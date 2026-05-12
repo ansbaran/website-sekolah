@@ -1,0 +1,425 @@
+/* =========================
+   CONTAINER
+========================= */
+.container {
+  width: min(100% - var(--space-8), var(--container-width));
+  margin-inline: auto;
+}
+
+main {
+  padding-top: calc(var(--header-height) + var(--space-2));
+}
+
+/* =========================
+   SECTION
+========================= */
+.section {
+  padding-block: var(--space-16);
+  scroll-margin-top: 100px;
+}
+
+.section--muted {
+  background: var(--color-gray-50);
+}
+
+/* =========================
+   SECTION HEADING
+========================= */
+.section-heading {
+  max-width: 720px;
+  margin-bottom: var(--space-8);
+}
+
+.section-heading--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-title {
+  max-width: 780px;
+  font-size: clamp(28px, 5vw, 36px); 
+  line-height: var(--line-height-heading);
+}
+
+.section-text {
+  max-width: 640px;
+  margin-top: var(--space-4);
+  color: var(--color-gray-500);
+  font-size: var(--font-size-lg);
+}
+
+/* =========================
+   GRID SYSTEM
+========================= */
+.grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* mobile default */
+.grid--2,
+.grid--3 {
+  grid-template-columns: 1fr;
+}
+
+/* tablet */
+@media (min-width: 640px) {
+  .grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* desktop */
+@media (min-width: 1024px) {
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* =========================
+   SPLIT LAYOUT
+========================= */
+.split-layout {
+  display: grid;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.split-layout__content {
+  max-width: 640px;
+}
+
+/* =========================
+   STATS POSITION (FIXED)
+========================= */
+.stats {
+  position: relative;
+  z-index: 2;
+  margin-top: calc(var(--space-12) * -1);
+}
+/* =========================
+   SECTION VARIANT (NEW)
+========================= */
+
+.section--default {
+  background: #ffffff;
+}
+
+.section--alt {
+  background: #f8fafc;
+}
+
+.section--divider {
+  position: relative;
+}
+
+.section--divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0,0,0,0.08),
+    transparent
+  );
+}
+section {
+  scroll-margin-top: 120px;
+}
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    position: fixed;
+
+    top: 8px;
+    left: 0;
+
+    width: 100%;
+
+    z-index: 9999;
+
+    padding: 0 18px;
+
+    background: transparent;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    max-width: 1380px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 10px 24px;
+
+    border-radius: 24px;
+
+    background: rgba(255,255,255,0.88);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 8px 30px rgba(15,23,42,0.06);
+}
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    text-decoration: none;
+}
+
+.logo img {
+    width: 42px;
+    height: 42px;
+
+    object-fit: contain;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1.1;
+}
+
+.logo-text span {
+    font-size: 1rem;
+    font-weight: 800;
+
+    color: #0f172a;
+}
+
+.logo-text small {
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    color: #334155;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+
+    gap: 28px;
+
+    list-style: none;
+
+    margin-left: auto;
+}
+
+.nav-menu a {
+    position: relative;
+
+    text-decoration: none;
+
+    font-size: 0.88rem;
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+
+    color: #0f172a;
+
+    transition: 0.3s ease;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: #4f46e5;
+    font-weight: 700;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.nav-action {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-left: 26px;
+}
+
+.btn-ppdb {
+    background: linear-gradient(
+        135deg,
+        #ffb703,
+        #fb8500
+    );
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 12px 20px;
+
+    border-radius: 18px;
+
+    font-weight: 700;
+
+    font-size: 0.95rem;
+
+    box-shadow:
+        0 10px 25px rgba(251,133,0,.25);
+
+    transition: .3s ease;
+}
+
+.btn-ppdb:hover {
+    transform: translateY(-3px);
+}
+
+.btn-contact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 56px;
+
+    padding: 0 18px;
+
+    border-radius: 16px;
+
+    text-decoration: none;
+
+    font-size: 0.88rem;
+    font-weight: 700;
+
+    color: #0f172a;
+
+    transition: 0.3s ease;
+}
+
+/* =========================
+   HERO SPACING
+========================= */
+
+.hero {
+    padding-top: 150px;
+}
+/* =========================
+   DROPDOWN
+========================= */
+
+.dropdown {
+    position: relative;
+}
+
+/* menu dropdown */
+.dropdown-menu {
+    position: absolute;
+
+    top: calc(100% + 16px);
+    left: 0;
+
+    min-width: 240px;
+
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    padding: 14px;
+
+    list-style: none;
+
+    box-shadow:
+        0 20px 40px rgba(15, 23, 42, 0.12);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform:
+        translateY(12px)
+        scale(0.98);
+
+    transition:
+        opacity .25s ease,
+        transform .25s ease,
+        visibility .25s ease;
+
+    z-index: 999;
+}
+
+/* muncul saat hover */
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+/* item */
+.dropdown-menu li {
+    width: 100%;
+}
+
+/* link */
+.dropdown-menu a {
+    display: block;
+
+    padding: 12px 16px;
+
+    border-radius: 14px;
+
+    color: #0f172a;
+
+    text-decoration: none;
+
+    font-size: 0.96rem;
+    font-weight: 600;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
+}
+
+/* hover item */
+.dropdown-menu a:hover {
+    background: #f3f4ff;
+    color: #4f46e5;
+
+    transform: translateX(4px);
+}
+/* =========================
+   ACTIVE MENU
+========================= */
+
+.nav-menu > li > a.active {
+
+    color: #4f46e5;
+
+    font-weight: 700;
+
+}

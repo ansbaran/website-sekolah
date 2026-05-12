@@ -1,0 +1,178 @@
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Mencegah geser kanan-kiri secara paksa */
+    position: relative;
+}
+
+html {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+}
+
+* {
+    box-sizing: border-box; /* Memastikan padding tidak melebarkan elemen */
+}
+/* =========================
+   DESIGN TOKENS
+========================= */
+:root {
+  /* ===== COLORS ===== */
+  --color-primary: #2563eb;
+  --color-primary-600: #1d4ed8;
+  --color-primary-700: #1e40af;
+
+  --color-secondary: #22c55e;
+  --color-secondary-600: #16a34a;
+
+  --color-accent: #f59e0b;
+
+  --color-white: #ffffff;
+
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-500: #64748b;
+  --color-gray-700: #334155;
+  --color-gray-900: #0f172a;
+
+  --color-overlay: rgba(15, 23, 42, 0.72);
+  --color-overlay-strong: rgba(15, 23, 42, 0.88);
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-family-base: "Inter", Arial, Helvetica, sans-serif;
+  --font-family-base: 'Poppins', sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-4xl: 3.5rem;
+
+  --line-height-heading: 1.2;
+  --line-height-body: 1.7;
+
+  /* ===== SPACING ===== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ===== RADIUS ===== */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+
+  /* ===== SHADOW ===== */
+  --shadow-light: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-medium: 0 18px 48px rgba(15, 23, 42, 0.12);
+  --shadow-hover: 0 24px 60px rgba(15, 23, 42, 0.18);
+
+  /* ===== LAYOUT ===== */
+  --container-width: 1120px;
+  --header-height: 76px;
+
+  /* ===== TRANSITION ===== */
+  --transition-fast: 180ms ease;
+  --transition-base: 260ms ease;
+}
+
+/* =========================
+   RESET & BASE
+========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + var(--space-2));
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-body);
+
+  color: var(--color-gray-900);
+  background-color: var(--color-white);
+
+}
+
+/* =========================
+   MEDIA
+========================= */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* =========================
+   LINKS & LIST
+========================= */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* =========================
+   FORM & BUTTON
+========================= */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* =========================
+   HEADINGS
+========================= */
+h1,
+h2,
+h3,
+h4 {
+  line-height: var(--line-height-heading);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+}
+
+h4 {
+  font-size: var(--font-size-lg);
+}

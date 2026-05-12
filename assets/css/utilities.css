@@ -1,0 +1,119 @@
+/* =========================
+   TEXT UTILITIES
+========================= */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--color-gray-500);
+}
+
+/* =========================
+   SURFACE / BACKGROUND
+========================= */
+.surface-muted {
+  background: var(--color-gray-50);
+}
+
+/* =========================
+   VISIBILITY
+========================= */
+.is-hidden {
+  display: none;
+}
+
+/* =========================
+   CURSOR (TYPING EFFECT)
+========================= */
+.cursor {
+  display: inline-block;
+  margin-left: 5px;
+  color: var(--color-white);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* =========================
+   MEDIA UTILITIES
+========================= */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rounded {
+  border-radius: var(--radius-md);
+}
+
+.shadow-sm {
+  box-shadow: var(--shadow-light);
+}
+/* =========================
+   REVEAL ANIMATION
+========================= */
+.reveal,
+.reveal-stagger > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.6s ease;
+}
+/* hanya kalau JS aktif, baru animasi */
+.js .reveal,
+.js .reveal-stagger > *,
+.js .scroll-fade {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* saat aktif */
+.js .reveal.active,
+.js .reveal-stagger > *.active,
+.js .scroll-fade.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* =========================
+   STAGGER CHILDREN
+========================= */
+.reveal,
+.reveal-stagger > *,
+.scroll-fade {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-stagger.active > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* delay berurutan */
+.reveal-stagger.active > *:nth-child(1) { transition-delay: 0.1s; }
+.reveal-stagger.active > *:nth-child(2) { transition-delay: 0.2s; }
+.reveal-stagger.active > *:nth-child(3) { transition-delay: 0.3s; }
+.reveal-stagger.active > *:nth-child(4) { transition-delay: 0.4s; }
+.reveal-stagger.active > *:nth-child(5) { transition-delay: 0.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal,
+  .js .reveal-stagger > *,
+  .js .scroll-fade {
+    opacity: 1;
+    transform: none;
+  }
+}

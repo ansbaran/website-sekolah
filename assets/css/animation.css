@@ -1,0 +1,147 @@
+/* =========================
+   GLOBAL ANIMATION SYSTEM
+========================= */
+
+:root {
+  --motion-duration-fast: 520ms;
+  --motion-duration-base: 780ms;
+  --motion-duration-hero: 1100ms;
+  --motion-easing-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+body {
+  opacity: 1;
+  transition:
+    opacity 220ms ease;
+}
+
+body.page-is-leaving {
+  opacity: 0;
+}
+
+[data-aos] {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.aos-init:not(.aos-animate) {
+  will-change: transform, opacity;
+}
+
+.aos-animate,
+.aos-fallback-visible {
+  will-change: auto;
+}
+
+.aos-init[data-aos][data-aos][data-aos-duration="1100"] {
+  transition-duration: var(--motion-duration-hero);
+}
+
+.btn,
+.primary-button,
+.prestasi-highlight__btn,
+.news-card__button,
+.filter-btn {
+  transition:
+    transform 260ms var(--motion-easing-premium),
+    box-shadow 260ms ease,
+    background 260ms ease,
+    color 260ms ease,
+    border-color 260ms ease;
+}
+
+.btn:hover,
+.primary-button:hover,
+.prestasi-highlight__btn:hover,
+.filter-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+.aos-fallback [data-aos] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity var(--motion-duration-base) ease,
+    transform var(--motion-duration-base) var(--motion-easing-premium);
+}
+
+.aos-fallback [data-aos].aos-fallback-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.aos-fallback [data-aos="zoom-in"] {
+  transform: translateY(18px) scale(0.97);
+}
+
+.aos-fallback [data-aos="zoom-out"] {
+  transform: translateY(18px) scale(1.03);
+}
+
+.aos-fallback [data-aos="fade-left"] {
+  transform: translateX(28px);
+}
+
+.aos-fallback [data-aos="fade-right"] {
+  transform: translateX(-28px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body,
+  [data-aos],
+  .aos-fallback [data-aos],
+  .btn,
+  .primary-button,
+  .prestasi-highlight__btn,
+  .news-card__button,
+  .filter-btn {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+[data-theme="dark"],
+.theme-dark {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] body,
+.theme-dark body {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .news-card,
+[data-theme="dark"] .gallery-card,
+[data-theme="dark"] .simple-gallery-card,
+[data-theme="dark"] .activity-card,
+[data-theme="dark"] .stat-box,
+[data-theme="dark"] .contact-card,
+.theme-dark .card,
+.theme-dark .news-card,
+.theme-dark .gallery-card,
+.theme-dark .simple-gallery-card,
+.theme-dark .activity-card,
+.theme-dark .stat-box,
+.theme-dark .contact-card {
+  background: #111827;
+  border-color: rgba(148, 163, 184, 0.2);
+}

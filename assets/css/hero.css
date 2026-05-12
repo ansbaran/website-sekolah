@@ -1,0 +1,443 @@
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 120px;
+  color: var(--color-white);
+  isolation: isolate;
+  background: linear-gradient(135deg, #1e3a8a, #1e293b);
+  overflow: hidden;
+
+}
+
+/* =========================
+   SLIDER
+========================= */
+.hero__slider,
+.hero__slide,
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__slide {
+  opacity: 0;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  transform: scale(1.08);
+  transition: opacity 900ms ease, transform 6s ease;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../img/sekolah.jpg") center/cover no-repeat;
+  opacity: 0.08;
+}
+.hero__card {
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  transition: 0.3s;
+}
+
+.hero__card:hover {
+  transform: translateY(-5px);
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* background images */
+.hero__slide:nth-child(1) {
+  background-image: url("../img/sekolah.jpg");
+}
+
+.hero__slide:nth-child(2) {
+  background-image: url("../img/sekolah2.JPG");
+}
+
+.hero__slide:nth-child(3) {
+  background-image: url("../img/sekolah3.jpg");
+}
+
+.hero__slide:nth-child(4) {
+  background-image: url("../img/sekolah4.jpeg");
+}
+
+.hero__slide:nth-child(5) {
+  background-image: url("../img/sekolah.jpg");
+}
+
+/* active slide */
+.hero__slide--active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* =========================
+   OVERLAY
+========================= */
+.hero__overlay {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(59,130,246,0.5),
+      rgba(139,92,246,0.5)
+    );
+}
+
+/* =========================
+   CONTENT
+========================= */
+.hero__content {
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px;
+  animation: fadeIn 1.2s ease;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* =========================
+   TITLE
+========================= */
+.hero__title {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+
+  font-size: clamp(2.8rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: 2px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 8px rgba(59,130,246,0.6),
+    0 0 20px rgba(59,130,246,0.4);
+}
+@media (max-width: 992px) {
+  .hero__title {
+    white-space: normal;
+  }
+}
+.hero__title::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.8),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+}
+.hero__title::after {
+  animation: shineMove 3s infinite;
+}
+
+@keyframes shineMove {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+/* =========================
+   TYPING TEXT
+========================= */
+.hero__typing {
+  min-height: 2rem;
+  margin-top: var(--space-4);
+
+  color: var(--color-secondary);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+}
+
+.hero__typing span::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: var(--space-1);
+
+  background: currentColor;
+  vertical-align: -0.1em;
+
+  animation: caret-blink 900ms steps(2, start) infinite;
+}
+
+/* =========================
+   DESCRIPTION
+========================= */
+.hero__text {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  backdrop-filter: none;
+}
+
+/* =========================
+   ACTION BUTTON
+========================= */
+.hero__actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+.hero__content > * {
+  opacity: 0;
+  gap: 12px;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.hero__content > *:nth-child(1) { animation-delay: 0.2s; }
+.hero__content > *:nth-child(2) { animation-delay: 0.4s; }
+.hero__content > *:nth-child(3) { animation-delay: 0.6s; }
+.hero__content > *:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes fadeUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+
+/* =========================
+   SLIDER NAV BUTTON
+========================= */
+.hero__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+ backdrop-filter: blur(12px);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 3;
+  transition: all 0.3s ease;
+}
+
+.hero__nav:hover {
+  background: rgba(255,255,255,0.35);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.hero__nav--prev {
+  left: 24px;
+}
+
+.hero__nav--next {
+  right: 24px;
+}
+
+/* =========================
+   STATS POSITION
+========================= */
+
+.hero__stat:hover .hero__stat-icon {
+  transform: scale(1.2) rotate(5deg);
+}
+/* =========================
+   HERO STATS MODERN (NEW)
+========================= */
+
+/* =========================
+   HERO STATS WITH ICON (PRO)
+========================= */
+
+.hero__stats {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 60px;
+  margin-top: 50px;
+  position: relative;
+  align-items: center !important;
+}
+
+/* garis glow horizontal */
+.hero__stats::before {
+  bottom: 18px;
+  height: 6px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59,130,246,1),
+    transparent
+  );
+
+  filter: blur(8px);
+}
+
+/* ITEM */
+.hero__stat {
+  text-align: center;
+  position: relative;
+}
+/* glow box */
+.hero__stat-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(59,130,246,0.4), transparent 70%);
+  opacity: 0;
+  transition: 0.3s;
+  z-index: -1;
+}
+
+
+/* LABEL */
+.hero__stat-label {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* hover efek */
+.hero__stat:hover .hero__stat-icon {
+  transform: translateY(-4px) scale(1.1);
+}
+
+/* FORCE REMOVE OLD CARD STYLE */
+.hero__stat {
+  background: transparent !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+.hero__stat::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 8px auto 0;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #3b82f6,
+    transparent
+  );
+
+  filter: blur(2px);
+  opacity: 0.8;
+}
+/* =========================
+   HERO STATS FINAL (CLEAN)
+========================= */
+/* item */
+.hero__stat {
+  text-align: center;
+  position: relative;
+  background: none;
+  border: none;
+}
+
+/* icon */
+.hero__stat-icon {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+  color: #3b82f6;
+
+  text-shadow:
+    0 0 10px rgba(59,130,246,0.7),
+    0 0 20px rgba(59,130,246,0.5);
+}
+
+/* angka (fokus utama) */
+.hero__stat-number {
+  font-size: 2.2rem;
+
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.8),
+    0 0 25px rgba(59,130,246,1),
+    0 0 40px rgba(59,130,246,0.8);
+}
+
+/* label */
+.hero__stat-label {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* glow bawah tiap item */
+.hero__stat::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 10px auto 0;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #3b82f6,
+    transparent
+  );
+
+  filter: blur(2px);
+  opacity: 0.8;
+}
+.hero__stat:nth-child(2) {
+  transform: scale(1.15);
+}
+
+.hero__stat:nth-child(2) .hero__stat-number {
+  text-shadow:
+    0 0 12px rgba(255,255,255,1),
+    0 0 30px rgba(59,130,246,1),
+    0 0 50px rgba(59,130,246,1);
+}

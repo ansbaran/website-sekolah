@@ -1,0 +1,228 @@
+/* CARD */
+
+.teacher-card {
+    position: relative;
+
+    width: 100%;
+    max-width: 340px;
+
+    height: 470px;
+
+    border-radius: 32px;
+
+    overflow: hidden;
+
+    background: white;
+
+    box-shadow:
+        0 20px 40px rgba(15, 23, 42, 0.08);
+
+    transition:
+        transform 0.5s ease,
+        box-shadow 0.5s ease,
+        border-radius 0.5s ease;
+
+    cursor: pointer;
+}
+
+/* HOVER CARD */
+
+.teacher-card:hover {
+    transform: translateY(-12px);
+
+    border-top-left-radius: 70px;
+
+    box-shadow:
+        0 30px 60px rgba(99, 102, 241, 0.18);
+}
+
+/* IMAGE AREA */
+
+.teacher-image {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    z-index: 1;
+
+    transition:
+        all 0.6s ease;
+}
+
+/* IMAGE */
+
+.teacher-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center top;
+
+    transition:
+        transform 0.8s ease,
+        object-position 0.8s ease;
+}
+
+/* INFO PANEL */
+
+.teacher-info {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 135px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(255,255,255,1),
+            rgba(255,255,255,0.96)
+        );
+
+    backdrop-filter: blur(12px);
+
+    padding: 24px;
+
+    border-radius: 28px 28px 0 0;
+
+    z-index: 2;
+
+    overflow: hidden;
+
+    transition:
+        height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* HOVER INFO */
+
+.teacher-card:hover .teacher-info {
+    height: 250px;
+
+    border-radius: 80px 28px 0 0;
+}
+
+/* TITLE */
+
+.teacher-info h3 {
+    font-size: 1.15rem;
+
+    font-weight: 700;
+
+    color: #4f46e5;
+
+    margin-bottom: 8px;
+}
+
+/* POSITION */
+
+.teacher-info span {
+    display: inline-block;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    color: #9333ea;
+
+    margin-bottom: 16px;
+}
+
+/* DESCRIPTION */
+
+.teacher-info p {
+    font-size: 0.92rem;
+
+    line-height: 1.8;
+
+    color: #64748b;
+
+    opacity: 0;
+
+    transform: translateY(20px);
+
+    transition:
+        all 0.5s ease;
+
+    margin-bottom: 20px;
+}
+
+/* SHOW DESCRIPTION */
+
+.teacher-card:hover .teacher-info p {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+/* BUTTON */
+
+.teacher-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 20px;
+
+    border-radius: 999px;
+
+    background: linear-gradient(
+        135deg,
+        #f59e0b,
+        #f97316
+    );
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* BUTTON HOVER */
+
+.teacher-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(249,115,22,0.3);
+}
+
+/* IMAGE EFFECT */
+
+.teacher-card:hover .teacher-image {
+    transform:
+        scale(0.32)
+        translate(18px, 18px);
+
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.18);
+
+    border: 5px solid white;
+}
+
+/* IMAGE ZOOM */
+
+.teacher-card:hover .teacher-image img {
+    transform: scale(1.18);
+
+    object-position: center top;
+}

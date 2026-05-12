@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="Website profil SD Cahaya Harapan Bekasi dengan informasi program, fasilitas, berita, aktivitas, dan kontak sekolah."
+    >
+    <title>SD Cahaya Harapan Bekasi</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  </head>
+  <body>
+    <div id="navbar"></div>
+    <main>
+        <section class="hero" id="hero" aria-labelledby="hero-title">
+              <button class="hero__nav hero__nav--prev" type="button">&#10094;</button>
+              <button class="hero__nav hero__nav--next" type="button">&#10095;</button>
+
+              <div class="hero__slider">
+                <div class="hero__slide hero__slide--active" data-slide></div> 
+                <div class="hero__slide" data-slide></div>                     
+                <div class="hero__slide" data-slide></div>                     
+                <div class="hero__slide" data-slide></div>  
+                <div class="hero__slide" data-slide></div>
+              </div>
+
+              <div class="hero__overlay"></div>
+
+              <div class="hero__content container">
+                
+                <h1 class="hero__title" id="hero-title">
+                  <span data-typing="SD CAHAYA HARAPAN BEKASI"></span>
+                  <span class="cursor">|</span>
+                </h1>
+
+                <p class="hero__text">
+                  Lingkungan belajar yang aman, modern, dan terarah untuk membantu
+                  siswa berkembang secara akademik, sosial, dan karakter.
+                </p>
+
+                <!-- ✅ FIXED STATS -->
+                <div class="hero__stats">
+
+                  <div class="hero__stat">
+                    <div class="hero__stat-icon">👥</div>
+                    <div class="hero__stat-number" data-target="800">0</div>
+                    <div class="hero__stat-label">Siswa Aktif</div>
+                  </div>
+
+                  <div class="hero__stat">
+                    <div class="hero__stat-icon">🏅</div>
+                    <div class="hero__stat-number" data-target="50">0</div>
+                    <div class="hero__stat-label">Prestasi Tahun Ini</div>
+                  </div>
+
+                  <div class="hero__stat">
+                    <div class="hero__stat-icon">📘</div>
+                    <div class="hero__stat-number" data-target="25">0</div>
+                    <div class="hero__stat-label">Ekstrakurikuler</div>
+                  </div>
+
+                </div>
+
+              </div>
+            </section>
+
+      <section class="section section--default section--divider about reveal" id="profil">
+        <div class="container about__wrapper">
+          <div class="about__content">
+            <span class="about__badge">Tentang Sekolah</span>
+            <h2 class="about__title">SD Cahaya Harapan Bekasi</h2>
+            <p class="about__text">
+              SD Cahaya Harapan Bekasi adalah sekolah Katolik yang membentuk
+              generasi beriman, berkarakter, dan berprestasi melalui pendidikan 
+              berkualitas yang berlandaskan nilai kasih, disiplin, dan pelayanan.
+              Dengan lingkungan belajar yang aman dan penuh perhatian, siswa didorong
+              untuk bertumbuh menjadi pribadi yang cerdas, mandiri 
+              serta memiliki semangat Kristiani dalam kehidupan sehari-hari.
+            </p>
+
+            <div class="about__stats reveal-stagger">
+              <div class="about__card blue">
+                <div class="icon" aria-hidden="true">&#127941;</div>
+                <h3>A</h3>
+                <p>Akreditasi</p>
+              </div>
+                <div class="about__card green">
+                  <div class="icon">&#128101;</div>
+                  <h3 class="counter" data-target="500">0</h3>
+                  <p>Siswa Aktif</p>
+                </div>
+              <div class="about__card purple">
+                <div class="icon" aria-hidden="true">&#128214;</div>
+                <h3 class="counter" data-target="15">0</h3>
+                <p>Program Unggulan</p>
+              </div>
+            </div>
+
+            <a href="tentang.html" class="primary-button">
+              Lihat Tentang Sekolah
+              <span>→</span>
+            </a>
+          </div>
+          <div class="about__image">
+            <span class="about__floating-badge about__floating-badge--top">Sekolah Katholik</span>
+            <img src="assets/img/sekolah.jpg" alt="Gedung SD Cahaya Harapan Bekasi">
+            <span class="about__floating-badge about__floating-badge--bottom"> Berkarakter</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="berita" class="section section--alt section--divider news-section-home">
+        <div class="container">
+          <div class="section-heading section-heading--center">
+            <p class="eyebrow">Berita</p>
+            <h2 class="section-title"> Kegiatan dan Informasi Terbaru Sekolah</h2>
+          </div>
+
+          <div class="news-grid-home"> 
+            
+            <article class="news-card">
+              <div class="news-card__image">
+                <img src="assets/img/sekolah.jpg" alt="Belajar Interaktif">
+              </div>
+              <div class="news-card__content">
+                <span class="news-card__date">
+                  12 Mei 2026
+                </span>
+                <h3>
+                  Belajar Interaktif di Kelas
+                </h3>
+                <p>
+                  Siswa mengikuti pembelajaran aktif dengan
+                  metode diskusi dan praktik langsung.
+                </p>
+                <a href="#" class="news-card__button">
+                  Lihat Berita
+                  <span>→</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="news-card">
+              <div class="news-card__image">
+                <img src="assets/img/sekolah2.JPG" alt="Pramuka">
+              </div>
+              <div class="news-card__content">
+                <span class="news-card__date">
+                  5 Mei 2026
+                </span>
+                <h3>
+                  Kegiatan Pramuka Aktif
+                </h3>
+                <p>
+                  Pramuka melatih kemandirian,
+                  kerja sama, dan kepemimpinan siswa serta
+                  Nilai Pancasila.
+                </p>
+                <a href="#" class="news-card__button">
+                  Lihat Berita
+                  <span>→</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="news-card">
+              <div class="news-card__image">
+                <img src="assets/img/sekolah3.jpg" alt="Prestasi Akademik">
+              </div>
+              <div class="news-card__content">
+                <span class="news-card__date">
+                  28 April 2026
+                </span>
+                <h3>
+                  Prestasi Siswa di Kompetisi Akademik
+                </h3>
+                <p>
+                  Siswa meraih penghargaan dalam
+                  kompetisi akademik tingkat kota.
+                </p>
+                <a href="#" class="news-card__button">
+                  Lihat Berita
+                  <span>→</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="news-card">
+              <div class="news-card__image">
+                <img src="assets/img/sekolah3.jpg" alt="Prestasi Akademik">
+              </div>
+              <div class="news-card__content">
+                <span class="news-card__date">
+                  28 April 2026
+                </span>
+                <h3>
+                  Prestasi Siswa di Kompetisi Akademik
+                </h3>
+                <p>
+                  Siswa meraih penghargaan dalam
+                  kompetisi akademik tingkat kota.
+                </p>
+                <a href="#" class="news-card__button">
+                  Lihat Berita
+                  <span>→</span>
+                </a>
+              </div>
+            </article>
+            
+          </div> </div>
+      </section>
+
+      <section id="prestasi-home" class="section section--divider">
+  <div class="container">
+    
+    <div class="prestasi-highlight">
+      
+      <div class="prestasi-highlight__content">
+        <h2 class="section-title">Prestasi, Program Unggulan & Aktivitas Sekolah</h2>
+        <p class="prestasi-highlight__desc">
+          Dedikasi, kerja keras, dan bimbingan maksimal telah mengantarkan siswa-siswi kami meraih berbagai penghargaan bergengsi di tingkat kota, nasional, hingga internasional. Temukan deretan prestasi membanggakan yang menjadi bukti nyata kualitas pendidikan kami.
+        </p>
+        <a href="prestasi.html" class="prestasi-highlight__btn">
+          Lihat Detail Prestasi <span>→</span>
+        </a>
+      </div>
+
+      <div class="prestasi-highlight__image-wrapper">
+        <img src="assets/img/prestasi-utama.png" alt="Highlight Prestasi Sekolah">
+        
+        <div class="prestasi-badge">
+          <span class="prestasi-badge__icon">🏆</span>
+          <div class="prestasi-badge__text">
+            <strong>Berbagai Penghargaan</strong>
+            <span>Tingkat Nasional & Provinsi</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+      <section class="section section--alt section--divider media-section">
+  <div class="container">
+
+    <div class="section-heading section-heading--center">
+      <p class="eyebrow">Media</p>
+      <h2 class="section-title">Kabar & Aktivitas Terbaru Sekolah</h2>
+    </div>
+
+    <div class="media-cta">
+<a href="https://www.instagram.com/sdcahayaharapanbekasi?igsh=MXVxbGd0OW81emh3aw==" target="_blank" class="btn btn--gradient">
+  Kunjungi Instagram →
+</a>
+    </div>
+
+<div class="media-grid">
+
+  <div class="media-item">
+    <a href="https://www.instagram.com/p/DQk2uNMAXen/" target="_blank" class="media-card">
+      <img src="assets/img/instagram/ppdb.png" alt="PPDB SD Cahaya Harapan Bekasi">
+      
+      <div class="media-overlay">
+        <span>
+          <i class="fa-brands fa-instagram"></i> Lihat Postingan
+        </span>
+      </div>
+    </a>
+
+    <div class="media-caption">
+      PPDB SD Cahaya Harapan Bekasi 2026
+    </div>
+  </div>
+
+  <div class="media-item">
+    <a href="https://www.instagram.com/p/DXndKfSE4nZ/" target="_blank" class="media-card">
+      <img src="assets/img/instagram/siaga.png" alt="Permainan Besar Siaga">
+      
+      <div class="media-overlay">
+        <span>
+          <i class="fa-brands fa-instagram"></i> Lihat Postingan
+        </span>
+      </div>
+    </a>
+
+    <div class="media-caption">
+      Kegiatan Upacara Permainan Besar Siaga
+    </div>
+  </div>
+
+  <div class="media-item">
+    <a href="https://www.instagram.com/p/DXvv40Gk0fE/" target="_blank" class="media-card">
+      <img src="assets/img/instagram/senam.png" alt="Senam Sehat Bersama">
+      
+      <div class="media-overlay">
+        <span>
+          <i class="fa-brands fa-instagram"></i> Lihat Postingan
+        </span>
+      </div>
+    </a>
+
+    <div class="media-caption">
+      Senam Sehat Bersama
+    </div>
+  </div>
+
+</div>
+
+  </div>
+</section>
+
+      <section class="section section--default section--divider ppdb-section" id="ppdb" aria-labelledby="ppdb-title">
+  <div class="container ppdb-section__inner">
+
+    <!-- KIRI -->
+    <div class="ppdb-section__content">
+      <p class="eyebrow">PPDB 2026 • Gelombang 1</p>
+
+      <h2 class="section-title">
+        Pendaftaran Peserta Didik Baru Telah Dibuka
+      </h2>
+
+      <p class="section-text">
+        Periode Maret–Mei 2026. Konsultasi & pendaftaran langsung bersama tim SD Cahaya Harapan Bekasi.
+      </p>
+
+      <ul class="ppdb-highlights">
+        <li>✔ Kurikulum Merdeka + penguatan karakter</li>
+        <li>✔ Fasilitas lengkap & lingkungan aman</li>
+        <li>✔ Pendampingan orang tua selama proses</li>
+      </ul>
+
+      <div class="ppdb-section__actions" aria-label="Aksi PPDB">
+        <a class="btn btn--ppdb" href="https://wa.me/6285692890015?text=Halo..." target="_blank">
+          <i class="fa-brands fa-whatsapp"></i> Daftar via WhatsApp
+        </a>
+      </div>
+      <p class="ppdb-note">
+  🔥 Pendaftaran terbatas, segera amankan tempat!
+</p>
+    </div>
+
+    <!-- KANAN -->
+    <div class="ppdb-section__panel" aria-label="Ringkasan PPDB 2026">
+
+      <div class="stat-box ppdb-section__stat">
+        <span class="stat-box__number">01</span>
+        <span class="stat-box__label">Konsultasi kebutuhan siswa</span>
+      </div>
+
+      <div class="stat-box ppdb-section__stat">
+        <span class="stat-box__number">02</span>
+        <span class="stat-box__label">Lengkapi data dan berkas</span>
+      </div>
+
+      <div class="stat-box ppdb-section__stat">
+        <span class="stat-box__number">03</span>
+        <span class="stat-box__label">Konfirmasi jadwal kunjungan</span>
+      </div>
+
+      <!-- 🔥 NOTE + COUNTDOWN PINDAH KE SINI -->
+
+      <div class="ppdb-countdown">
+        <p class="countdown-label">Pendaftaran ditutup dalam:</p>
+
+        <div class="countdown-timer" id="countdown">
+          <span><b id="days">0</b><small>Hari</small></span>
+          <span><b id="hours">0</b><small>Jam</small></span>
+          <span><b id="minutes">0</b><small>Menit</small></span>
+          <span><b id="seconds">0</b><small>Detik</small></span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+      <section class="section section--alt section--divider cta-section" id="kontak">
+          <div class="cta-content">
+
+            <!-- LEFT -->
+            <div class="cta-text">
+              <p class="eyebrow">KUNJUNGAN SEKOLAH</p>
+
+              <h2 class="section-title">
+                Ingin Melihat Lingkungan Belajar Secara Langsung?
+              </h2>
+
+              <p class="section-text">
+                Jadwalkan kunjungan ke SD Cahaya Harapan Bekasi untuk melihat langsung
+                suasana belajar, fasilitas, dan aktivitas siswa.
+              </p>
+
+              <a href="https://wa.me/6285692890015" class="btn btn--ppdb">
+                Jadwalkan Kunjungan
+              </a>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="cta-cards">
+
+              <div class="visit-card">
+                <h3>Apa yang Akan Anda Lihat?</h3>
+
+                <ul class="visit-list">
+                  <li>🏫 Lingkungan sekolah yang nyaman</li>
+                  <li>👩‍🏫 Interaksi guru dan siswa</li>
+                  <li>📚 Proses pembelajaran di kelas</li>
+                  <li>🎯 Program karakter & kegiatan siswa</li>
+                </ul>
+
+                <div class="visit-info">
+                  <p><strong>Waktu Kunjungan:</strong><br>Senin – Jumat (08.00 – 12.00)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+    </main>
+    <div id="footer"></div>
+    <script type="module" src="assets/js/main.js"></script>
+    <script src="assets/js/seo.js"></script>
+    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/cms-connector.js"></script>
+<button id="scrollTopBtn">
+  <i class="fas fa-arrow-up"></i>
+</button>
+  </body>
+</html>

@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    if (window.location.pathname.startsWith('/admin') || window.location.pathname.endsWith('/maintenance.html')) {
+    if (window.location.pathname.includes('/admin') || window.location.pathname.endsWith('/maintenance.html')) {
         return;
     }
 
     try {
-        const response = await fetch('/api/maintenance.php', {
+        const response = await fetch('api/maintenance.php', {
             headers: { 'Accept': 'application/json' },
         });
         if (!response.ok) {

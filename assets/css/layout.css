@@ -179,6 +179,47 @@ section {
     box-shadow:
         0 8px 30px rgba(15,23,42,0.06);
 }
+
+.header.scrolled,
+.site-header--scrolled {
+    background: transparent;
+}
+
+.navbar__toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: auto;
+    border: 0;
+    border-radius: 12px;
+    background: #eef2ff;
+    cursor: pointer;
+}
+
+.navbar__toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 999px;
+    background: #0f172a;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.navbar__toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.navbar__toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar__toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
 /* =========================
    LOGO
 ========================= */

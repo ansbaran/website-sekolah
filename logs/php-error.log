@@ -1,0 +1,323 @@
+[13-May-2026 02:34:47 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 02:34:47 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:34:47 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:34:56 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 02:34:56 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:34:56 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:35:19 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 02:35:19 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:35:19 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:35:36 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 02:35:36 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:35:36 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:36:16 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 02:36:16 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:36:16 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:37:57 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 02:37:57 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:37:57 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:39:04 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 02:39:04 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:39:04 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:47:11 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 02:47:11 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:47:11 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:52:52 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 02:52:52 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:52:52 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:54:01 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 02:54:01 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:54:01 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 02:54:32 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 02:54:32 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 02:54:32 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 03:00:06 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 03:00:06 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 03:00:06 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 03:07:04 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 03:07:04 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 03:07:04 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 03:07:56 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 03:07:56 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 03:07:56 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 03:11:27 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 03:11:27 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 03:11:27 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:41:16 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:41:16 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:41:16 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:41:28 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:41:28 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:41:28 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:43:01 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 05:43:01 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:43:01 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:45:27 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:45:27 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:45:27 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:45:45 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 05:45:45 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:45:45 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:45:57 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 05:45:57 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:45:57 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:46:30 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:46:30 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:46:30 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:46:30 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:46:30 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:46:30 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:48:00 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:48:00 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:48:00 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:48:08 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:48:08 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:48:08 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:48:22 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 05:48:22 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:48:22 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:48:27 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 05:48:27 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:48:27 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:54:10 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:54:10 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:54:10 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:54:38 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 05:54:38 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:54:38 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:55:25 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:55:25 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:55:25 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:55:35 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:55:35 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:55:35 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:56:04 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 05:56:04 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:56:04 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:56:19 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:56:19 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:56:19 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:56:24 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:56:24 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:56:24 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:57:26 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 05:57:26 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:57:26 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:58:20 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:58:20 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:58:20 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:58:45 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:58:45 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:58:45 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:59:11 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 05:59:11 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:59:11 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:59:28 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:59:28 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:59:28 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:59:42 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:59:42 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:59:42 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:59:56 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:59:56 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:59:56 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 05:59:58 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 05:59:58 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 05:59:58 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:03:23 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:03:23 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:03:23 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:04:20 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:04:20 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:04:20 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:04:26 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 06:04:26 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:04:26 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:13:40 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:13:40 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:13:40 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:14:39 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 06:14:39 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:14:39 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:16:56 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:16:56 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:16:56 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:17:44 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 06:17:44 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:17:44 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:18:02 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:18:02 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:18:02 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:19:08 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 06:19:08 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:19:08 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:19:39 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:19:39 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:19:39 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:20:43 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 06:20:43 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:20:43 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:24:34 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 06:24:34 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:24:34 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:24:38 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 06:24:38 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:24:38 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:24:51 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:24:51 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:24:51 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:24:51 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:24:51 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:24:51 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:27:26 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 06:27:26 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:27:26 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:27:53 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:27:53 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:27:53 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:30:01 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:30:01 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:30:01 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:30:02 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:30:02 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:30:02 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:32:05 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 06:32:05 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:32:05 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 06:32:16 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 06:32:16 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 06:32:16 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:00:24 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:00:24 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:00:24 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:00:33 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:00:33 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:00:33 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:05:14 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 07:05:14 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:05:14 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:05:17 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 07:05:17 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:05:17 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:05:53 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 07:05:53 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:05:53 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:07:29 Europe/Berlin] [API] public-news.php called with limit=12
+[13-May-2026 07:07:29 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:07:29 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:11:25 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:11:25 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:11:25 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:15:42 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:15:42 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:15:42 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:21:54 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:21:54 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:21:54 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:21:59 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:21:59 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:21:59 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:22:26 Europe/Berlin] PHP Warning:  session_start(): open(C:\xampp\tmp\sess_r1hidg59s7slhti4gm09elviqq, O_RDWR) failed: Permission denied (13) in C:\xampp\htdocs\website-sekolah\config\config.php on line 85
+[13-May-2026 07:22:26 Europe/Berlin] PHP Warning:  session_start(): Failed to read session data: files (path: C:\xampp\tmp) in C:\xampp\htdocs\website-sekolah\config\config.php on line 85
+[13-May-2026 07:22:38 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:22:38 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:22:38 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:23:21 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:23:21 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:23:21 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:26:19 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:26:19 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:26:19 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:26:30 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:26:30 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:26:30 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:27:21 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:27:21 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:27:21 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:29:11 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:29:11 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:29:11 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:29:42 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:29:42 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:29:42 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:31:25 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:31:25 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:31:25 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:40:40 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 61
+[13-May-2026 07:40:40 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 62
+[13-May-2026 07:40:40 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 63
+[13-May-2026 07:40:40 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 77
+[13-May-2026 07:40:40 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 78
+[13-May-2026 07:40:40 Europe/Berlin] PHP Warning:  session_name(): Session name cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 83
+[13-May-2026 07:40:40 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 85
+[13-May-2026 07:44:14 Europe/Berlin] [API] public-news.php called with limit=3
+[13-May-2026 07:44:14 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:44:14 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:44:35 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:44:35 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:44:35 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:46:59 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:46:59 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:46:59 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:47:40 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:47:40 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:47:40 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:48:19 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:48:19 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:48:19 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:49:21 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:49:21 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:49:21 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:49:45 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:49:45 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:49:45 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:49:55 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:49:55 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:49:55 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 07:50:35 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 07:50:35 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 07:50:35 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 08:01:26 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 08:01:26 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 08:01:26 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 08:10:41 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 08:10:41 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 08:10:41 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 08:13:03 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 61
+[13-May-2026 08:13:03 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 62
+[13-May-2026 08:13:03 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 63
+[13-May-2026 08:13:03 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 77
+[13-May-2026 08:13:03 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 78
+[13-May-2026 08:13:03 Europe/Berlin] PHP Warning:  session_name(): Session name cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 83
+[13-May-2026 08:13:03 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 85
+[13-May-2026 08:13:03 Europe/Berlin] PHP Fatal error:  Cannot redeclare render_database_error() (previously declared in C:\xampp\htdocs\website-sekolah\config\db.php:4) in C:\xampp\htdocs\website-sekolah\config\db.php on line 4
+[13-May-2026 08:14:34 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 61
+[13-May-2026 08:14:34 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 62
+[13-May-2026 08:14:34 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 63
+[13-May-2026 08:14:34 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 77
+[13-May-2026 08:14:34 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 78
+[13-May-2026 08:14:34 Europe/Berlin] PHP Warning:  session_name(): Session name cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 83
+[13-May-2026 08:14:34 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 85
+[13-May-2026 08:14:34 Europe/Berlin] PHP Fatal error:  Cannot redeclare render_database_error() (previously declared in C:\xampp\htdocs\website-sekolah\config\db.php:4) in C:\xampp\htdocs\website-sekolah\config\db.php on line 4
+[13-May-2026 08:15:23 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 61
+[13-May-2026 08:15:23 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 62
+[13-May-2026 08:15:23 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 63
+[13-May-2026 08:15:23 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 77
+[13-May-2026 08:15:23 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 78
+[13-May-2026 08:15:23 Europe/Berlin] PHP Warning:  session_name(): Session name cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 83
+[13-May-2026 08:15:23 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 85
+[13-May-2026 08:15:23 Europe/Berlin] PHP Fatal error:  Cannot redeclare render_database_error() (previously declared in C:\xampp\htdocs\website-sekolah\config\db.php:4) in C:\xampp\htdocs\website-sekolah\config\db.php on line 4
+[13-May-2026 08:19:06 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 08:19:06 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 08:19:06 Europe/Berlin] [API] Response sent with 3 items
+[13-May-2026 08:19:58 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 61
+[13-May-2026 08:19:58 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 62
+[13-May-2026 08:19:58 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 63
+[13-May-2026 08:19:58 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 77
+[13-May-2026 08:19:58 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 78
+[13-May-2026 08:19:58 Europe/Berlin] PHP Warning:  session_name(): Session name cannot be changed after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 83
+[13-May-2026 08:19:58 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\website-sekolah\config\config.php on line 85
+[13-May-2026 08:19:58 Europe/Berlin] PHP Fatal error:  Cannot redeclare render_database_error() (previously declared in C:\xampp\htdocs\website-sekolah\config\db.php:4) in C:\xampp\htdocs\website-sekolah\config\db.php on line 4
+[13-May-2026 08:27:00 Europe/Berlin] [API] public-news.php called with limit=4
+[13-May-2026 08:27:00 Europe/Berlin] [API] Query returned 3 records
+[13-May-2026 08:27:00 Europe/Berlin] [API] Response sent with 3 items

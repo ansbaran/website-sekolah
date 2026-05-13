@@ -53,9 +53,13 @@
     display: inline-flex;
   }
 
+  .nav-action {
+    display: none;
+  }
+
   .navbar__menu {
-    position: absolute;
-    top: var(--header-height);
+    position: fixed;
+    top: 86px;
     left: var(--space-4);
     right: var(--space-4);
 
@@ -69,6 +73,10 @@
     background: var(--color-white);
     border: 1px solid var(--color-gray-200);
     box-shadow: var(--shadow-medium);
+  }
+
+  .nav-menu {
+    margin-left: 0;
   }
 
   .navbar__menu > li {

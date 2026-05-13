@@ -1,21 +1,16 @@
 async function loadFooter() {
-
-    const footer = document.getElementById("footer");
-
+    const footer = document.getElementById('footer');
     if (!footer) return;
 
     try {
-
-        const response = await fetch("components/footer.html");
-
+        const baseUrl = window.location.pathname.includes('/website-sekolah/') 
+            ? '/website-sekolah/' 
+            : '/';
+        const response = await fetch(baseUrl + 'components/footer.html');
         const data = await response.text();
-
         footer.innerHTML = data;
-
     } catch (error) {
-
-        console.error("Footer gagal dimuat:", error);
-
+        console.error('Footer gagal dimuat:', error);
     }
 }
 

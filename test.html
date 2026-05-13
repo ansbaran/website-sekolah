@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Navbar & Footer Loading</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/utilities.css">
+    <style>
+        body { background: #f5f7fa; }
+        .test-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .test-section { background: white; padding: 24px; margin: 20px 0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .test-section h2 { margin-top: 0; color: #2563eb; }
+        .test-item { padding: 12px; margin: 8px 0; background: #f9fafb; border-left: 4px solid #2563eb; border-radius: 4px; }
+        .test-item.ok { border-left-color: #22c55e; color: #15803d; }
+        .test-item.warning { border-left-color: #f59e0b; color: #92400e; }
+        .test-item.error { border-left-color: #ef4444; color: #7f1d1d; }
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="test-container">
+        <div class="test-section">
+            <h2>🧪 Test Page - Verifikasi Semua Komponen</h2>
+            
+            <div class="test-item ok">
+                ✓ Navbar container tersedia (div#navbar)
+            </div>
+            
+            <div class="test-item">
+                Status Navbar: <span id="navbar-status">Loading...</span>
+            </div>
+            
+            <div class="test-item">
+                Status Footer: <span id="footer-status">Loading...</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>📰 API Test - News Data</h2>
+            <div id="api-test">Loading...</div>
+        </div>
+
+        <div class="test-section">
+            <h2>🎨 CSS Test - Sidebar Styling</h2>
+            <div class="news-detail-sidebar__item" style="max-width: 300px;">
+                <div class="news-detail-sidebar__item-image">
+                    <img src="assets/img/berita1.jpeg" alt="Test">
+                </div>
+                <div style="padding: 12px;">
+                    <div class="news-detail-sidebar__item-title">Test Berita Title</div>
+                    <div class="news-detail-sidebar__item-date">15 Januari 2025</div>
+                    <div class="news-detail-sidebar__item-link">Baca Selengkapnya →</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/footer.js"></script>
+    
+    <script>
+        document.addEventListener('navbar:loaded', () => {
+            document.getElementById('navbar-status').innerHTML = '<span class="test-item ok">✓ Navbar dimuat berhasil</span>';
+        });
+
+        setTimeout(() => {
+            if (!document.querySelector('#navbar > *')) {
+                document.getElementById('navbar-status').innerHTML = '<span class="test-item error">✗ Navbar gagal dimuat</span>';
+            }
+        }, 3000);
+
+        setTimeout(() => {
+            if (!document.querySelector('#footer > *')) {
+                document.getElementById('footer-status').innerHTML = '<span class="test-item error">✗ Footer gagal dimuat</span>';
+            } else {
+                document.getElementById('footer-status').innerHTML = '<span class="test-item ok">✓ Footer dimuat berhasil</span>';
+            }
+        }, 3000);
+
+        // Test API
+        fetch('api/public-news.php?limit=3')
+            .then(r => r.json())
+            .then(data => {
+                const html = data.data.map(item => `
+                    <div class="test-item ok">
+                        📰 <strong>${item.title}</strong> 
+                        <br>Thumbnail: ${item.thumbnail ? '✓ OK' : '✗ NULL'}
+                    </div>
+                `).join('');
+                document.getElementById('api-test').innerHTML = html || '<div class="test-item error">❌ Tidak ada data</div>';
+            })
+            .catch(e => {
+                document.getElementById('api-test').innerHTML = '<div class="test-item error">❌ Error: ' + e.message + '</div>';
+            });
+
+        loadNavbar();
+    </script>
+</body>
+</html>

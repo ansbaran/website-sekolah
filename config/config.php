@@ -3,12 +3,32 @@ declare(strict_types=1);
 
 // General application config
 define('APP_NAME', 'SD Cahaya Harapan Admin');
-define('APP_ENV', getenv('APP_ENV') ?: 'production');
+
+$serverHost = $_SERVER['HTTP_HOST'] ?? '';
+$isLocalhost = preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/', $serverHost) === 1;
+$defaultEnv = getenv('APP_ENV') ?: ($isLocalhost ? 'development' : 'production');
+define('APP_ENV', $defaultEnv);
 define('APP_DEBUG', filter_var(getenv('APP_DEBUG') ?: '', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? (APP_ENV !== 'production'));
-define('APP_URL', '/admin');
-define('BASE_PATH', dirname(__DIR__));
+
+$documentRoot = realpath($_SERVER['DOCUMENT_ROOT'] ?? '') ?: '';
+$basePath = dirname(__DIR__);
+$basePathReal = realpath($basePath) ?: $basePath;
+$baseUrl = '/';
+if ($documentRoot && strpos($basePathReal, $documentRoot) === 0) {
+    $baseUrl = str_replace('\\', '/', substr($basePathReal, strlen($documentRoot)));
+    if ($baseUrl === '') {
+        $baseUrl = '/';
+    } elseif ($baseUrl[0] !== '/') {
+        $baseUrl = '/' . ltrim($baseUrl, '/');
+    }
+}
+
+define('BASE_PATH', $basePathReal);
+define('ROOT_PATH', BASE_PATH);
+define('BASE_URL', $baseUrl === '/' ? '' : rtrim($baseUrl, '/'));
+define('APP_URL', BASE_URL . '/admin');
 define('UPLOAD_BASE', BASE_PATH . '/uploads');
-define('UPLOAD_URL', '/uploads');
+define('UPLOAD_URL', BASE_URL . '/uploads');
 define('LOG_DIR', BASE_PATH . '/logs');
 define('ERROR_LOG_FILE', LOG_DIR . '/php-error.log');
 define('BACKUP_DIR', BASE_PATH . '/backups');
@@ -45,9 +65,12 @@ error_reporting(APP_DEBUG ? E_ALL : E_ALL & ~E_DEPRECATED & ~E_STRICT);
 
 // Database connection settings
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'school_admin');
-define('DB_USER', 'dbuser');
-define('DB_PASS', 'dbpass');
+define('DB_PORT', getenv('DB_PORT') ?: '3306');
+define('DB_FALLBACK_PORT', getenv('DB_FALLBACK_PORT') ?: '3307');
+define('DB_NAME', getenv('DB_NAME') ?: 'school_admin');
+define('DB_FALLBACK_NAME', getenv('DB_FALLBACK_NAME') ?: 'website_sekolah');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Session and auth configuration

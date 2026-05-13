@@ -102,7 +102,7 @@ function send_secure_headers(): void
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: geolocation=(), microphone=(), camera=()');
     header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
-    header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'self'; base-uri 'self';");
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://unpkg.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self'; frame-ancestors 'self'; base-uri 'self';");
 }
 
 function cache_file_path(string $key): string
@@ -793,11 +793,19 @@ function increment_news_views(int $id): void
 function get_related_news(int $newsId, int $limit = 3): array
 {
     global $pdo;
+    $newsData = $pdo->prepare('SELECT category FROM news WHERE id = :id LIMIT 1');
+    $newsData->execute(['id' => $newsId]);
+    $news = $newsData->fetch();
+    
+    if (!$news) {
+        return [];
+    }
+
     $stmt = $pdo->prepare(
-        'SELECT * FROM news WHERE id != :id AND category = (SELECT category FROM news WHERE id = :id) 
-         AND is_active = 1 ORDER BY published_at DESC LIMIT :limit'
+        'SELECT * FROM news WHERE id != :id AND category = :category AND is_active = 1 ORDER BY published_at DESC LIMIT :limit'
     );
     $stmt->bindValue(':id', $newsId, PDO::PARAM_INT);
+    $stmt->bindValue(':category', $news['category'], PDO::PARAM_STR);
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll() ?: [];

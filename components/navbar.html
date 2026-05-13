@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header" data-header>
 
     <div class="navbar">
 
@@ -22,7 +22,19 @@
         <!-- =========================
              NAVIGATION MENU
         ========================== -->
-        <ul class="nav-menu">
+        <button
+            class="navbar__toggle"
+            type="button"
+            aria-label="Buka menu navigasi"
+            aria-expanded="false"
+            data-nav-toggle
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-menu navbar__menu" data-nav-menu>
 
             <!-- BERANDA -->
             <li>

@@ -160,13 +160,14 @@
   transform: skewX(-20deg);
 }
 .hero__title::after {
-  animation: shineMove 3s infinite;
+  animation: none;
 }
 
 @keyframes shineMove {
   0% {
     left: -100%;
   }
+
   100% {
     left: 150%;
   }

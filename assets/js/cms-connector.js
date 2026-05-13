@@ -2,14 +2,23 @@
 // Fetches data from admin database without changing visual design
 
 class CMSConnector {
-    constructor(baseUrl = '/api/') {
+    constructor(baseUrl = 'api/') {
         this.baseUrl = baseUrl;
+        this.newsFallbackImage = 'assets/img/placeholder-news.jpg';
+
+        if (!this.baseUrl.endsWith('/')) {
+            this.baseUrl += '/';
+        }
     }
 
     async fetchData(endpoint, params = {}) {
         try {
-            const url = new URL(this.baseUrl + endpoint, window.location.origin);
-            Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+            const url = new URL(this.baseUrl + endpoint, window.location.href);
+            Object.keys(params).forEach(key => {
+                if (params[key] !== undefined && params[key] !== null) {
+                    url.searchParams.append(key, params[key]);
+                }
+            });
 
             const response = await fetch(url, {
                 method: 'GET',
@@ -30,41 +39,112 @@ class CMSConnector {
         }
     }
 
-    // Render news cards without changing existing structure
-    async renderNews(containerSelector, limit = 4) {
+    // Render news cards while preserving fallback cards when CMS data is incomplete.
+    async renderNews(containerSelector, limit = 4, gridSelector = null) {
         const container = document.querySelector(containerSelector);
-        if (!container) return;
+        if (!container) {
+            console.warn('[CMS] Container not found:', containerSelector);
+            return;
+        }
 
         const news = await this.fetchData('public-news.php', { limit });
 
         if (news.length === 0) {
-            // Fallback: keep existing placeholder or add safe placeholder
+            console.warn('[CMS] No news data returned from API');
             return;
         }
 
-        // Clear existing content but keep structure
-        const grid = container.querySelector('.news-grid-home');
-        if (!grid) return;
+        const grid = (gridSelector ? container.querySelector(gridSelector) : null) ||
+            container.querySelector('.news-grid-home') ||
+            container.querySelector('.news-grid') ||
+            container.querySelector('[class*="news-grid"]');
 
-        grid.innerHTML = '';
+        if (!grid) {
+            console.warn('[CMS] News grid not found in container. Tried selectors: .news-grid-home, .news-grid, [class*="news-grid"]');
+            console.log('[CMS] Container classes:', container.className);
+            return;
+        }
 
-        news.forEach(item => {
-            const card = document.createElement('article');
-            card.className = 'news-card';
+        const existingCards = Array.from(grid.querySelectorAll('.news-card'));
+        const shouldPreserveFallbackCards = existingCards.length > news.length;
+
+        if (!shouldPreserveFallbackCards) {
+            grid.innerHTML = '';
+        }
+
+        news.forEach((item, index) => {
+            const card = shouldPreserveFallbackCards
+                ? existingCards[index]
+                : document.createElement('article');
+            const isSmallCard = card.classList.contains('small');
+            card.className = isSmallCard ? 'news-card small' : 'news-card';
+
+            let detailUrl;
+            if (item.slug && item.slug.trim()) {
+                detailUrl = `berita-detail.php?slug=${encodeURIComponent(item.slug)}`;
+            } else {
+                detailUrl = `berita-detail.php?id=${encodeURIComponent(item.id)}`;
+            }
+
+            const thumbSrc = item.thumbnail || this.newsFallbackImage;
+            const title = this.escapeHtml(item.title || 'Berita Sekolah');
+            const excerpt = this.escapeHtml(item.excerpt || 'Informasi terbaru dari SD Cahaya Harapan Bekasi.');
 
             card.innerHTML = `
-                <div class="news-image">
-                    <img loading="lazy" src="${item.thumbnail || '/assets/img/placeholder-news.jpg'}" alt="${item.title}" onerror="this.src='/assets/img/placeholder-news.jpg'">
+                <div class="news-card__image news-image">
+                    <img loading="lazy" src="${thumbSrc}" alt="${title}" onerror="this.src='${this.newsFallbackImage}'">
                 </div>
-                <div class="news-content">
-                    <span class="news-date">${this.formatDate(item.published_at)}</span>
-                    <h4>${item.title}</h4>
-                    <p>${item.excerpt || 'Deskripsi berita...'}</p>
-                    <a href="berita.html">Baca Selengkapnya →</a>
+                <div class="news-card__content news-content">
+                    <span class="news-card__date news-date">${this.formatDate(item.published_at)}</span>
+                    <h4 class="news-card__title">${title}</h4>
+                    <p class="news-card__text">${excerpt}</p>
+                    <a href="${detailUrl}" class="news-card__button" aria-label="Baca berita ${title}">Baca Selengkapnya <span>&rarr;</span></a>
                 </div>
             `;
 
-            grid.appendChild(card);
+            if (!shouldPreserveFallbackCards) {
+                grid.appendChild(card);
+            }
+        });
+
+        grid.querySelectorAll('.news-card').forEach(card => {
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-duration', '720');
+            card.classList.add('aos-animate');
+        });
+
+        console.log('[CMS] News rendered:', news.length, 'cards');
+    }
+
+    enhanceNewsLinks() {
+        const cards = document.querySelectorAll('.news-card');
+        if (!cards.length) {
+            return;
+        }
+
+        console.log(`[CMS] News links initialized - enhancing ${cards.length} cards`);
+
+        cards.forEach((card, index) => {
+            const link = card.querySelector('.news-content a, .news-card__content a');
+            const slug = card?.dataset?.slug?.trim();
+            const id = card?.dataset?.id?.trim();
+            if (!link) {
+                return;
+            }
+
+            if (slug) {
+                link.href = `berita-detail.php?slug=${encodeURIComponent(slug)}`;
+                console.log('[CMS] Linked slug:', slug);
+                return;
+            }
+
+            if (id) {
+                link.href = `berita-detail.php?id=${encodeURIComponent(id)}`;
+                console.log('[CMS] Fallback to ID:', id);
+                return;
+            }
+
+            console.log('[CMS] Missing slug/id for news card', index + 1);
         });
     }
 
@@ -89,10 +169,10 @@ class CMSConnector {
             itemDiv.className = 'gallery-item';
 
             itemDiv.innerHTML = `
-                <img src="${item.image}" alt="${item.title}" loading="lazy" onerror="this.src='/assets/img/placeholder-news.jpg'">
+                <img src="${item.image}" alt="${this.escapeHtml(item.title)}" loading="lazy" onerror="this.src='${this.newsFallbackImage}'">
                 <div class="gallery-overlay">
-                    <h4>${item.title}</h4>
-                    <span>${item.category}</span>
+                    <h4>${this.escapeHtml(item.title)}</h4>
+                    <span>${this.escapeHtml(item.category)}</span>
                 </div>
             `;
 
@@ -116,15 +196,15 @@ class CMSConnector {
 
         sliderWrapper.innerHTML = '';
 
-        slides.forEach((slide, index) => {
+        slides.forEach((slide) => {
             const slideDiv = document.createElement('div');
             slideDiv.className = 'hero-slide';
             slideDiv.style.backgroundImage = `url(${slide.background})`;
 
             slideDiv.innerHTML = `
                 <div class="hero-content">
-                    <h1>${slide.title}</h1>
-                    ${slide.subtitle ? `<p>${slide.subtitle}</p>` : ''}
+                    <h1>${this.escapeHtml(slide.title)}</h1>
+                    ${slide.subtitle ? `<p>${this.escapeHtml(slide.subtitle)}</p>` : ''}
                     <a href="#ppdb" class="btn-primary">Daftar PPDB</a>
                 </div>
             `;
@@ -132,7 +212,6 @@ class CMSConnector {
             sliderWrapper.appendChild(slideDiv);
         });
 
-        // Reinitialize slider if exists
         if (typeof initSlider === 'function') {
             initSlider();
         }
@@ -157,7 +236,7 @@ class CMSConnector {
         announcements.forEach(item => {
             const li = document.createElement('li');
             li.innerHTML = `
-                <strong>${item.title}</strong> - ${item.content}
+                <strong>${this.escapeHtml(item.title)}</strong> - ${this.escapeHtml(item.content)}
                 <small>${this.formatDate(item.published_at)}</small>
             `;
             list.appendChild(li);
@@ -185,10 +264,10 @@ class CMSConnector {
             card.className = 'achievement-card';
 
             card.innerHTML = `
-                <img src="${item.image || '/assets/img/placeholder-achievement.jpg'}" alt="${item.title}" loading="lazy" onerror="this.src='/assets/img/placeholder-achievement.jpg'">
-                <h4>${item.title}</h4>
-                <span>${item.level}</span>
-                <p>${item.description || ''}</p>
+                <img src="${item.image || 'assets/img/placeholder-achievement.jpg'}" alt="${this.escapeHtml(item.title)}" loading="lazy" onerror="this.src='assets/img/placeholder-achievement.jpg'">
+                <h4>${this.escapeHtml(item.title)}</h4>
+                <span>${this.escapeHtml(item.level)}</span>
+                <p>${this.escapeHtml(item.description || '')}</p>
             `;
 
             grid.appendChild(card);
@@ -197,11 +276,25 @@ class CMSConnector {
 
     formatDate(dateString) {
         const date = new Date(dateString);
+        if (Number.isNaN(date.getTime())) {
+            return '';
+        }
+
         return date.toLocaleDateString('id-ID', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
         });
+    }
+
+    escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        })[char]);
     }
 }
 
@@ -211,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Homepage integrations
     if (document.querySelector('.news-grid-home')) {
-        cms.renderNews('.news-section-home', 4);
+        cms.renderNews('.news-section-home', 4, '.news-grid-home');
     }
 
     if (document.querySelector('.hero-slider')) {
@@ -220,8 +313,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Page-specific integrations
     if (window.location.pathname.includes('berita.html')) {
-        cms.renderNews('.news-section', 12);
+        cms.renderNews('.news-modern', 4, '.latest-news');
     }
+
+    cms.enhanceNewsLinks();
 
     if (window.location.pathname.includes('galeri.html')) {
         cms.renderGallery('.gallery-section', 20);

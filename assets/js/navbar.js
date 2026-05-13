@@ -1,27 +1,27 @@
 async function loadNavbar() {
-
-    const navbarContainer =
-        document.getElementById("navbar");
-
+    const navbarContainer = document.getElementById("navbar");
     if (!navbarContainer) return;
 
     try {
+        const baseUrl = window.location.pathname.includes('/website-sekolah/')
+            ? '/website-sekolah/'
+            : '/';
+        const response = await fetch(baseUrl + 'components/navbar.html', { cache: 'no-cache' });
 
-        const response =
-            await fetch("components/navbar.html");
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
 
-        const html =
-            await response.text();
-
+        const html = await response.text();
         navbarContainer.innerHTML = html;
-
         initNavbar();
-
+        document.dispatchEvent(new CustomEvent('navbar:loaded'));
     } catch (error) {
-
-        console.error("Navbar gagal dimuat:", error);
+        console.error('Navbar gagal dimuat:', error);
     }
 }
+
+loadNavbar();
 
 /* =========================
    ACTIVE MENU
@@ -109,9 +109,14 @@ function initMobileMenu() {
 
     toggle.addEventListener("click", () => {
 
-        menu.classList.toggle("active");
+        const isOpen =
+            menu.classList.toggle("navbar__menu--open");
 
-        toggle.classList.toggle("active");
+        menu.classList.toggle("active", isOpen);
+
+        toggle.classList.toggle("active", isOpen);
+
+        toggle.setAttribute("aria-expanded", String(isOpen));
     });
 }
 

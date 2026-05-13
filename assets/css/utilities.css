@@ -30,8 +30,9 @@
   display: inline-block;
   margin-left: 5px;
   color: var(--color-white);
-  animation: blink 1s infinite;
+  animation: none;
 }
+
 
 @keyframes blink {
   50% {

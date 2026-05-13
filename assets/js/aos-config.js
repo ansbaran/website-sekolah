@@ -15,7 +15,6 @@ const AOS_OPTIONS = {
 
 const ANIMATION_RULES = [
   { selector: ".hero, .prestasi-hero", animation: "zoom-out", duration: 1100, delay: 0 },
-  { selector: ".header", animation: "fade-down", duration: 650, delay: 0 },
   { selector: "main > section, body > section", animation: "fade-up", duration: 780, delay: 0 },
   { selector: ".section-heading, .simple-gallery-header, .news-heading, .team-heading, .history-heading", animation: "fade-up", duration: 720, delay: 0 },
   { selector: ".card, .news-card, .gallery-card, .simple-gallery-card, .activity-card, .leader-card, .stat-box", animation: "fade-up", duration: 720, stagger: 35 },
@@ -150,7 +149,7 @@ function observeDynamicContent() {
 
   const observer = new MutationObserver(() => {
     window.clearTimeout(refreshTimer);
-    refreshTimer = window.setTimeout(() => refreshAos({ hard: true }), 180);
+    refreshTimer = window.setTimeout(() => refreshAos({ hard: false }), 180);
   });
 
   observer.observe(document.body, {

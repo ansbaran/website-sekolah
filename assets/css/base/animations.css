@@ -1,0 +1,80 @@
+/* GLOBAL MOTION TOKENS */
+:root {
+  --motion-duration-fast: 520ms;
+  --motion-duration-base: 780ms;
+  --motion-duration-hero: 1100ms;
+  --motion-easing-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body.page-is-leaving {
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+[data-aos] {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.aos-init:not(.aos-animate) {
+  will-change: transform, opacity;
+}
+
+.aos-animate,
+.aos-fallback-visible {
+  will-change: auto;
+}
+
+.aos-init[data-aos][data-aos][data-aos-duration="1100"] {
+  transition-duration: var(--motion-duration-hero);
+}
+
+.aos-fallback [data-aos] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity var(--motion-duration-base) ease,
+    transform var(--motion-duration-base) var(--motion-easing-premium);
+}
+
+.aos-fallback [data-aos].aos-fallback-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.aos-fallback [data-aos="zoom-in"] {
+  transform: translateY(18px) scale(0.97);
+}
+
+.aos-fallback [data-aos="zoom-out"] {
+  transform: translateY(18px) scale(1.03);
+}
+
+.aos-fallback [data-aos="fade-left"] {
+  transform: translateX(28px);
+}
+
+.aos-fallback [data-aos="fade-right"] {
+  transform: translateX(-28px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body,
+  [data-aos],
+  .aos-fallback [data-aos],
+  .btn,
+  .primary-button,
+  .prestasi-highlight__btn,
+  .news-card__button,
+  .filter-btn {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

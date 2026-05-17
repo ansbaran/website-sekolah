@@ -5,6 +5,37 @@ export function initGalleryFilters() {
   if (!filterGroup || !items.length) return;
 
   const buttons = filterGroup.querySelectorAll("[data-filter]");
+  const activeClasses = [
+    "text-white",
+    "shadow-lg",
+    "shadow-[#0D0B61]/20",
+    "scale-[1.03]",
+    "-translate-y-0.5"
+  ];
+
+  const inactiveClasses = [
+    "text-slate-600",
+    "shadow-sm"
+  ];
+
+  function syncButtonState(activeButton) {
+    buttons.forEach((item) => {
+      const isActive = item === activeButton;
+
+      item.classList.toggle("active", isActive);
+      item.setAttribute("aria-pressed", String(isActive));
+
+      item.classList.toggle("bg-gradient-to-r", isActive);
+      item.classList.toggle("from-[#0D0B61]", isActive);
+      item.classList.toggle("to-[#478B8D]", isActive);
+      item.classList.toggle("border-transparent", isActive);
+
+      activeClasses.forEach((className) => item.classList.toggle(className, isActive));
+      inactiveClasses.forEach((className) => item.classList.toggle(className, !isActive));
+    });
+  }
+
+  syncButtonState(filterGroup.querySelector("[aria-pressed='true']") || buttons[0]);
 
   filterGroup.addEventListener("click", (event) => {
     const button = event.target.closest("[data-filter]");
@@ -13,10 +44,7 @@ export function initGalleryFilters() {
 
     const selectedFilter = button.dataset.filter;
 
-    buttons.forEach((item) => {
-      item.classList.toggle("active", item === button);
-      item.setAttribute("aria-pressed", String(item === button));
-    });
+    syncButtonState(button);
 
     items.forEach((item) => {
       const isVisible =

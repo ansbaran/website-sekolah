@@ -8,11 +8,7 @@ import "./navbar.js";
 import "./footer.js";
 
 import {
-  initHeaderState,
-  initMobileNavigation,
-  initDropdownHover,
   initHashSectionNavigation,
-  initActiveMenu,
   initReveal
 } from "./ui.js";
 
@@ -21,12 +17,6 @@ import { initCounter } from "./counter.js";
 function initApp() {
 
   initPageTransitions();
-
-  initHeaderState();
-
-  initMobileNavigation();
-
-  initDropdownHover();
 
   initHashSectionNavigation();
 
@@ -39,8 +29,6 @@ function initApp() {
   initReveal();
 
   initGalleryFilters();
-
-  initActiveMenu();
 
   initAosAnimations();
 }

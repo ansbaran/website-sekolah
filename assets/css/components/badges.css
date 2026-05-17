@@ -1,0 +1,147 @@
+/* Floating badges and section tags */
+.section-tag {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.about__badge {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-violet));
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  letter-spacing: 0;
+  margin-bottom: 24px;
+  box-shadow: 0 16px 35px rgba(37, 99, 235, 0.2);
+}
+
+.hero-badge-wrapper {
+  margin-bottom: 25px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+}
+
+.prestasi-badge {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  background: var(--color-white);
+  padding: 16px 24px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.prestasi-badge__icon {
+  background: #eef2ff;
+  color: var(--color-brand-purple);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.prestasi-badge__text strong {
+  display: block;
+  font-size: 15px;
+  color: var(--color-black);
+}
+
+.prestasi-badge__text span {
+  display: block;
+  font-size: 13px;
+  color: var(--color-gray-500);
+}
+
+.about__floating-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 10px 35px rgba(15,23,42,0.12), inset 0 1px 0 rgba(255,255,255,0.5);
+  color: #1e3a8a;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  z-index: 5;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  animation: floatingBadge 4s ease-in-out infinite;
+}
+
+.about__floating-badge::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-secondary), #4ade80);
+  box-shadow: 0 0 12px rgba(34,197,94,0.7), 0 0 24px rgba(34,197,94,0.35);
+}
+
+.about__floating-badge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent);
+  transform: skewX(-20deg);
+  animation: badgeShine 5s infinite;
+}
+
+.about__floating-badge:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 20px 45px rgba(15,23,42,0.18), inset 0 1px 0 rgba(255,255,255,0.55);
+}
+
+.about__floating-badge--top {
+  top: -18px;
+  left: 40px;
+}
+
+.about__floating-badge--bottom {
+  bottom: -15px;
+  right: 36px;
+}
+
+@keyframes floatingBadge {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes badgeShine {
+  0% { left: -120%; }
+  100% { left: 140%; }
+}

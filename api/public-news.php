@@ -34,14 +34,29 @@ try {
         $thumbnailUrl = null;
 
         if ($thumbnail) {
-            // First try to find file in uploads/news/
-            $thumbnailPath = UPLOAD_BASE . '/news/' . ltrim($thumbnail, '/');
-            if (is_file($thumbnailPath)) {
+            $thumbnail = normalize_legacy_asset_path((string) $thumbnail);
+            $thumbnail = ltrim($thumbnail, '/');
+
+            if (strpos($thumbnail, 'assets/') === 0) {
                 $thumbnailUrl = build_upload_url('news', $thumbnail);
-            } 
-            // If not found and thumbnail starts with assets/, use it directly
-            else if (strpos($thumbnail, 'assets/') === 0) {
-                $thumbnailUrl = '/' . ltrim($thumbnail, '/');
+            } elseif (strpos($thumbnail, 'uploads/') === 0) {
+                $thumbnailUrl = build_upload_url('news', $thumbnail);
+            } else {
+                // Security: prevent path traversal — allow filename only
+                $safeFilename = basename($thumbnail);
+
+                // Validate extension (whitelist)
+                $ext = strtolower(pathinfo($safeFilename, PATHINFO_EXTENSION));
+                if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'], true)) {
+                    $safeFilename = ''; // reject invalid extension
+                }
+
+                if ($safeFilename !== '') {
+                    $thumbnailPath = UPLOAD_BASE . '/news/' . $safeFilename;
+                    if (is_file($thumbnailPath)) {
+                        $thumbnailUrl = build_upload_url('news', $safeFilename);
+                    }
+                }
             }
         }
         

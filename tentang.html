@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="id">
   <head>
+    <base href="/website-sekolah/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
@@ -8,64 +9,99 @@
       content="Tentang SD Cahaya Harapan Bekasi, profil sekolah, visi, dan misi pendidikan."
     >
     <title>Tentang - SD Cahaya Harapan Bekasi</title>
+    <script>
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { sans: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"] }, colors: { school: { navy: "#0D0B61", blue: "#294669", teal: "#478B8D", gold: "#E4D329" } } } } };
+    </script>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
+  <body class="bg-slate-50 font-sans text-slate-700 antialiased">
     <div id="navbar"></div>
-    <main>
-<section class="section section--default section--divider principal reveal" id="profil">
-  <div class="container principal__wrapper">
+    <main class="overflow-hidden">
+<section class="section section--default section--divider principal reveal px-4 pb-16 pt-28 sm:px-6 lg:pb-24 lg:pt-32" id="profil">
+  <div class="container principal__wrapper mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-14">
 
-    <!-- LEFT CONTENT -->
-    <div class="principal__content">
-
-      <span class="principal__badge">
+    <div class="principal__content rounded-[2rem] border border-white/80 bg-white/78 p-6 shadow-[0_28px_90px_rgba(13,11,97,0.10)] backdrop-blur-xl sm:p-8 lg:p-10">
+      <span class="principal__badge inline-flex items-center gap-2 rounded-full border border-[#478B8D]/20 bg-[#478B8D]/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-[#0D0B61]">
+        <span class="h-2 w-2 rounded-full bg-[#E4D329]"></span>
         Sambutan Kepala Sekolah
       </span>
 
-      <h2 class="principal__title">
-        Membangun Generasi Cerdas,
-        Berkarakter, dan Siap Masa Depan
+      <h2 class="principal__title mt-6 max-w-3xl text-3xl font-black leading-tight tracking-tight text-[#0D0B61] sm:text-4xl lg:text-5xl">
+        Iman Kuat, Karakter Hebat, Prestasi Bermartabat
       </h2>
 
-      <p class="principal__text">
-        Selamat datang di SD Cahaya Harapan Bekasi, sebuah lembaga pendidikan Katolik 
-        yang berlandaskan kasih, iman, dan nilai-nilai luhur Pancasila. 
-        Kami meyakini bahwa setiap anak adalah pribadi istimewa, ciptaan Tuhan yang memiliki 
-        talenta dan potensi untuk berkembang menjadi generasi yang cerdas, berkarakter, 
-        serta mampu membawa terang bagi sesama.
-      </p>
+      <div class="mt-7 space-y-5 text-base leading-8 text-[#294669]">
+        <p class="principal__text">
+          Dengan penuh syukur kepada Tuhan Yang Maha Kasih, 
+          kami menyambut seluruh peserta didik, orang tua, 
+          dan masyarakat di SD Cahaya Harapan Bekasi sebagai lingkungan pendidikan Katolik
+          yang berkomitmen membentuk generasi beriman, berkarakter, dan berprestasi.
+        </p>
 
-      <p class="principal__text">
-        Dengan semangat pelayanan dan pendidikan yang humanis,
-        SD Cahaya Harapan Bekasi berkomitmen menghadirkan pembelajaran yang berkualitas, inovatif, dan penuh makna
-        dalam suasana yang aman, disiplin, serta penuh kasih. Kami tidak hanya membentuk peserta didik yang unggul secara akademik,
-        etapi juga menanamkan nilai-nilai iman, kejujuran, tanggung jawab, toleransi, dan kepedulian sosial
-        sebagai wujud nyata pengamalan ajaran Kristiani dan semangat kebhinekaan Indonesia.
-      </p>
-            <p class="principal__text">
-        Dengan semangat pelayanan dan pendidikan yang humanis,
-        SD Cahaya Harapan Bekasi berkomitmen menghadirkan pembelajaran yang berkualitas, inovatif, dan penuh makna
-        dalam suasana yang aman, disiplin, serta penuh kasih. Kami tidak hanya membentuk peserta didik yang unggul secara akademik,
-        etapi juga menanamkan nilai-nilai iman, kejujuran, tanggung jawab, toleransi, dan kepedulian sosial
-        sebagai wujud nyata pengamalan ajaran Kristiani dan semangat kebhinekaan Indonesia.
-      </p>Bersama keluarga dan seluruh warga sekolah, kami terus melangkah membangun generasi
-         masa depan yang berintegritas, berdaya saing, dan mampu menjadi pribadi yang mengasihi Tuhan, sesama, serta tanah air.
+        <p class="principal__text">
+          Sebagai sekolah Katolik, kami percaya bahwa pendidikan bukan hanya tentang pencapaian akademik,
+          tetapi juga tentang pembentukan pribadi yang utuh melalui nilai iman, kasih, dan pelayanan.
+          Oleh karena itu, SD Cahaya Harapan Bekasi terus berupaya menjadi sekolah yang unggul
+          dalam iman dan karakter melalui pembelajaran mendalam yang berlandaskan nilai-nilai Pancasila.
+        </p>
+
+        <p class="principal__text">
+          Kami mendorong setiap peserta didik untuk bertumbuh menjadi pribadi yang memiliki semangat kasih, tanggung jawab, disiplin,
+          serta kepedulian terhadap sesama.Melalui pembelajaran yang bermakna dan mendalam, kami juga berkomitmen
+          mewujudkan Profil Pelajar Pancasila sekaligus meningkatkan kualitas hasil belajar melalui penguatan literasi dan numerasi.
+        </p>
+
+        <p class="principal__text">
+          Selain kegiatan akademik, sekolah menyediakan berbagai kegiatan ekstrakurikuler dan pengembangan diri sebagai wadah
+          untuk menggali potensi, bakat, kreativitas, dan kepercayaan diri peserta didik. Kami percaya bahwa setiap anak memiliki 
+          talenta istimewa yang perlu didukung dan dikembangkan secara optimal.           
+        </p>
+
+        <p class="principal__text">
+          Kami juga menyadari bahwa keberhasilan pendidikan membutuhkan kerja sama yang harmonis antara sekolah, orang tua, dan masyarakat.
+          Karena itu, kami terus membangun kemitraan yang kolaboratif dan solutif demi menciptakan lingkungan belajar yang aman, nyaman, positif, dan penuh semangat kasih.         
+        </p>
+        <p class="principal__text">
+          Kiranya melalui semangat “Iman, Ilmu, dan Kasih”, SD Cahaya Harapan Bekasi dapat terus menjadi tempat bertumbuhnya
+          generasi yang cerdas, berintegritas, serta menjadi terang dan harapan bagi sesama.
+          Tuhan memberkati.
+        </p>
+
+      </div>
+
+      <div class="mt-8 grid gap-3 sm:grid-cols-3">
+        <div class="rounded-2xl border border-[#478B8D]/15 bg-white/70 p-4">
+          <span class="block text-2xl font-black text-[#0D0B61]">Iman</span>
+          <p class="mt-1 text-xs font-semibold leading-5 text-[#294669]">Bertumbuh dalam terang Kristus</p>
+        </div>
+        <div class="rounded-2xl border border-[#478B8D]/15 bg-white/70 p-4">
+          <span class="block text-2xl font-black text-[#0D0B61]">Ilmu</span>
+          <p class="mt-1 text-xs font-semibold leading-5 text-[#294669]">Belajar dengan hikmat dan kreativitas</p>
+        </div>
+        <div class="rounded-2xl border border-[#478B8D]/15 bg-white/70 p-4">
+          <span class="block text-2xl font-black text-[#0D0B61]">Kasih</span>
+          <p class="mt-1 text-xs font-semibold leading-5 text-[#294669]">Hidup dalam kepedulian dan persaudaraan</p>
+        </div>
+      </div>
     </div>
 
-    <!-- RIGHT IMAGE -->
-<div class="principal__image">
+    <div class="principal__image relative mx-auto w-full max-w-xl lg:max-w-none">
+      <div class="absolute -left-5 top-10 hidden h-28 w-28 rounded-full bg-[#E4D329]/25 blur-2xl sm:block"></div>
+      <div class="absolute -right-4 bottom-16 hidden h-36 w-36 rounded-full bg-[#478B8D]/25 blur-3xl sm:block"></div>
 
-  <img src="assets/img/kepsek.jpg" alt="Kepala Sekolah">
+      <div class="relative overflow-hidden rounded-[2rem] border border-white/80 bg-white/75 p-3 shadow-[0_30px_90px_rgba(13,11,97,0.18)] backdrop-blur-xl">
+        <img src="assets/img/tim-kep/kepsek.jpg?v=1" alt="Kepala Sekolah" class="aspect-[4/5] w-full rounded-[1.45rem] object-cover object-center">
 
-<div class="principal__identity">
-  <span>Kepala Sekolah</span>
-  <strong>Paulus Ngabur, S.Pd</strong>
-</div>
-
-</div>
+        <div class="principal__identity absolute bottom-5 left-5 right-5 rounded-[1.35rem] border border-white/60 bg-white/80 p-4 shadow-xl backdrop-blur-xl">
+          <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-[#478B8D]">Kepala Sekolah</span>
+          <strong class="mt-1 block text-lg font-black text-[#0D0B61]">Paulus Ngabur, S.Pd</strong>
+        </div>
+      </div>
+    </div>
 
   </div>
 </section>
@@ -361,7 +397,7 @@
             <article class="leader-card leader-blue">
 
                 <div class="leader-image">
-                    <img src="assets/img/kepsek.jpg" alt="Paulus Ngabur">
+                    <img src="assets/img/tim-kep/kepsek.jpg?v=1" alt="Paulus Ngabur" loading="lazy">
                 </div>
 
                 <div class="leader-content">
@@ -400,7 +436,7 @@
             <article class="leader-card leader-pink">
 
                 <div class="leader-image">
-                    <img src="assets/img/wakakur.JPG" alt="Richa Mentari">
+                    <img src="assets/img/tim-kep/wakakur.jpg?v=1" alt="Richa Mentari" loading="lazy">
                 </div>
 
                 <div class="leader-content">
@@ -439,7 +475,7 @@
             <article class="leader-card leader-green">
 
                 <div class="leader-image">
-                    <img src="assets/img/wakasek.JPG" alt="Yuliana Yatimah">
+                    <img src="assets/img/tim-kep/wakasek.jpg?v=1" alt="Yuliana Yatimah" loading="lazy">
                 </div>
 
                 <div class="leader-content">

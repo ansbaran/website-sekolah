@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="id">
   <head>
+    <base href="/website-sekolah/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
@@ -8,427 +9,345 @@
       content="Website profil SD Cahaya Harapan Bekasi dengan informasi program, fasilitas, berita, aktivitas, dan kontak sekolah."
     >
     <title>SD Cahaya Harapan Bekasi</title>
+    <script>
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"]
+            },
+              colors: {
+                school: {
+                  navy: "#0D0B61",
+                  blue: "#294669",
+                  teal: "#478B8D",
+                  gold: "#E4D329"
+                }
+              }
+          }
+        }
+      };
+    </script>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
+  <body class="bg-slate-50 font-sans text-slate-700 antialiased">
     <div id="navbar"></div>
-    <main>
-        <section class="hero" id="hero" aria-labelledby="hero-title">
-              <button class="hero__nav hero__nav--prev" type="button">&#10094;</button>
-              <button class="hero__nav hero__nav--next" type="button">&#10095;</button>
 
-              <div class="hero__slider">
-                <div class="hero__slide hero__slide--active" data-slide></div> 
-                <div class="hero__slide" data-slide></div>                     
-                <div class="hero__slide" data-slide></div>                     
-                <div class="hero__slide" data-slide></div>  
-                <div class="hero__slide" data-slide></div>
-              </div>
+    <main class="overflow-hidden">
+      <section class="hero relative isolate flex min-h-[760px] items-center overflow-hidden bg-slate-950 px-4 pt-28 text-white sm:px-6 lg:min-h-[820px]" id="hero" aria-labelledby="hero-title">
+        <button class="hero__nav hero__nav--prev !left-4 !z-20 !grid !h-11 !w-11 !place-items-center !rounded-full !border !border-white/25 !bg-white/10 !text-white !backdrop-blur-md !transition hover:!scale-105 hover:!bg-white/25 sm:!left-8" type="button" aria-label="Slide sebelumnya">&#10094;</button>
+        <button class="hero__nav hero__nav--next !right-4 !z-20 !grid !h-11 !w-11 !place-items-center !rounded-full !border !border-white/25 !bg-white/10 !text-white !backdrop-blur-md !transition hover:!scale-105 hover:!bg-white/25 sm:!right-8" type="button" aria-label="Slide berikutnya">&#10095;</button>
 
-              <div class="hero__overlay"></div>
+        <div class="hero__slider">
+          <div class="hero__slide hero__slide--active" data-slide></div>
+          <div class="hero__slide" data-slide></div>
+          <div class="hero__slide" data-slide></div>
+          <div class="hero__slide" data-slide></div>
+          <div class="hero__slide" data-slide></div>
+        </div>
 
-              <div class="hero__content container">
-                
-                <h1 class="hero__title" id="hero-title">
-                  <span data-typing="SD CAHAYA HARAPAN BEKASI"></span>
-                  <span class="cursor">|</span>
-                </h1>
+        <div class="hero__overlay bg-[linear-gradient(135deg,rgba(15,23,42,0.84),rgba(30,64,175,0.56),rgba(15,23,42,0.78))]"></div>
 
-                <p class="hero__text">
-                  Lingkungan belajar yang aman, modern, dan terarah untuk membantu
-                  siswa berkembang secara akademik, sosial, dan karakter.
-                </p>
+        <div class="hero__content container relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center">
+          <p class="mb-5 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-blue-100 shadow-lg backdrop-blur-md">
+            Sekolah Dasar Modern Bekasi
+          </p>
 
-                <!-- ✅ FIXED STATS -->
-                <div class="hero__stats">
+          <h1 class="hero__title max-w-5xl text-balance text-4xl font-black leading-tight tracking-tight text-white drop-shadow-2xl sm:text-6xl lg:text-7xl" id="hero-title">
+            <span data-typing="SD CAHAYA HARAPAN BEKASI"></span>
+            <span class="cursor">|</span>
+          </h1>
 
-                  <div class="hero__stat">
-                    <div class="hero__stat-icon">👥</div>
-                    <div class="hero__stat-number" data-target="800">0</div>
-                    <div class="hero__stat-label">Siswa Aktif</div>
-                  </div>
+          <p class="hero__text mt-6 max-w-3xl text-base leading-8 text-blue-50/90 sm:text-lg">
+            Lingkungan belajar yang aman, modern, dan terarah untuk membantu siswa berkembang secara akademik, sosial, dan karakter.
+          </p>
 
-                  <div class="hero__stat">
-                    <div class="hero__stat-icon">🏅</div>
-                    <div class="hero__stat-number" data-target="50">0</div>
-                    <div class="hero__stat-label">Prestasi Tahun Ini</div>
-                  </div>
+          <div class="hero__stats mt-12 grid w-full max-w-4xl grid-cols-1 gap-4 sm:grid-cols-3">
+            <div class="hero__stat rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl shadow-blue-950/20 backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15">
+              <div class="hero__stat-icon text-2xl"><i class="fa-solid fa-users"></i></div>
+              <div class="hero__stat-number mt-2 text-4xl font-black" data-target="500">0</div>
+              <div class="hero__stat-label mt-1 text-sm font-semibold text-blue-100">Siswa Aktif</div>
+            </div>
+            <div class="hero__stat rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl shadow-blue-950/20 backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15">
+              <div class="hero__stat-icon text-2xl"><i class="fa-solid fa-trophy"></i></div>
+              <div class="hero__stat-number mt-2 text-4xl font-black" data-target="50">0</div>
+              <div class="hero__stat-label mt-1 text-sm font-semibold text-blue-100">Prestasi Tahun Ini</div>
+            </div>
+            <div class="hero__stat rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl shadow-blue-950/20 backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15">
+              <div class="hero__stat-icon text-2xl"><i class="fa-solid fa-book-open-reader"></i></div>
+              <div class="hero__stat-number mt-2 text-4xl font-black" data-target="25">0</div>
+              <div class="hero__stat-label mt-1 text-sm font-semibold text-blue-100">Tenaga Pendidik</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                  <div class="hero__stat">
-                    <div class="hero__stat-icon">📘</div>
-                    <div class="hero__stat-number" data-target="25">0</div>
-                    <div class="hero__stat-label">Ekstrakurikuler</div>
-                  </div>
-
-                </div>
-
-              </div>
-            </section>
-
-      <section class="section section--default section--divider about reveal" id="profil">
-        <div class="container about__wrapper">
+      <section class="section section--default section--divider about reveal bg-white py-20 lg:py-28" id="profil">
+        <div class="container about__wrapper mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div class="about__content">
-            <span class="about__badge">Tentang Sekolah</span>
-            <h2 class="about__title">SD Cahaya Harapan Bekasi</h2>
-            <p class="about__text">
-              SD Cahaya Harapan Bekasi adalah sekolah Katolik yang membentuk
-              generasi beriman, berkarakter, dan berprestasi melalui pendidikan 
-              berkualitas yang berlandaskan nilai kasih, disiplin, dan pelayanan.
-              Dengan lingkungan belajar yang aman dan penuh perhatian, siswa didorong
-              untuk bertumbuh menjadi pribadi yang cerdas, mandiri 
-              serta memiliki semangat Kristiani dalam kehidupan sehari-hari.
+            <span class="about__badge inline-flex rounded-full bg-blue-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">Tentang Sekolah</span>
+            <h2 class="about__title mt-5 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">SD Cahaya Harapan Bekasi</h2>
+            <p class="about__text mt-5 text-base leading-8 text-slate-600">
+              SD Cahaya Harapan Bekasi adalah sekolah Katolik yang membentuk generasi beriman, berkarakter, dan berprestasi melalui pendidikan berkualitas yang berlandaskan nilai kasih, disiplin, dan pelayanan. Dengan lingkungan belajar yang aman dan penuh perhatian, siswa didorong untuk bertumbuh menjadi pribadi yang cerdas, mandiri, serta memiliki semangat Kristiani dalam kehidupan sehari-hari.
             </p>
 
-            <div class="about__stats reveal-stagger">
-              <div class="about__card blue">
-                <div class="icon" aria-hidden="true">&#127941;</div>
-                <h3>A</h3>
-                <p>Akreditasi</p>
+            <div class="about__stats reveal-stagger mt-8 grid gap-4 sm:grid-cols-3">
+              <div class="about__card blue rounded-3xl border border-blue-100 bg-white p-6 shadow-xl shadow-slate-200/60 transition hover:-translate-y-1 hover:shadow-2xl">
+                <div class="icon text-2xl text-blue-700" aria-hidden="true"><i class="fa-solid fa-award"></i></div>
+                <h3 class="mt-3 text-3xl font-black text-slate-950">A</h3>
+                <p class="text-sm font-bold text-slate-500">Akreditasi</p>
               </div>
-                <div class="about__card green">
-                  <div class="icon">&#128101;</div>
-                  <h3 class="counter" data-target="500">0</h3>
-                  <p>Siswa Aktif</p>
-                </div>
-              <div class="about__card purple">
-                <div class="icon" aria-hidden="true">&#128214;</div>
-                <h3 class="counter" data-target="15">0</h3>
-                <p>Program Unggulan</p>
+              <div class="about__card green rounded-3xl border border-emerald-100 bg-white p-6 shadow-xl shadow-slate-200/60 transition hover:-translate-y-1 hover:shadow-2xl">
+                <div class="icon text-2xl text-emerald-600"><i class="fa-solid fa-user-group"></i></div>
+                <h3 class="counter mt-3 text-3xl font-black text-slate-950" data-target="500">0</h3>
+                <p class="text-sm font-bold text-slate-500">Siswa Aktif</p>
+              </div>
+              <div class="about__card purple rounded-3xl border border-indigo-100 bg-white p-6 shadow-xl shadow-slate-200/60 transition hover:-translate-y-1 hover:shadow-2xl">
+                <div class="icon text-2xl text-indigo-600" aria-hidden="true"><i class="fa-solid fa-book"></i></div>
+                <h3 class="counter mt-3 text-3xl font-black text-slate-950" data-target="15">0</h3>
+                <p class="text-sm font-bold text-slate-500">Program Unggulan</p>
               </div>
             </div>
 
-            <a href="tentang.html" class="primary-button">
+            <a href="tentang.html" class="primary-button mt-8 inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-6 py-4 text-sm font-extrabold text-white shadow-xl shadow-slate-900/20 transition hover:-translate-y-1 hover:bg-blue-700">
               Lihat Tentang Sekolah
-              <span>→</span>
+              <span>&rarr;</span>
             </a>
           </div>
-          <div class="about__image">
-            <span class="about__floating-badge about__floating-badge--top">Sekolah Katholik</span>
-            <img src="assets/img/sekolah.jpg" alt="Gedung SD Cahaya Harapan Bekasi">
-            <span class="about__floating-badge about__floating-badge--bottom"> Berkarakter</span>
+
+          <div class="about__image relative">
+            <span class="about__floating-badge about__floating-badge--top absolute left-5 top-5 z-10 rounded-full bg-white/85 px-4 py-2 text-xs font-extrabold text-slate-900 shadow-xl backdrop-blur">Sekolah Katolik</span>
+            <img src="assets/img/sekolah.jpg" alt="Gedung SD Cahaya Harapan Bekasi" class="aspect-[4/3] w-full rounded-[2rem] object-cover shadow-2xl shadow-slate-300/60">
+            <span class="about__floating-badge about__floating-badge--bottom absolute bottom-5 right-5 z-10 rounded-full bg-blue-700/90 px-4 py-2 text-xs font-extrabold text-white shadow-xl backdrop-blur">Berkarakter</span>
           </div>
         </div>
       </section>
 
-      <section id="berita" class="section section--alt section--divider news-section-home">
-        <div class="container">
-          <div class="section-heading section-heading--center">
-            <p class="eyebrow">Berita</p>
-            <h2 class="section-title"> Kegiatan dan Informasi Terbaru Sekolah</h2>
+      <section id="berita" class="section section--alt section--divider news-section-home bg-slate-50 py-20 lg:py-28">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6">
+          <div class="section-heading section-heading--center mx-auto mb-12 max-w-3xl text-center">
+            <p class="eyebrow text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-600">Berita</p>
+            <h2 class="section-title mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">Kegiatan dan Informasi Terbaru Sekolah</h2>
           </div>
 
-          <div class="news-grid-home"> 
-            
-            <article class="news-card">
-              <div class="news-card__image">
-                <img src="assets/img/sekolah.jpg" alt="Belajar Interaktif">
+          <div class="news-grid-home grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <article class="news-card group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl">
+              <div class="news-card__image aspect-[16/10] overflow-hidden">
+                <img src="assets/img/sekolah.jpg" alt="Belajar Interaktif" class="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
               </div>
-              <div class="news-card__content">
-                <span class="news-card__date">
-                  12 Mei 2026
-                </span>
-                <h3>
-                  Belajar Interaktif di Kelas
-                </h3>
-                <p>
-                  Siswa mengikuti pembelajaran aktif dengan
-                  metode diskusi dan praktik langsung.
-                </p>
-                <a href="berita.html" class="news-card__button">
-                  Lihat Berita
-                  <span>→</span>
-                </a>
+              <div class="news-card__content flex min-h-[260px] flex-col p-6">
+                <span class="news-card__date text-sm font-bold text-slate-400">12 Mei 2026</span>
+                <h3 class="mt-3 text-lg font-extrabold leading-snug text-slate-950">Belajar Interaktif di Kelas</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-600">Siswa mengikuti pembelajaran aktif dengan metode diskusi dan praktik langsung.</p>
+                <a href="berita.html" class="news-card__button mt-auto inline-flex items-center gap-2 rounded-2xl bg-blue-700 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-slate-950">Lihat Berita <span>&rarr;</span></a>
               </div>
             </article>
 
-            <article class="news-card">
-              <div class="news-card__image">
-                <img src="assets/img/sekolah2.JPG" alt="Pramuka">
+            <article class="news-card group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl">
+              <div class="news-card__image aspect-[16/10] overflow-hidden">
+                <img src="assets/img/sekolah2.jpg" alt="Pramuka" class="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
               </div>
-              <div class="news-card__content">
-                <span class="news-card__date">
-                  5 Mei 2026
-                </span>
-                <h3>
-                  Kegiatan Pramuka Aktif
-                </h3>
-                <p>
-                  Pramuka melatih kemandirian,
-                  kerja sama, dan kepemimpinan siswa serta
-                  Nilai Pancasila.
-                </p>
-                <a href="berita.html" class="news-card__button">
-                  Lihat Berita
-                  <span>→</span>
-                </a>
+              <div class="news-card__content flex min-h-[260px] flex-col p-6">
+                <span class="news-card__date text-sm font-bold text-slate-400">5 Mei 2026</span>
+                <h3 class="mt-3 text-lg font-extrabold leading-snug text-slate-950">Kegiatan Pramuka Aktif</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-600">Pramuka melatih kemandirian, kerja sama, kepemimpinan siswa, dan nilai Pancasila.</p>
+                <a href="berita.html" class="news-card__button mt-auto inline-flex items-center gap-2 rounded-2xl bg-blue-700 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-slate-950">Lihat Berita <span>&rarr;</span></a>
               </div>
             </article>
 
-            <article class="news-card">
-              <div class="news-card__image">
-                <img src="assets/img/sekolah3.jpg" alt="Prestasi Akademik">
+            <article class="news-card group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl">
+              <div class="news-card__image aspect-[16/10] overflow-hidden">
+                <img src="assets/img/sekolah3.jpg" alt="Prestasi Akademik" class="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
               </div>
-              <div class="news-card__content">
-                <span class="news-card__date">
-                  28 April 2026
-                </span>
-                <h3>
-                  Prestasi Siswa di Kompetisi Akademik
-                </h3>
-                <p>
-                  Siswa meraih penghargaan dalam
-                  kompetisi akademik tingkat kota.
-                </p>
-                <a href="berita.html" class="news-card__button">
-                  Lihat Berita
-                  <span>→</span>
-                </a>
+              <div class="news-card__content flex min-h-[260px] flex-col p-6">
+                <span class="news-card__date text-sm font-bold text-slate-400">28 April 2026</span>
+                <h3 class="mt-3 text-lg font-extrabold leading-snug text-slate-950">Prestasi Siswa di Kompetisi Akademik</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-600">Siswa meraih penghargaan dalam kompetisi akademik tingkat kota.</p>
+                <a href="berita.html" class="news-card__button mt-auto inline-flex items-center gap-2 rounded-2xl bg-blue-700 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-slate-950">Lihat Berita <span>&rarr;</span></a>
               </div>
             </article>
 
-            <article class="news-card">
-              <div class="news-card__image">
-                <img src="assets/img/sekolah3.jpg" alt="Prestasi Akademik">
+            <article class="news-card group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl">
+              <div class="news-card__image aspect-[16/10] overflow-hidden">
+                <img src="assets/img/sekolah4.jpeg" alt="Lingkungan Sekolah" class="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
               </div>
-              <div class="news-card__content">
-                <span class="news-card__date">
-                  28 April 2026
-                </span>
-                <h3>
-                  Prestasi Siswa di Kompetisi Akademik
-                </h3>
-                <p>
-                  Siswa meraih penghargaan dalam
-                  kompetisi akademik tingkat kota.
-                </p>
-                <a href="berita.html" class="news-card__button">
-                  Lihat Berita
-                  <span>→</span>
-                </a>
+              <div class="news-card__content flex min-h-[260px] flex-col p-6">
+                <span class="news-card__date text-sm font-bold text-slate-400">20 April 2026</span>
+                <h3 class="mt-3 text-lg font-extrabold leading-snug text-slate-950">Lingkungan Sekolah yang Nyaman</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-600">Ruang belajar dirancang bersih, aman, dan mendukung pengalaman belajar anak.</p>
+                <a href="berita.html" class="news-card__button mt-auto inline-flex items-center gap-2 rounded-2xl bg-blue-700 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-slate-950">Lihat Berita <span>&rarr;</span></a>
               </div>
             </article>
-            
-          </div> </div>
+          </div>
+        </div>
       </section>
 
-      <section id="prestasi-home" class="section section--divider">
-  <div class="container">
-    
-    <div class="prestasi-highlight">
-      
-      <div class="prestasi-highlight__content">
-        <h2 class="section-title">Prestasi, Program Unggulan & Aktivitas Sekolah</h2>
-        <p class="prestasi-highlight__desc">
-          Dedikasi, kerja keras, dan bimbingan maksimal telah mengantarkan siswa-siswi kami meraih berbagai penghargaan bergengsi di tingkat kota, nasional, hingga internasional. Temukan deretan prestasi membanggakan yang menjadi bukti nyata kualitas pendidikan kami.
-        </p>
-        <a href="prestasi.html" class="prestasi-highlight__btn">
-          Lihat Detail Prestasi <span>→</span>
-        </a>
-      </div>
-
-      <div class="prestasi-highlight__image-wrapper">
-        <img src="assets/img/prestasi-utama.png" alt="Highlight Prestasi Sekolah">
-        
-        <div class="prestasi-badge">
-          <span class="prestasi-badge__icon">🏆</span>
-          <div class="prestasi-badge__text">
-            <strong>Berbagai Penghargaan</strong>
-            <span>Tingkat Nasional & Provinsi</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-      <section class="section section--alt section--divider media-section">
-  <div class="container">
-
-    <div class="section-heading section-heading--center">
-      <p class="eyebrow">Media</p>
-      <h2 class="section-title">Kabar & Aktivitas Terbaru Sekolah</h2>
-    </div>
-
-    <div class="media-cta">
-<a href="https://www.instagram.com/sdcahayaharapanbekasi?igsh=MXVxbGd0OW81emh3aw==" target="_blank" class="btn btn--gradient">
-  Kunjungi Instagram →
-</a>
-    </div>
-
-<div class="media-grid">
-
-  <div class="media-item">
-    <a href="https://www.instagram.com/p/DQk2uNMAXen/" target="_blank" class="media-card">
-      <img src="assets/img/instagram/ppdb.png" alt="PPDB SD Cahaya Harapan Bekasi">
-      
-      <div class="media-overlay">
-        <span>
-          <i class="fa-brands fa-instagram"></i> Lihat Postingan
-        </span>
-      </div>
-    </a>
-
-    <div class="media-caption">
-      PPDB SD Cahaya Harapan Bekasi 2026
-    </div>
-  </div>
-
-  <div class="media-item">
-    <a href="https://www.instagram.com/p/DXndKfSE4nZ/" target="_blank" class="media-card">
-      <img src="assets/img/instagram/siaga.png" alt="Permainan Besar Siaga">
-      
-      <div class="media-overlay">
-        <span>
-          <i class="fa-brands fa-instagram"></i> Lihat Postingan
-        </span>
-      </div>
-    </a>
-
-    <div class="media-caption">
-      Kegiatan Upacara Permainan Besar Siaga
-    </div>
-  </div>
-
-  <div class="media-item">
-    <a href="https://www.instagram.com/p/DXvv40Gk0fE/" target="_blank" class="media-card">
-      <img src="assets/img/instagram/senam.png" alt="Senam Sehat Bersama">
-      
-      <div class="media-overlay">
-        <span>
-          <i class="fa-brands fa-instagram"></i> Lihat Postingan
-        </span>
-      </div>
-    </a>
-
-    <div class="media-caption">
-      Senam Sehat Bersama
-    </div>
-  </div>
-
-</div>
-
-  </div>
-</section>
-
-      <section class="section section--default section--divider ppdb-section" id="ppdb" aria-labelledby="ppdb-title">
-  <div class="container ppdb-section__inner">
-
-    <!-- KIRI -->
-    <div class="ppdb-section__content">
-      <p class="eyebrow">PPDB 2026 • Gelombang 1</p>
-
-      <h2 class="section-title">
-        Pendaftaran Peserta Didik Baru Telah Dibuka
-      </h2>
-
-      <p class="section-text">
-        Periode Maret–Mei 2026. Konsultasi & pendaftaran langsung bersama tim SD Cahaya Harapan Bekasi.
-      </p>
-
-      <ul class="ppdb-highlights">
-        <li>✔ Kurikulum Merdeka + penguatan karakter</li>
-        <li>✔ Fasilitas lengkap & lingkungan aman</li>
-        <li>✔ Pendampingan orang tua selama proses</li>
-      </ul>
-
-      <div class="ppdb-section__actions" aria-label="Aksi PPDB">
-        <a class="btn btn--ppdb" href="https://wa.me/6285692890015?text=Halo..." target="_blank">
-          <i class="fa-brands fa-whatsapp"></i> Daftar via WhatsApp
-        </a>
-      </div>
-      <p class="ppdb-note">
-  🔥 Pendaftaran terbatas, segera amankan tempat!
-</p>
-    </div>
-
-    <!-- KANAN -->
-    <div class="ppdb-section__panel" aria-label="Ringkasan PPDB 2026">
-
-      <div class="stat-box ppdb-section__stat">
-        <span class="stat-box__number">01</span>
-        <span class="stat-box__label">Konsultasi kebutuhan siswa</span>
-      </div>
-
-      <div class="stat-box ppdb-section__stat">
-        <span class="stat-box__number">02</span>
-        <span class="stat-box__label">Lengkapi data dan berkas</span>
-      </div>
-
-      <div class="stat-box ppdb-section__stat">
-        <span class="stat-box__number">03</span>
-        <span class="stat-box__label">Konfirmasi jadwal kunjungan</span>
-      </div>
-
-      <!-- 🔥 NOTE + COUNTDOWN PINDAH KE SINI -->
-
-      <div class="ppdb-countdown">
-        <p class="countdown-label">Pendaftaran ditutup dalam:</p>
-
-        <div class="countdown-timer" id="countdown">
-          <span><b id="days">0</b><small>Hari</small></span>
-          <span><b id="hours">0</b><small>Jam</small></span>
-          <span><b id="minutes">0</b><small>Menit</small></span>
-          <span><b id="seconds">0</b><small>Detik</small></span>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-      <section class="section section--alt section--divider cta-section" id="kontak">
-          <div class="cta-content">
-
-            <!-- LEFT -->
-            <div class="cta-text">
-              <p class="eyebrow">KUNJUNGAN SEKOLAH</p>
-
-              <h2 class="section-title">
-                Ingin Melihat Lingkungan Belajar Secara Langsung?
-              </h2>
-
-              <p class="section-text">
-                Jadwalkan kunjungan ke SD Cahaya Harapan Bekasi untuk melihat langsung
-                suasana belajar, fasilitas, dan aktivitas siswa.
+      <section id="prestasi-home" class="section section--divider bg-white py-20 lg:py-28">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6">
+          <div class="prestasi-highlight grid items-center gap-12 lg:grid-cols-2">
+            <div class="prestasi-highlight__content">
+              <h2 class="section-title text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">Prestasi, Program Unggulan & Aktivitas Sekolah</h2>
+              <p class="prestasi-highlight__desc mt-5 text-base leading-8 text-slate-600">
+                Dedikasi, kerja keras, dan bimbingan maksimal telah mengantarkan siswa-siswi kami meraih berbagai penghargaan bergengsi di tingkat kota, nasional, hingga internasional.
               </p>
-
-              <a href="https://wa.me/6285692890015" class="btn btn--ppdb">
-                Jadwalkan Kunjungan
+              <a href="prestasi.html" class="prestasi-highlight__btn mt-8 inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-6 py-4 text-sm font-extrabold text-white shadow-xl shadow-slate-900/20 transition hover:-translate-y-1 hover:bg-blue-700">
+                Lihat Detail Prestasi <span>&rarr;</span>
               </a>
             </div>
 
-            <!-- RIGHT -->
-            <div class="cta-cards">
-
-              <div class="visit-card">
-                <h3>Apa yang Akan Anda Lihat?</h3>
-
-                <ul class="visit-list">
-                  <li>🏫 Lingkungan sekolah yang nyaman</li>
-                  <li>👩‍🏫 Interaksi guru dan siswa</li>
-                  <li>📚 Proses pembelajaran di kelas</li>
-                  <li>🎯 Program karakter & kegiatan siswa</li>
-                </ul>
-
-                <div class="visit-info">
-                  <p><strong>Waktu Kunjungan:</strong><br>Senin – Jumat (08.00 – 12.00)</p>
+            <div class="prestasi-highlight__image-wrapper relative">
+              <img src="assets/img/prestasi/prestasi-utama.png" alt="Highlight Prestasi Sekolah" class="aspect-[4/3] w-full rounded-[2rem] object-cover shadow-2xl shadow-slate-300/70" loading="lazy" decoding="async">
+              <div class="prestasi-badge absolute bottom-5 left-5 flex max-w-[calc(100%-2.5rem)] items-center gap-4 rounded-3xl bg-white/90 p-4 shadow-2xl backdrop-blur">
+                <span class="prestasi-badge__icon grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-blue-50 text-blue-700"><i class="fa-solid fa-trophy"></i></span>
+                <div class="prestasi-badge__text">
+                  <strong class="block text-sm font-extrabold text-slate-950">Berbagai Penghargaan</strong>
+                  <span class="text-xs font-semibold text-slate-500">Tingkat Nasional & Provinsi</span>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section class="section section--alt section--divider media-section bg-slate-50 py-20 lg:py-28">
+        <div class="container mx-auto max-w-7xl px-4 sm:px-6">
+          <div class="section-heading section-heading--center mx-auto mb-8 max-w-3xl text-center">
+            <p class="eyebrow text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-600">Media</p>
+            <h2 class="section-title mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">Kabar & Aktivitas Terbaru Sekolah</h2>
+          </div>
+
+          <div class="media-cta mb-10 text-center">
+            <a href="https://www.instagram.com/sdcahayaharapanbekasi?igsh=MXVxbGd0OW81emh3aw==" target="_blank" rel="noopener noreferrer" class="btn btn--gradient inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-700 to-slate-950 px-6 py-4 text-sm font-extrabold text-white shadow-xl shadow-blue-900/20 transition hover:-translate-y-1">
+              Kunjungi Instagram <span>&rarr;</span>
+            </a>
+          </div>
+
+          <div class="media-grid grid gap-6 md:grid-cols-3">
+            <div class="media-item">
+              <a href="https://www.instagram.com/p/DQk2uNMAXen/" target="_blank" rel="noopener noreferrer" class="media-card group relative block overflow-hidden rounded-[1.75rem] shadow-xl shadow-slate-200/70">
+                <img src="assets/img/instagram/ppdb.png" alt="PPDB SD Cahaya Harapan Bekasi" class="aspect-square w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
+                <div class="media-overlay absolute inset-0 grid place-items-center bg-slate-950/0 text-white transition group-hover:bg-slate-950/45">
+                  <span class="translate-y-3 rounded-full bg-white/15 px-4 py-2 text-sm font-bold opacity-0 backdrop-blur transition group-hover:translate-y-0 group-hover:opacity-100"><i class="fa-brands fa-instagram"></i> Lihat Postingan</span>
+                </div>
+              </a>
+              <div class="media-caption mt-4 text-sm font-bold text-slate-700">PPDB SD Cahaya Harapan Bekasi 2026</div>
+            </div>
+
+            <div class="media-item">
+              <a href="https://www.instagram.com/p/DXndKfSE4nZ/" target="_blank" rel="noopener noreferrer" class="media-card group relative block overflow-hidden rounded-[1.75rem] shadow-xl shadow-slate-200/70">
+                <img src="assets/img/instagram/siaga.png" alt="Permainan Besar Siaga" class="aspect-square w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
+                <div class="media-overlay absolute inset-0 grid place-items-center bg-slate-950/0 text-white transition group-hover:bg-slate-950/45">
+                  <span class="translate-y-3 rounded-full bg-white/15 px-4 py-2 text-sm font-bold opacity-0 backdrop-blur transition group-hover:translate-y-0 group-hover:opacity-100"><i class="fa-brands fa-instagram"></i> Lihat Postingan</span>
+                </div>
+              </a>
+              <div class="media-caption mt-4 text-sm font-bold text-slate-700">Kegiatan Upacara Permainan Besar Siaga</div>
+            </div>
+
+            <div class="media-item">
+              <a href="https://www.instagram.com/p/DXvv40Gk0fE/" target="_blank" rel="noopener noreferrer" class="media-card group relative block overflow-hidden rounded-[1.75rem] shadow-xl shadow-slate-200/70">
+                <img src="assets/img/instagram/senam.png" alt="Senam Sehat Bersama" class="aspect-square w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
+                <div class="media-overlay absolute inset-0 grid place-items-center bg-slate-950/0 text-white transition group-hover:bg-slate-950/45">
+                  <span class="translate-y-3 rounded-full bg-white/15 px-4 py-2 text-sm font-bold opacity-0 backdrop-blur transition group-hover:translate-y-0 group-hover:opacity-100"><i class="fa-brands fa-instagram"></i> Lihat Postingan</span>
+                </div>
+              </a>
+              <div class="media-caption mt-4 text-sm font-bold text-slate-700">Senam Sehat Bersama</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--default section--divider ppdb-section bg-white py-20 lg:py-28" id="ppdb" aria-labelledby="ppdb-title">
+        <div class="container ppdb-section__inner mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.82fr]">
+          <div class="ppdb-section__content rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-xl shadow-slate-200/60 sm:p-10">
+            <p class="eyebrow text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-600">PPDB 2026 - Gelombang 1</p>
+            <h2 class="section-title mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl" id="ppdb-title">Pendaftaran Peserta Didik Baru Telah Dibuka</h2>
+            <p class="section-text mt-5 text-base leading-8 text-slate-600">
+              Periode Maret-Mei 2026. Konsultasi dan pendaftaran langsung bersama tim SD Cahaya Harapan Bekasi.
+            </p>
+
+            <ul class="ppdb-highlights mt-6 space-y-3 text-sm font-bold text-slate-700">
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-emerald-600"></i> Kurikulum Merdeka + penguatan karakter</li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-emerald-600"></i> Fasilitas lengkap dan lingkungan aman</li>
+              <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-emerald-600"></i> Pendampingan orang tua selama proses</li>
+            </ul>
+
+            <div class="ppdb-section__actions mt-8" aria-label="Aksi PPDB">
+              <a class="btn btn--ppdb inline-flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-4 text-sm font-extrabold text-white shadow-xl shadow-emerald-700/20 transition hover:-translate-y-1 hover:bg-emerald-700" href="https://wa.me/6285692890015?text=Halo..." target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-whatsapp"></i> Daftar via WhatsApp
+              </a>
+            </div>
+            <p class="ppdb-note mt-5 text-sm font-bold text-blue-700">Pendaftaran terbatas, segera amankan tempat.</p>
+          </div>
+
+          <div class="ppdb-section__panel rounded-[2rem] border border-blue-100 bg-white p-6 shadow-2xl shadow-blue-100/80 sm:p-8" aria-label="Ringkasan PPDB 2026">
+            <div class="grid gap-4">
+              <div class="stat-box ppdb-section__stat flex items-center gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                <span class="stat-box__number grid h-12 w-12 place-items-center rounded-2xl bg-blue-700 font-black text-white">01</span>
+                <span class="stat-box__label text-sm font-bold text-slate-700">Konsultasi kebutuhan siswa</span>
+              </div>
+              <div class="stat-box ppdb-section__stat flex items-center gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                <span class="stat-box__number grid h-12 w-12 place-items-center rounded-2xl bg-blue-700 font-black text-white">02</span>
+                <span class="stat-box__label text-sm font-bold text-slate-700">Lengkapi data dan berkas</span>
+              </div>
+              <div class="stat-box ppdb-section__stat flex items-center gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                <span class="stat-box__number grid h-12 w-12 place-items-center rounded-2xl bg-blue-700 font-black text-white">03</span>
+                <span class="stat-box__label text-sm font-bold text-slate-700">Konfirmasi jadwal kunjungan</span>
+              </div>
+            </div>
+
+            <div class="ppdb-countdown mt-6 rounded-3xl bg-slate-950 p-5 text-white">
+              <p class="countdown-label text-sm font-bold text-blue-100">Pendaftaran ditutup dalam:</p>
+              <div class="countdown-timer mt-4 grid grid-cols-4 gap-3" id="countdown">
+                <span class="rounded-2xl bg-white/10 p-3 text-center"><b id="days" class="block text-2xl font-black">0</b><small class="text-[11px] font-bold text-blue-100">Hari</small></span>
+                <span class="rounded-2xl bg-white/10 p-3 text-center"><b id="hours" class="block text-2xl font-black">0</b><small class="text-[11px] font-bold text-blue-100">Jam</small></span>
+                <span class="rounded-2xl bg-white/10 p-3 text-center"><b id="minutes" class="block text-2xl font-black">0</b><small class="text-[11px] font-bold text-blue-100">Menit</small></span>
+                <span class="rounded-2xl bg-white/10 p-3 text-center"><b id="seconds" class="block text-2xl font-black">0</b><small class="text-[11px] font-bold text-blue-100">Detik</small></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt section--divider cta-section bg-slate-50 px-4 py-20 sm:px-6 lg:py-28" id="kontak">
+        <div class="cta-content mx-auto grid max-w-7xl items-center gap-8 rounded-[2rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-300/60 sm:p-10 lg:grid-cols-[1fr_0.82fr]">
+          <div class="cta-text">
+            <p class="eyebrow text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-300">Kunjungan Sekolah</p>
+            <h2 class="section-title mt-3 text-3xl font-black tracking-tight sm:text-4xl">Ingin Melihat Lingkungan Belajar Secara Langsung?</h2>
+            <p class="section-text mt-5 max-w-2xl text-base leading-8 text-slate-300">
+              Jadwalkan kunjungan ke SD Cahaya Harapan Bekasi untuk melihat langsung suasana belajar, fasilitas, dan aktivitas siswa.
+            </p>
+            <a href="https://wa.me/6285692890015" class="btn btn--ppdb mt-8 inline-flex items-center rounded-2xl bg-white px-6 py-4 text-sm font-extrabold text-slate-950 shadow-xl transition hover:-translate-y-1 hover:bg-blue-50">
+              Jadwalkan Kunjungan
+            </a>
+          </div>
+
+          <div class="cta-cards">
+            <div class="visit-card rounded-[1.75rem] border border-white/10 bg-white/10 p-6 backdrop-blur">
+              <h3 class="text-lg font-extrabold">Apa yang Akan Anda Lihat?</h3>
+              <ul class="visit-list mt-5 space-y-3 text-sm font-semibold text-slate-200">
+                <li class="flex gap-3"><i class="fa-solid fa-school mt-1 text-blue-200"></i> Lingkungan sekolah yang nyaman</li>
+                <li class="flex gap-3"><i class="fa-solid fa-chalkboard-user mt-1 text-blue-200"></i> Interaksi guru dan siswa</li>
+                <li class="flex gap-3"><i class="fa-solid fa-book-open mt-1 text-blue-200"></i> Proses pembelajaran di kelas</li>
+                <li class="flex gap-3"><i class="fa-solid fa-bullseye mt-1 text-blue-200"></i> Program karakter dan kegiatan siswa</li>
+              </ul>
+              <div class="visit-info mt-6 rounded-2xl bg-white/10 p-4 text-sm text-slate-200">
+                <p><strong class="text-white">Waktu Kunjungan:</strong><br>Senin - Jumat (08.00 - 12.00)</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
+
     <div id="footer"></div>
     <script type="module" src="assets/js/main.js"></script>
     <script src="assets/js/seo.js"></script>
     <script src="assets/js/maintenance.js"></script>
     <script src="assets/js/cms-connector.js"></script>
-<button id="scrollTopBtn">
-  <i class="fas fa-arrow-up"></i>
-</button>
   </body>
 </html>

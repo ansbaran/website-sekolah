@@ -1,7 +1,10 @@
-@import url("./base.css");
-@import url("./layout.css");
-@import url("./components.css");
-@import url("./hero.css");
-@import url("./utilities.css");
-@import url("./animation.css");
-@import url("./responsive.css");
+@import './base.css';
+@import './layout.css';
+@import './components.css';
+@import './hero.css';
+@import './utilities.css';
+@import './animation.css';
+@import './responsive.css';
+@import './news-detail.css';
+@import './struktur.css';
+@import './tailwind-migration.css';

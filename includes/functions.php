@@ -57,9 +57,41 @@ function build_upload_path(string $subDir, string $fileName): string
     return $uploadDir . '/' . $fileName;
 }
 
-function build_upload_url(string $subDir, string $fileName): string
+function normalize_legacy_asset_path(string $path): string
 {
-    return rtrim(UPLOAD_URL, '/') . '/' . trim($subDir, '/') . '/' . $fileName;
+    $path = ltrim(str_replace('\\', '/', trim($path)), '/');
+
+    if (defined('BASE_URL') && BASE_URL !== '') {
+        $basePath = trim(BASE_URL, '/') . '/';
+        if (strpos($path, $basePath) === 0) {
+            $path = substr($path, strlen($basePath));
+        }
+    }
+
+    $legacyMap = [
+        'assets/img/berita1.jpeg' => 'assets/img/berita/berita1.jpeg',
+        'assets/img/berita5.jpeg' => 'assets/img/berita/berita5.jpeg',
+        'assets/img/sekolah.jpg' => 'assets/img/sekolah.jpg',
+    ];
+
+    return $legacyMap[$path] ?? $path;
+}
+
+function build_upload_url($type, $filename) {
+    if (!$filename) return "";
+
+    $filename = normalize_legacy_asset_path((string) $filename);
+    $filename = ltrim($filename, '/');
+
+    if (preg_match('#^https?://#i', $filename)) {
+        return $filename;
+    }
+
+    if (strpos($filename, 'assets/') === 0 || strpos($filename, 'uploads/') === 0) {
+        return BASE_URL . '/' . $filename;
+    }
+
+    return UPLOAD_URL . '/' . trim((string) $type, '/') . '/' . ltrim($filename, '/');
 }
 
 function escape(string $value): string

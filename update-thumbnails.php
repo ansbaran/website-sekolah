@@ -10,9 +10,9 @@ require_once 'config/db.php';
 try {
     // Define available images
     $images = [
-        'assets/img/berita1.jpeg',
-        'assets/img/berita5.jpeg',
-        'assets/img/sekolah.jpg'
+        'assets/img/berita/berita1.jpeg',
+        'assets/img/berita/berita2.jpeg',
+        'assets/img/berita/berita3.jpeg'
     ];
 
     // Get all news that don't have thumbnails

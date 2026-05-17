@@ -1,0 +1,88 @@
+/* Buttons and interactive controls */
+.btn--gradient {
+  background: linear-gradient(135deg, #ff4ecb, #7b61ff);
+  color: var(--color-white);
+  padding: 12px 26px;
+  border-radius: 30px;
+  font-weight: 600;
+  display: inline-block;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base), color var(--transition-base);
+}
+
+.btn--gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(123, 97, 255, 0.4);
+}
+
+.btn--ppdb {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-brand-orange), var(--color-accent-strong));
+  color: var(--color-white);
+  font-weight: 800;
+  min-height: 48px;
+  padding: 10px 30px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 12px 28px rgba(249,115,22,0.28);
+  transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow var(--transition-base), filter var(--transition-base);
+  letter-spacing: 0.3px;
+}
+
+.btn--ppdb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 120%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.36) 50%, transparent 100%);
+  transform: translateX(-110%);
+  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn--ppdb:hover,
+.btn--ppdb:focus-visible {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(249,115,22,0.34);
+  filter: brightness(1.03);
+}
+
+.btn--ppdb:hover::after,
+.btn--ppdb:focus-visible::after {
+  transform: translateX(80%);
+}
+
+.btn--ppdb:active {
+  transform: scale(0.96);
+}
+
+.primary-button,
+.prestasi-highlight__btn,
+.news-card__button,
+.filter-btn {
+  transition: transform var(--transition-base) var(--motion-easing-premium), box-shadow var(--transition-base), background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+}
+
+.primary-button:hover,
+.prestasi-highlight__btn:hover,
+.news-card__button:hover,
+.filter-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+.teacher-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.teacher-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(249,115,22,0.3);
+}

@@ -13,19 +13,14 @@
 }
 
 .news-detail-hero__image-wrapper {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  aspect-ratio: 16/9;
-  border-radius: 24px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(59, 130, 246, 0.15);
-  position: relative;
+    position: relative;
+    width: 100%;
+    max-width: 1000px; /* Membatasi lebar maksimal konten */
+    height: 450px;     /* Membatasi tinggi agar tidak terlalu besar */
+    margin: 20px auto; /* Memberi jarak dan menempatkan di tengah */
+    overflow: hidden;
+    border-radius: 20px; /* Sudut melengkung halus agar terlihat modern */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Efek bayangan lembut */
 }
 
 .news-detail-hero__image-wrapper::after {
@@ -41,10 +36,16 @@
 }
 
 .news-detail-hero__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    /* Foto akan dipotong secara proporsional */
+    object-position: center;
+    display: block;
+    transition: transform 0.5s ease;
+}
+/* Efek saat gambar di-hover */
+.news-detail-hero__image-wrapper:hover .news-detail-hero__image {
+    transform: scale(1.03);
 }
 
 .news-detail-hero__placeholder {
@@ -504,7 +505,7 @@
 
 /* News 404 */
 .news-detail-404 {
-  min-height: 100vh;
+  min-height: auto;
   display: flex;
   align-items: center;
   justify-content: center;

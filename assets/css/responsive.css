@@ -36,10 +36,15 @@
   }
 }
 
-/* ===== XL (≥1200px) ===== */
 @media (min-width: 1200px) {
   .hero {
-    min-height: 92vh;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    min-height: auto;
   }
 }
 
@@ -109,6 +114,13 @@
     --header-height: 68px;
   }
 
+  /* FIX: remove artificial mobile height causing whitespace before footer */
+  main {
+    min-height: unset;
+    height: auto;
+  }
+
+
   .section {
     padding-block: var(--space-12);
     scroll-margin-top: 100px;
@@ -125,7 +137,7 @@
   }
 
   .hero {
-    min-height: 82vh;
+    min-height: auto;
   }
 
   .hero__typing {

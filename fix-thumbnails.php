@@ -9,11 +9,10 @@ require_once 'config/db.php';
 try {
     // Map news ID to available images
     $mapping = [
-        1 => 'assets/img/berita1.jpeg',
-        2 => 'assets/img/berita5.jpeg',
-        3 => 'assets/img/sekolah.jpg'
+        1 => 'assets/img/berita/berita1.jpeg',
+        2 => 'assets/img/berita/berita2.jpeg', // Tadi di sini campuran " dan '
+        3 => 'assets/img/berita/berita3.jpeg'  // Tadi di sini kelebihan tanda '
     ];
-
     foreach ($mapping as $id => $image) {
         $stmt = $pdo->prepare("UPDATE news SET thumbnail = ? WHERE id = ?");
         $stmt->execute([$image, $id]);
@@ -27,7 +26,8 @@ try {
 
     echo "\n✓ Semua thumbnail berhasil diupdate\n";
 
-} catch (Exception $e) {
+} 
+catch (Exception $e) {
     echo "✗ Error: " . $e->getMessage() . "\n";
 }
 ?>

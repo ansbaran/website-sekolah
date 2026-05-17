@@ -1,61 +1,68 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <base href="/website-sekolah/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeri Sekolah - SD Cahaya Harapan</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { sans: ["Manrope", "ui-sans-serif", "system-ui", "sans-serif"] }, colors: { school: { navy: "#0D0B61", blue: "#294669", teal: "#478B8D", gold: "#E4D329" } } } } };
+    </script>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="galeri-page">
+<body class="galeri-page bg-slate-50 font-sans text-slate-700 antialiased">
     
     <div id="navbar"></div>
 
-    <section class="simple-gallery-section gallery-section" id="galeri">
-        <div class="container">
+    <section class="simple-gallery-section gallery-section bg-slate-50 px-4 pb-16 pt-28 sm:px-6 lg:pb-24" id="galeri">
+        <div class="container mx-auto max-w-7xl">
             
-            <div class="simple-gallery-header">
-                <h2>Galeri Sekolah</h2>
-                <p>Dokumentasi kegiatan dan fasilitas di lingkungan SD Cahaya Harapan.</p>
+            <div class="simple-gallery-header mx-auto mb-10 max-w-3xl text-center">
+                <span class="inline-flex rounded-full bg-blue-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">Galeri</span>
+                <h2 class="mt-5 text-3xl font-black tracking-tight text-slate-950 sm:text-5xl">Galeri Sekolah</h2>
+                <p class="mt-4 text-base leading-8 text-slate-600">Dokumentasi kegiatan dan fasilitas di lingkungan SD Cahaya Harapan.</p>
             </div>
 
-            <div class="gallery-filters" data-gallery-filters>
-                <button class="filter-btn active" type="button" data-filter="semua" aria-pressed="true">Semua</button>
-                <button class="filter-btn" type="button" data-filter="fasilitas" aria-pressed="false">Fasilitas</button>
-                <button class="filter-btn" type="button" data-filter="kegiatan" aria-pressed="false">Kegiatan</button>
-                <button class="filter-btn" type="button" data-filter="prestasi" aria-pressed="false">Prestasi</button>
+            <div class="gallery-filters mb-10 flex flex-wrap justify-center gap-3" data-gallery-filters>
+                <button class="filter-btn active rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="semua" aria-pressed="true">Semua</button>
+                <button class="filter-btn rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="fasilitas" aria-pressed="false">Fasilitas</button>
+                <button class="filter-btn rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="kegiatan" aria-pressed="false">Kegiatan</button>
+                <button class="filter-btn rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="prestasi" aria-pressed="false">Prestasi</button>
             </div>
 
-            <div class="simple-gallery-grid">
-                <figure class="simple-gallery-card" data-gallery-item data-category="fasilitas">
-                    <img src="assets/img/sekolah.jpg" alt="Gedung sekolah SD Cahaya Harapan">
-                    <figcaption>Gedung Sekolah</figcaption>
+            <div class="simple-gallery-grid grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <figure class="simple-gallery-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-gallery-item data-category="fasilitas">
+                    <img src="assets/img/sekolah.jpg" alt="Gedung sekolah SD Cahaya Harapan" class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-110">
+                    <figcaption class="p-5 text-sm font-extrabold text-slate-800">Gedung Sekolah</figcaption>
                 </figure>
 
-                <figure class="simple-gallery-card" data-gallery-item data-category="kegiatan">
-                    <img src="assets/img/sekolah2.JPG" alt="Kegiatan siswa di lingkungan sekolah">
-                    <figcaption>Kegiatan Siswa</figcaption>
+                <figure class="simple-gallery-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-gallery-item data-category="kegiatan">
+                    <img src="assets/img/sekolah2.jpg" alt="Kegiatan siswa di lingkungan sekolah" class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-110">
+                    <figcaption class="p-5 text-sm font-extrabold text-slate-800">Kegiatan Siswa</figcaption>
                 </figure>
 
-                <figure class="simple-gallery-card" data-gallery-item data-category="kegiatan">
-                    <img src="assets/img/sekolah3.jpg" alt="Aktivitas belajar siswa">
-                    <figcaption>Aktivitas Belajar</figcaption>
+                <figure class="simple-gallery-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-gallery-item data-category="kegiatan">
+                    <img src="assets/img/sekolah3.jpg" alt="Aktivitas belajar siswa" class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-110">
+                    <figcaption class="p-5 text-sm font-extrabold text-slate-800">Aktivitas Belajar</figcaption>
                 </figure>
 
-                <figure class="simple-gallery-card" data-gallery-item data-category="fasilitas">
-                    <img src="assets/img/sekolah4.jpeg" alt="Fasilitas sekolah">
-                    <figcaption>Lingkungan Sekolah</figcaption>
+                <figure class="simple-gallery-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-gallery-item data-category="fasilitas">
+                    <img src="assets/img/sekolah4.jpeg" alt="Fasilitas sekolah" class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-110">
+                    <figcaption class="p-5 text-sm font-extrabold text-slate-800">Lingkungan Sekolah</figcaption>
                 </figure>
 
-                <figure class="simple-gallery-card" data-gallery-item data-category="prestasi">
-                    <img src="assets/img/instagram/siaga.png" alt="Dokumentasi kegiatan siaga">
-                    <figcaption>Permainan Besar Siaga</figcaption>
+                <figure class="simple-gallery-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-gallery-item data-category="prestasi">
+                    <img src="assets/img/instagram/siaga.png" alt="Dokumentasi kegiatan siaga" class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-110">
+                    <figcaption class="p-5 text-sm font-extrabold text-slate-800">Permainan Besar Siaga</figcaption>
                 </figure>
 
-                <figure class="simple-gallery-card" data-gallery-item data-category="kegiatan">
-                    <img src="assets/img/instagram/senam.png" alt="Senam sehat bersama">
-                    <figcaption>Senam Sehat Bersama</figcaption>
+                <figure class="simple-gallery-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-gallery-item data-category="kegiatan">
+                    <img src="assets/img/instagram/senam.png" alt="Senam sehat bersama" class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-110">
+                    <figcaption class="p-5 text-sm font-extrabold text-slate-800">Senam Sehat Bersama</figcaption>
                 </figure>
             </div>
 

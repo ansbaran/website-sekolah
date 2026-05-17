@@ -1,0 +1,301 @@
+/* Homepage hero + news + prestasi sections */
+.hero {
+  position: relative;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 120px;
+  color: var(--color-white);
+  isolation: isolate;
+  background: linear-gradient(135deg, #1e3a8a, #1e293b);
+}
+
+.hero__slider,
+.hero__slide,
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__slide {
+  opacity: 0;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  transform: scale(1.08);
+  transition: opacity 900ms ease, transform 6s ease;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../img/sekolah.jpg") center/cover no-repeat;
+  opacity: 0.08;
+}
+
+.hero__overlay {
+  background: linear-gradient(135deg, rgba(59,130,246,0.5), rgba(139,92,246,0.5));
+}
+
+.hero__content {
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px;
+  animation: fadeIn 1.2s ease;
+}
+
+.hero__title {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  font-size: clamp(2.8rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--color-white);
+  text-shadow: 0 0 8px rgba(59,130,246,0.6), 0 0 20px rgba(59,130,246,0.4);
+}
+
+.hero__title::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.8), transparent);
+  transform: skewX(-20deg);
+}
+
+.hero__typing {
+  min-height: 2rem;
+  margin-top: var(--space-4);
+  color: var(--color-secondary);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+}
+
+.hero__typing span::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: var(--space-1);
+  background: currentColor;
+  vertical-align: -0.1em;
+  animation: caret-blink 900ms steps(2, start) infinite;
+}
+
+.hero__text {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.hero__actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.hero__content > * {
+  opacity: 0;
+  gap: 12px;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.hero__content > *:nth-child(1) { animation-delay: 0.2s; }
+.hero__content > *:nth-child(2) { animation-delay: 0.4s; }
+.hero__content > *:nth-child(3) { animation-delay: 0.6s; }
+.hero__content > *:nth-child(4) { animation-delay: 0.8s; }
+
+.hero__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--color-white);
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 3;
+  transition: all 0.3s ease;
+}
+
+.hero__nav:hover {
+  background: rgba(255,255,255,0.35);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.hero__nav--prev {
+  left: 24px;
+}
+
+.hero__nav--next {
+  right: 24px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+
+.hero__slide--active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero__slide:nth-child(1) { background-image: url("../img/sekolah.jpg"); }
+.hero__slide:nth-child(2) { background-image: url("../img/sekolah2.jpg"); }
+.hero__slide:nth-child(3) { background-image: url("../img/sekolah3.jpg"); }
+.hero__slide:nth-child(4) { background-image: url("../img/sekolah4.jpeg"); }
+.hero__slide:nth-child(5) { background-image: url("../img/sekolah.jpg"); }
+
+.news-section {
+  width: 95%;
+  max-width: 1280px;
+  margin: 0 auto 40px;
+}
+
+.news-grid-home {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 95%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.news-grid-home .news-card__button {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-white) !important;
+  background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-violet), var(--color-brand-magenta)) !important;
+  box-shadow: 0 8px 18px rgba(124, 58, 237, 0.2);
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.news-grid-home .news-card__button:hover {
+  background: linear-gradient(135deg, #4338ca, #6d28d9, #db2777) !important;
+  color: var(--color-white) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(124, 58, 237, 0.35);
+  opacity: 1;
+}
+
+.news-grid-home .news-card__button:hover span {
+  color: var(--color-white) !important;
+  transform: translateX(4px);
+}
+
+@media (max-width: 1024px) {
+  .news-grid-home {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .news-grid-home {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prestasi-highlight {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.prestasi-highlight__content {
+  flex: 1;
+}
+
+.prestasi-highlight__desc {
+  color: var(--color-gray-500);
+  line-height: 1.8;
+  font-size: 16px;
+  margin-bottom: 30px;
+  margin-top: 15px;
+}
+
+.prestasi-highlight__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-violet), var(--color-brand-magenta));
+  color: var(--color-white) !important;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(124, 58, 237, 0.2);
+  transition: all 0.3s ease;
+}
+
+.prestasi-highlight__btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(124, 58, 237, 0.35);
+}
+
+.prestasi-highlight__btn span {
+  transition: transform 0.3s ease;
+}
+
+.prestasi-highlight__btn:hover span {
+  transform: translateX(5px);
+}
+
+.prestasi-highlight__image-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.prestasi-highlight__image-wrapper img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .prestasi-highlight {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .prestasi-badge {
+    left: 20px;
+    bottom: 20px;
+  }
+}

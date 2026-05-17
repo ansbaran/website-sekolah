@@ -255,6 +255,28 @@ $readingTime = max(1, ceil($wordCount / 200));
         <?= escape($seoTitle) ?> - SD Cahaya Harapan Bekasi
     </title>
 
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Manrope", "ui-sans-serif", "system-ui", "sans-serif"]
+                    },
+                    colors: {
+                        school: {
+                            navy: "#0D0B61",
+                            blue: "#294669",
+                            teal: "#478B8D",
+                            gold: "#E4D329"
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
     <meta
         name="description"
         content="<?= escape($seoDescription) ?>"
@@ -357,11 +379,6 @@ $readingTime = max(1, ceil($wordCount / 200));
 
     <link
         rel="stylesheet"
-        href="assets/css/components.css"
-    >
-
-    <link
-        rel="stylesheet"
         href="assets/css/style.css"
     >
 
@@ -376,9 +393,11 @@ $readingTime = max(1, ceil($wordCount / 200));
     >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
-<body class="news-detail-page">
+<body class="news-detail-page bg-slate-50 font-sans text-slate-700 antialiased">
 
     <!-- NAVBAR -->
 
@@ -398,7 +417,7 @@ $readingTime = max(1, ceil($wordCount / 200));
                     src="<?= escape(
                         $featuredImage
                             ? build_upload_url('news', $featuredImage)
-                            : 'assets/img/berita1.jpg'
+                            : 'assets/img/berita/berita1.jpeg'
                     ) ?>"
 
 
@@ -500,8 +519,8 @@ $readingTime = max(1, ceil($wordCount / 200));
                 <span
                     class="news-detail-meta__category"
                     style="
-                        background-color:rgba(37,99,235,.1);
-                        color:#2563eb;
+                        background-color:rgba(71,139,141,.12);
+                        color:#0D0B61;
                     "
                 >
                     <?= escape(
@@ -722,7 +741,7 @@ $readingTime = max(1, ceil($wordCount / 200));
                                                 $related['thumbnail']
                                             )
 
-                                            : 'assets/img/berita1.jpg'
+                                            : 'assets/img/berita/berita1.jpeg'
 
                                         ) ?>"
 
@@ -731,8 +750,9 @@ $readingTime = max(1, ceil($wordCount / 200));
                                         ) ?>"
 
                                         onerror="
-                                            this.src='assets/img/berita1.jpg';
+                                            this.src='assets/img/berita/berita1.jpeg';
                                         "
+
                                     >
 
                                 </div>

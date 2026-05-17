@@ -14,7 +14,7 @@ main {
    SECTION
 ========================= */
 .section {
-  padding-block: var(--space-16);
+  padding-block: clamp(56px, 7vw, 90px);
   scroll-margin-top: 100px;
 }
 

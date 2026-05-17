@@ -1,0 +1,30 @@
+@import './base/variables.css';
+@import './base/reset.css';
+@import './base/typography.css';
+@import './base/animations.css';
+@import './base/utilities.css';
+
+@import './layout/container.css';
+@import './layout/section.css';
+@import './layout/grid.css';
+@import './layout/navbar.css';
+@import './layout/footer.css';
+
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/gallery.css';
+@import './components/dropdown.css';
+@import './components/timeline.css';
+@import './components/media.css';
+@import './components/stats.css';
+@import './components/badges.css';
+@import './components/forms.css';
+
+@import './pages/home.css';
+@import './pages/berita.css';
+@import './pages/prestasi.css';
+@import './pages/aktivitas.css';
+@import './pages/sejarah.css';
+@import './pages/tentang.css';
+
+@import './responsive.css';

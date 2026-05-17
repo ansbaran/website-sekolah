@@ -4,7 +4,6 @@ const NAV_MENU_SELECTOR = "[data-nav-menu]";
 const NAV_LINK_SELECTOR =".nav-menu a, .dropdown-menu a";
 const HEADER_SCROLLED_CLASS = "site-header--scrolled";
 const NAV_OPEN_CLASS = "navbar__menu--open";
-const SECTION_HASH_CLASS = "has-section-hash";
 const AUTO_REVEAL_SELECTOR = [
   "main > section",
   "body > section",
@@ -84,6 +83,9 @@ export function initDropdownHover() {
    HASH SECTION NAVIGATION
 ========================= */
 export function initHashSectionNavigation() {
+  if (window.__HASH_NAV_BOUND__) return;
+  window.__HASH_NAV_BOUND__ = true;
+
   const OFFSET = 110;
 
   const scrollToTarget = (hash) => {
@@ -99,7 +101,21 @@ export function initHashSectionNavigation() {
   };
 
   // 🔥 HANDLE CLICK LANGSUNG
-  document.querySelectorAll('a[href*="#"]').forEach((link) => {
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href*="#"]');
+    if (!link) return;
+
+    const url = new URL(link.href);
+    const hash = url.hash;
+
+    if (window.location.pathname === url.pathname && hash) {
+      event.preventDefault();
+      history.pushState(null, "", hash);
+      scrollToTarget(hash);
+    }
+  });
+
+  document.querySelectorAll("[data-legacy-hash-disabled]").forEach((link) => {
     link.addEventListener("click", (e) => {
       const url = new URL(link.href);
       const hash = url.hash;
@@ -191,25 +207,43 @@ export function initReveal() {
       }
     });
   }
-  const scrollBtn = document.getElementById("scrollTopBtn");
-  if (scrollBtn) {
 
-// muncul saat scroll
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {
-    scrollBtn.classList.add("show");
-  } else {
-    scrollBtn.classList.remove("show");
+  function bindScrollTopBtnOnce(scrollBtn) {
+    if (!scrollBtn || scrollBtn.dataset.bound === "1") return;
+    scrollBtn.dataset.bound = "1";
+
+    // muncul saat scroll
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        scrollBtn.classList.add("show");
+      } else {
+        scrollBtn.classList.remove("show");
+      }
+    }, { passive: true });
+
+    // klik → scroll ke atas
+    scrollBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
   }
-});
 
-// klik → scroll ke atas
-scrollBtn.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-});
+  // Tombol bisa di-inject setelah JS init (footer loader)
+  const existingBtn = document.getElementById("scrollTopBtn");
+  if (existingBtn) {
+    bindScrollTopBtnOnce(existingBtn);
+  } else {
+    const observer = new MutationObserver(() => {
+      const btn = document.getElementById("scrollTopBtn");
+      if (btn) {
+        bindScrollTopBtnOnce(btn);
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.documentElement, { childList: true, subtree: true });
   }
 
   if (elements.length && !("IntersectionObserver" in window)) {

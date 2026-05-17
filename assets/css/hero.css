@@ -3,7 +3,7 @@
 ========================= */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: auto;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -64,7 +64,7 @@
 }
 
 .hero__slide:nth-child(2) {
-  background-image: url("../img/sekolah2.JPG");
+  background-image: url("../img/sekolah2.jpg");
 }
 
 .hero__slide:nth-child(3) {

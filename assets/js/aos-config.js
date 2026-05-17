@@ -21,8 +21,7 @@ const ANIMATION_RULES = [
   { selector: ".media-card, .card-image, .simple-gallery-card img", animation: "zoom-in", duration: 760, stagger: 25 },
   { selector: ".vm-block, .vm-list-item", animation: "fade-right", duration: 740, stagger: 35 },
   { selector: ".history-box.top", animation: "fade-right", duration: 760, stagger: 35 },
-  { selector: ".history-box.bottom", animation: "fade-left", duration: 760, stagger: 35 },
-  { selector: ".footer", animation: "fade-up", duration: 720, delay: 0 }
+  { selector: ".history-box.bottom", animation: "fade-left", duration: 760, stagger: 35 }
 ];
 
 window.__AOS_MANAGED__ = true;

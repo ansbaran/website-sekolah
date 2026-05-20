@@ -41,6 +41,12 @@ define('LOGIN_RATE_LIMIT_WINDOW', 900); // 15 minutes
 
 define('UPLOAD_DIMENSION_MIN_WIDTH', 120);
 define('UPLOAD_DIMENSION_MIN_HEIGHT', 120);
+define('MAX_IMAGE_SIZE', 4 * 1024 * 1024);
+define('MAX_IMAGE_WIDTH', 4096);
+define('MAX_IMAGE_HEIGHT', 4096);
+define('ALLOWED_IMAGE_TYPES', ['image/jpeg', 'image/png', 'image/webp']);
+define('ALLOWED_IMAGE_EXT', ['jpg', 'jpeg', 'png', 'webp']);
+define('ALLOWED_UPLOAD_DIRS', ['news', 'gallery', 'achievements', 'slider', 'misc']);
 
 if (!is_dir(LOG_DIR)) {
     @mkdir(LOG_DIR, 0755, true);
@@ -64,13 +70,13 @@ ini_set('session.cookie_lifetime', '0');
 error_reporting(APP_DEBUG ? E_ALL : E_ALL & ~E_DEPRECATED & ~E_STRICT);
 
 // Database connection settings
-define('DB_HOST', 'localhost');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
 define('DB_PORT', getenv('DB_PORT') ?: '3306');
 define('DB_FALLBACK_PORT', getenv('DB_FALLBACK_PORT') ?: '3307');
 define('DB_NAME', getenv('DB_NAME') ?: 'school_admin');
 define('DB_FALLBACK_NAME', getenv('DB_FALLBACK_NAME') ?: 'website_sekolah');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Session and auth configuration

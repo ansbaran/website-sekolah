@@ -40,7 +40,8 @@ function old(string $key, $default = '')
 function sanitize_file_name(string $name): string
 {
     $fileName = preg_replace('/[^a-zA-Z0-9._-]/', '-', $name);
-    return preg_replace('/-+/', '-', $fileName);
+    $fileName = preg_replace('/-+/', '-', $fileName);
+    return trim($fileName, '.-') ?: 'file';
 }
 
 function unique_file_name(string $fileName): string
@@ -50,11 +51,40 @@ function unique_file_name(string $fileName): string
 
 function build_upload_path(string $subDir, string $fileName): string
 {
-    $uploadDir = UPLOAD_BASE . '/' . trim($subDir, '/');
+    $safeSubDir = normalize_upload_subdir($subDir);
+    $uploadDir = UPLOAD_BASE . '/' . $safeSubDir;
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0755, true);
     }
-    return $uploadDir . '/' . $fileName;
+    return $uploadDir . '/' . ltrim($fileName, '/\\');
+}
+
+function normalize_upload_subdir(string $subDir): string
+{
+    $subDir = trim(strtolower(str_replace('\\', '/', $subDir)), '/');
+    if (!in_array($subDir, ALLOWED_UPLOAD_DIRS, true)) {
+        return 'misc';
+    }
+
+    return $subDir;
+}
+
+function uploaded_file_path(string $subDir, string $fileName): ?string
+{
+    $safeSubDir = normalize_upload_subdir($subDir);
+    $safeFileName = basename(str_replace('\\', '/', $fileName));
+    if ($safeFileName === '' || $safeFileName !== sanitize_file_name($safeFileName)) {
+        return null;
+    }
+
+    $path = UPLOAD_BASE . '/' . $safeSubDir . '/' . $safeFileName;
+    $base = realpath(UPLOAD_BASE);
+    $dir = realpath(dirname($path));
+    if ($base === false || $dir === false || strpos($dir, $base) !== 0) {
+        return null;
+    }
+
+    return $path;
 }
 
 function normalize_legacy_asset_path(string $path): string
@@ -80,6 +110,7 @@ function normalize_legacy_asset_path(string $path): string
 function build_upload_url($type, $filename) {
     if (!$filename) return "";
 
+    $type = normalize_upload_subdir((string) $type);
     $filename = normalize_legacy_asset_path((string) $filename);
     $filename = ltrim($filename, '/');
 
@@ -91,7 +122,7 @@ function build_upload_url($type, $filename) {
         return BASE_URL . '/' . $filename;
     }
 
-    return UPLOAD_URL . '/' . trim((string) $type, '/') . '/' . ltrim($filename, '/');
+    return UPLOAD_URL . '/' . $type . '/' . rawurlencode(basename($filename));
 }
 
 function escape(string $value): string
@@ -364,6 +395,7 @@ function strip_image_metadata(string $sourcePath, string $mimeType): bool
 
 function upload_image(array $file, string $subDir, ?string &$error = null): ?string
 {
+    $subDir = normalize_upload_subdir($subDir);
     if (!validate_image_upload($file, $error)) {
         return null;
     }
@@ -399,6 +431,12 @@ function upload_image(array $file, string $subDir, ?string &$error = null): ?str
 
 function delete_file(string $path): void
 {
+    $base = realpath(BASE_PATH);
+    $realPath = realpath($path);
+    if ($base === false || $realPath === false || strpos($realPath, $base) !== 0) {
+        return;
+    }
+
     if ($path !== '' && file_exists($path) && is_file($path)) {
         @unlink($path);
     }

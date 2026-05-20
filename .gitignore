@@ -1,0 +1,22 @@
+# Environment
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# Runtime uploads
+uploads/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies / build
+node_modules/
+vendor/
+dist/
+build/

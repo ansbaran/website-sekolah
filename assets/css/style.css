@@ -1,10 +1,8 @@
-@import './base.css';
-@import './layout.css';
-@import './components.css';
-@import './hero.css';
-@import './utilities.css';
-@import './animation.css';
-@import './responsive.css';
+@import './main.css';
 @import './news-detail.css';
 @import './struktur.css';
 @import './tailwind-migration.css';
+@import './frontend-stage1.css';
+@import './frontend-stage2.css';
+@import './frontend-stage3.css';
+@import './frontend-final-polish.css';

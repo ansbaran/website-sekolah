@@ -3,10 +3,10 @@ const AOS_JS_URL = "https://unpkg.com/aos@2.3.4/dist/aos.js";
 
 const AOS_OPTIONS = {
   once: false,
-  mirror: true,
-  duration: 780,
+  mirror: false,
+  duration: 720,
   easing: "ease-out-cubic",
-  offset: 48,
+  offset: 56,
   debounceDelay: 40,
   throttleDelay: 60,
   disableMutationObserver: true,
@@ -16,8 +16,10 @@ const AOS_OPTIONS = {
 const ANIMATION_RULES = [
   { selector: ".hero, .prestasi-hero", animation: "zoom-out", duration: 1100, delay: 0 },
   { selector: "main > section, body > section", animation: "fade-up", duration: 780, delay: 0 },
-  { selector: ".section-heading, .simple-gallery-header, .news-heading, .team-heading, .history-heading", animation: "fade-up", duration: 720, delay: 0 },
-  { selector: ".card, .news-card, .gallery-card, .simple-gallery-card, .activity-card, .leader-card, .stat-box", animation: "fade-up", duration: 720, stagger: 35 },
+  { selector: ".section-heading, .simple-gallery-header, .news-heading, .team-heading, .history-heading, .feedback-heading", animation: "fade-up", duration: 720, delay: 0 },
+  { selector: ".cta-text, .ppdb-section__content", animation: "fade-right", duration: 720, delay: 0 },
+  { selector: ".cta-cards, .ppdb-section__panel", animation: "fade-left", duration: 720, delay: 60 },
+  { selector: ".card, .news-card, .gallery-card, .simple-gallery-card, .activity-card, .leader-card, .stat-box, .feedback-card", animation: "fade-up", duration: 700, stagger: 35 },
   { selector: ".media-card, .card-image, .simple-gallery-card img", animation: "zoom-in", duration: 760, stagger: 25 },
   { selector: ".vm-block, .vm-list-item", animation: "fade-right", duration: 740, stagger: 35 },
   { selector: ".history-box.top", animation: "fade-right", duration: 760, stagger: 35 },
@@ -189,7 +191,6 @@ export async function initAosAnimations() {
     window.AOS.refresh();
     document.documentElement.classList.add("aos-ready");
   } catch (error) {
-    console.warn("AOS gagal dimuat, memakai fallback animasi ringan.", error);
     initFallbackAnimations();
   }
 }

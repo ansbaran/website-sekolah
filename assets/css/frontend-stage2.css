@@ -1,0 +1,160 @@
+/* Frontend stage 2: Tailwind consolidation and legacy conflict guards.
+   Keep this small: utility classes handle most layout; custom CSS handles CMS/state. */
+
+:root {
+  --stage2-page-bg: #ffffff;
+  --stage2-section-soft: #f8fafc;
+  --stage2-border: rgba(203, 213, 225, 0.72);
+  --stage2-shadow: 0 12px 30px rgba(15, 23, 42, 0.07);
+  --stage2-shadow-hover: 0 18px 40px rgba(37, 99, 235, 0.11);
+}
+
+body,
+main {
+  background: var(--stage2-page-bg) !important;
+}
+
+/* Keep CMS-rendered empty containers stable before data arrives. */
+.hero__slider,
+.news-grid-home,
+.latest-news,
+.more-news,
+.simple-gallery-grid,
+.achievements-grid {
+  min-width: 0;
+}
+
+.news-grid-home:empty,
+.latest-news:empty,
+.more-news:empty,
+.simple-gallery-grid:empty,
+.achievements-grid:empty {
+  min-height: 0;
+}
+
+/* CMS card compatibility: JS injects plain semantic classes, Tailwind handles page shells. */
+.news-card,
+.gallery-card,
+.simple-gallery-card,
+.achievement-card {
+  min-width: 0;
+  contain: layout paint;
+}
+
+.news-card__content,
+.news-content,
+.card-footer {
+  min-width: 0;
+}
+
+.news-card__title,
+.news-content h4,
+.news-card__content h3,
+.card-footer h3 {
+  overflow-wrap: anywhere;
+}
+
+.news-card__text,
+.news-content p,
+.card-footer p {
+  overflow-wrap: break-word;
+}
+
+/* Gallery filter state is JS-driven via [hidden] and aria-pressed. */
+[data-gallery-item][hidden],
+.simple-gallery-card[hidden] {
+  display: none !important;
+}
+
+.gallery-filters {
+  align-items: center;
+}
+
+/* Navbar state guards: component markup uses Tailwind; CSS only handles state and stacking. */
+[data-header] {
+  z-index: 10050 !important;
+}
+
+[data-nav-menu] {
+  z-index: 10040 !important;
+}
+
+@media (max-width: 1023px) {
+  [data-nav-menu] {
+    display: none !important;
+  }
+
+  [data-nav-menu].navbar__menu--open {
+    display: flex !important;
+  }
+
+  [data-nav-menu] .dropdown-menu {
+    width: 100%;
+  }
+}
+
+/* Hero: keep CMS image layer below overlay/content and avoid legacy nth-child bleed. */
+.hero__slider {
+  pointer-events: none;
+}
+
+.hero__slide {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.hero__slide:not(.hero__slide--active) {
+  pointer-events: none;
+}
+
+.hero__overlay {
+  pointer-events: none;
+}
+
+.hero__content {
+  pointer-events: auto;
+}
+
+/* Reduce old animation side effects while preserving small hover feedback. */
+.news-card,
+.gallery-card,
+.simple-gallery-card,
+.achievement-card,
+.activity-card {
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease !important;
+}
+
+.news-card:hover,
+.gallery-card:hover,
+.simple-gallery-card:hover,
+.achievement-card:hover,
+.activity-card:hover {
+  transform: translateY(-3px) !important;
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    border-radius: 18px !important;
+  }
+
+  .logo-text span {
+    font-size: 0.9rem !important;
+  }
+
+  .logo-text small {
+    font-size: 0.72rem !important;
+  }
+
+  .news-card,
+  .gallery-card,
+  .simple-gallery-card,
+  .achievement-card {
+    border-radius: 14px !important;
+  }
+
+  .hero__nav {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}

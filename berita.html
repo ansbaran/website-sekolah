@@ -15,410 +15,41 @@
     </script>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-slate-50 font-sans text-slate-700 antialiased">
+  <body class="bg-white font-sans text-slate-700 antialiased">
     <div id="navbar"></div>
+
     <main class="overflow-hidden">
-      <section class="news-modern news-section bg-slate-50 px-4 pb-16 pt-28 sm:px-6 lg:pb-24">
-
-    <!-- =======================
-         HEADING
-    ======================== -->
-
-    <div class="news-heading mx-auto mb-12 max-w-3xl text-center">
-
-        <span class="inline-flex rounded-full bg-blue-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">BERITA</span>
-
-        <h2 class="mt-5 text-3xl font-black tracking-tight text-slate-950 sm:text-5xl">
+      <section class="news-modern news-section bg-white px-4 pb-16 pt-28 sm:px-6 lg:pb-24">
+        <div class="news-heading mx-auto mb-12 max-w-3xl text-center">
+          <span class="inline-flex rounded-full bg-blue-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">BERITA</span>
+          <h2 class="mt-5 text-3xl font-black tracking-tight text-slate-950 sm:text-5xl">
             Kegiatan dan Informasi Terbaru Sekolah
-        </h2>
+          </h2>
+        </div>
 
-    </div>
-
-    <!-- =======================
-         BERITA TERBARU
-    ======================== -->
-
-    <div class="news-section mx-auto max-w-7xl">
-
-        <div class="section-title mb-6">
+        <div class="news-section mx-auto max-w-7xl">
+          <div class="section-title mb-6">
             <span></span>
             <h3 class="text-2xl font-black tracking-tight text-slate-950">Berita Terbaru</h3>
+          </div>
+
+          <div class="news-grid latest-news grid gap-6 md:grid-cols-2 xl:grid-cols-4"></div>
         </div>
 
-        <div class="news-grid latest-news grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-
-            <!-- CARD -->
-            <article class="news-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-slug="pelaksanaan-ujian-tka" data-id="1">
-
-                <div class="news-image aspect-[16/10] overflow-hidden">
-                    <img src="assets/img/berita/berita1.jpeg" alt="Pelaksanaan Ujian TKA" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
-                </div>
-
-                <div class="news-content flex min-h-[260px] flex-col p-6">
-
-                    <span class="news-date text-sm font-bold text-slate-400">
-                        12 Mei 2026
-                    </span>
-
-                    <h4 class="mt-3 text-lg font-extrabold leading-snug text-slate-950">
-                        Pelaksanaan Ujian TKA
-                    </h4>
-
-                    <p class="mt-3 text-sm leading-7 text-slate-600">
-                      TKA bertujuan untuk mengukur capaian akademik siswa 
-                      secara objektif dan menjadi salah satu komponen 
-                      penting dalam sistem evaluasi nasional.
-                    </p>
-
-                    <a href="#" class="mt-auto inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-slug="pelaksanaan-ujian-tka" data-id="2">
-
-                <div class="news-image aspect-[16/10] overflow-hidden">
-                    <img src="assets/img/berita/berita3.jpeg" alt="Pelaksanaan Ujian TKA" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
-                </div>
-
-                <div class="news-content flex min-h-[260px] flex-col p-6">
-
-                    <span class="news-date text-sm font-bold text-slate-400">
-                        12 Mei 2026
-                    </span>
-
-                    <h4 class="mt-3 text-lg font-extrabold leading-snug text-slate-950">
-                        Pelaksanaan Ujian TKA
-                    </h4>
-
-                    <p class="mt-3 text-sm leading-7 text-slate-600">
-                      TKA bertujuan untuk mengukur capaian akademik siswa 
-                      secara objektif dan menjadi salah satu komponen 
-                      penting dalam sistem evaluasi nasional.
-                    </p>
-
-                    <a href="#" class="mt-auto inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-slug="pelaksanaan-ujian-tka" data-id="3">
-
-                <div class="news-image aspect-[16/10] overflow-hidden">
-                    <img src="assets/img/berita/berita1.jpeg" alt="Pelaksanaan Ujian TKA" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
-                </div>
-
-                <div class="news-content flex min-h-[260px] flex-col p-6">
-
-                    <span class="news-date text-sm font-bold text-slate-400">
-                        12 Mei 2026
-                    </span>
-
-                    <h4 class="mt-3 text-lg font-extrabold leading-snug text-slate-950">
-                        Pelaksanaan Ujian TKA
-                    </h4>
-
-                    <p class="mt-3 text-sm leading-7 text-slate-600">
-                      TKA bertujuan untuk mengukur capaian akademik siswa 
-                      secara objektif dan menjadi salah satu komponen 
-                      penting dalam sistem evaluasi nasional.
-                    </p>
-
-                    <a href="#" class="mt-auto inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card group overflow-hidden rounded-[1.75rem] bg-white shadow-xl shadow-slate-200/70 transition hover:-translate-y-2 hover:shadow-2xl" data-slug="pelaksanaan-ujian-tka" data-id="4">
-
-                <div class="news-image aspect-[16/10] overflow-hidden">
-                    <img src="assets/img/berita/berita2.jpeg" alt="Pelaksanaan Ujian TKA" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
-                </div>
-
-                <div class="news-content flex min-h-[260px] flex-col p-6">
-
-                    <span class="news-date text-sm font-bold text-slate-400">
-                        12 Mei 2026
-                    </span>
-
-                    <h4 class="mt-3 text-lg font-extrabold leading-snug text-slate-950">
-                        Pelaksanaan Ujian TKA
-                    </h4>
-
-                    <p class="mt-3 text-sm leading-7 text-slate-600">
-                      TKA bertujuan untuk mengukur capaian akademik siswa 
-                      secara objektif dan menjadi salah satu komponen 
-                      penting dalam sistem evaluasi nasional.
-                    </p>
-
-                    <a href="#" class="mt-auto inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-        </div>
-
-    </div>
-
-    <!-- =======================
-         BERITA LAINNYA
-    ======================== -->
-
-    <div class="news-section more-news-section mx-auto mt-16 max-w-7xl">
-
-        <div class="section-title mb-6">
+        <div class="news-section more-news-section mx-auto mt-16 max-w-7xl">
+          <div class="section-title mb-6">
             <span></span>
             <h3 class="text-2xl font-black tracking-tight text-slate-950">Berita Lainnya</h3>
+          </div>
+
+          <div class="news-grid more-news grid gap-6 md:grid-cols-2 xl:grid-cols-4"></div>
         </div>
-
-        <div class="news-grid more-news grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-
-            <!-- card kecil -->
-            <article class="news-card small" data-slug="pelaksanaan-anbk" data-id="5">
-
-                <div class="news-image">
-                    <img src="assets/img/berita/berita5.jpeg" alt="Pelaksanaan ANBK">
-                </div>
-
-                <div class="news-content">
-
-                    <span class="news-date">
-                        10 Mei 2025
-                    </span>
-
-                    <h4>
-                        Pelaksanaan ANBK
-                    </h4>
-                      <p>
-                      ANBK adalah program evaluasi yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan 
-                      (Kemendikbud) untuk meningkatkan mutu pendidikan di Indonesia.
-                    </p>
-
-                    <a href="#">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card small" data-slug="pelaksanaan-anbk" data-id="6">
-
-                <div class="news-image">
-                    <img src="assets/img/berita/berita5.jpeg" alt="Pelaksanaan ANBK">
-                </div>
-
-                <div class="news-content">
-
-                    <span class="news-date">
-                        10 Mei 2025
-                    </span>
-
-                    <h4>
-                        Pelaksanaan ANBK
-                    </h4>
-                      <p>
-                      ANBK adalah program evaluasi yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan 
-                      (Kemendikbud) untuk meningkatkan mutu pendidikan di Indonesia.
-                    </p>
-
-                    <a href="#">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card small" data-slug="pelaksanaan-anbk" data-id="7">
-
-                <div class="news-image">
-                    <img src="assets/img/berita/berita5.jpeg" alt="Pelaksanaan ANBK">
-                </div>
-
-                <div class="news-content">
-
-                    <span class="news-date">
-                        10 Mei 2025
-                    </span>
-
-                    <h4>
-                        Pelaksanaan ANBK
-                    </h4>
-                      <p>
-                      ANBK adalah program evaluasi yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan 
-                      (Kemendikbud) untuk meningkatkan mutu pendidikan di Indonesia.
-                    </p>
-
-                    <a href="#">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card small" data-slug="pelaksanaan-anbk" data-id="8">
-
-                <div class="news-image">
-                    <img src="assets/img/berita/berita5.jpeg" alt="Pelaksanaan ANBK">
-                </div>
-
-                <div class="news-content">
-
-                    <span class="news-date">
-                        10 Mei 2025
-                    </span>
-
-                    <h4>
-                        Pelaksanaan ANBK
-                    </h4>
-                      <p>
-                      ANBK adalah program evaluasi yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan 
-                      (Kemendikbud) untuk meningkatkan mutu pendidikan di Indonesia.
-                    </p>
-
-                    <a href="#">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card small" data-slug="pelaksanaan-anbk" data-id="9">
-
-                <div class="news-image">
-                    <img src="assets/img/berita/berita5.jpeg" alt="Pelaksanaan ANBK">
-                </div>
-
-                <div class="news-content">
-
-                    <span class="news-date">
-                        10 Mei 2025
-                    </span>
-
-                    <h4>
-                        Pelaksanaan ANBK
-                    </h4>
-                      <p>
-                      ANBK adalah program evaluasi yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan 
-                      (Kemendikbud) untuk meningkatkan mutu pendidikan di Indonesia.
-                    </p>
-
-                    <a href="#">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card small" data-slug="pelaksanaan-anbk" data-id="10">
-
-                <div class="news-image">
-                    <img src="assets/img/berita/berita5.jpeg" alt="Pelaksanaan ANBK">
-                </div>
-
-                <div class="news-content">
-
-                    <span class="news-date">
-                        10 Mei 2025
-                    </span>
-
-                    <h4>
-                        Pelaksanaan ANBK
-                    </h4>
-                      <p>
-                      ANBK adalah program evaluasi yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan 
-                      (Kemendikbud) untuk meningkatkan mutu pendidikan di Indonesia.
-                    </p>
-
-                    <a href="#">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card small" data-slug="pelaksanaan-anbk" data-id="11">
-
-                <div class="news-image">
-                    <img src="assets/img/berita/berita5.jpeg" alt="Pelaksanaan ANBK">
-                </div>
-
-                <div class="news-content">
-
-                    <span class="news-date">
-                        10 Mei 2025
-                    </span>
-
-                    <h4>
-                        Pelaksanaan ANBK
-                    </h4>
-                      <p>
-                      ANBK adalah program evaluasi yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan 
-                      (Kemendikbud) untuk meningkatkan mutu pendidikan di Indonesia.
-                    </p>
-
-                    <a href="#">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="news-card small" data-slug="pelaksanaan-anbk" data-id="12">
-
-                <div class="news-image">
-                    <img src="assets/img/berita/berita5.jpeg" alt="Pelaksanaan ANBK">
-                </div>
-
-                <div class="news-content">
-
-                    <span class="news-date">
-                        10 Mei 2025
-                    </span>
-
-                    <h4>
-                        Pelaksanaan ANBK
-                    </h4>
-                      <p>
-                      ANBK adalah program evaluasi yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan 
-                      (Kemendikbud) untuk meningkatkan mutu pendidikan di Indonesia.
-                    </p>
-
-                    <a href="#">
-                        Baca Selengkapnya →
-                    </a>
-
-                </div>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
+      </section>
     </main>
+
     <div id="footer"></div>
     <script type="module" src="assets/js/main.js"></script>
     <script src="assets/js/seo.js"></script>
@@ -426,4 +57,3 @@
     <script src="assets/js/cms-connector.js"></script>
   </body>
 </html>
-

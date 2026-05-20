@@ -14,14 +14,12 @@ async function loadNavbar() {
         `${window.location.origin}/components/navbar.html`
     ];
 
-    console.log('[Navbar] mencari komponen di path:', candidatePaths);
 
     for (const componentUrl of candidatePaths) {
         try {
             const response = await fetch(componentUrl, { cache: 'no-cache' });
 
             if (!response.ok) {
-                console.warn('[Navbar] path tidak ditemukan:', componentUrl, response.status);
                 continue;
             }
 
@@ -29,14 +27,12 @@ async function loadNavbar() {
             navbarContainer.innerHTML = html;
             initNavbar();
             document.dispatchEvent(new CustomEvent('navbar:loaded'));
-            console.log('[Navbar] berhasil dimuat dari:', componentUrl);
             return;
         } catch (error) {
-            console.warn('[Navbar] gagal memuat path:', componentUrl, error);
+            continue;
         }
     }
 
-    console.error('Navbar gagal dimuat: komponen navbar tidak ditemukan pada semua path fallback');
 }
 
 /* =========================
@@ -123,6 +119,13 @@ function initMobileMenu() {
 
     if (!toggle || !menu) return;
 
+    const closeMenu = () => {
+        menu.classList.remove("navbar__menu--open");
+        menu.classList.remove("active");
+        toggle.classList.remove("active");
+        toggle.setAttribute("aria-expanded", "false");
+    };
+
     toggle.addEventListener("click", () => {
 
         const isOpen =
@@ -133,6 +136,27 @@ function initMobileMenu() {
         toggle.classList.toggle("active", isOpen);
 
         toggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    menu.addEventListener("click", (event) => {
+        const link = event.target.closest("a");
+        if (!link || link.classList.contains("dropdown-toggle")) return;
+
+        closeMenu();
+    });
+
+    document.addEventListener("click", (event) => {
+        if (event.target.closest("[data-nav-menu]") || event.target.closest("[data-nav-toggle]")) {
+            return;
+        }
+
+        closeMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+        }
     });
 }
 

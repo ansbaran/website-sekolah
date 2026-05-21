@@ -62,9 +62,9 @@ body {
     radial-gradient(circle at top left, rgba(228, 211, 41, 0.18), transparent 30%),
     radial-gradient(circle at bottom right, rgba(71, 139, 141, 0.34), transparent 32%),
     linear-gradient(135deg, #17145f 0%, #1f2c72 52%, #315a77 100%) !important;
-  padding: clamp(3rem, 5vw, 4.5rem) clamp(1rem, 3vw, 2.25rem) 2rem !important;
+  padding: clamp(2rem, 3.4vw, 2.8rem) clamp(1rem, 3vw, 2.25rem) 1.35rem !important;
   color: #ffffff !important;
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
 }
 
 .footer > .absolute {
@@ -78,8 +78,8 @@ body {
   width: min(100%, 80rem) !important;
   max-width: 80rem !important;
   margin-inline: auto !important;
-  grid-template-columns: minmax(0, 1.45fr) minmax(10rem, 0.8fr) minmax(10rem, 0.85fr) minmax(14rem, 1.15fr) !important;
-  gap: clamp(2rem, 5vw, 4rem) !important;
+  grid-template-columns: minmax(0, 1.38fr) minmax(8.5rem, 0.72fr) minmax(8.5rem, 0.68fr) minmax(22rem, 1.35fr) !important;
+  gap: clamp(1.35rem, 2.8vw, 2.5rem) !important;
   align-items: start !important;
   padding: 0 !important;
 }
@@ -91,30 +91,36 @@ body {
 .footer-brand {
   display: flex !important;
   align-items: flex-start !important;
-  gap: 1.5rem !important;
+  gap: 0.75rem !important;
 }
 
 .footer-brand__logo {
   display: grid !important;
-  width: 5.4rem !important;
-  height: 5.4rem !important;
-  flex: 0 0 5.4rem !important;
+  width: 5rem !important;
+  height: 5rem !important;
+  flex: 0 0 5rem !important;
   place-items: center !important;
-  border-radius: 1.25rem !important;
-  background: #ffffff !important;
-  box-shadow: 0 18px 44px rgba(13, 11, 97, 0.24) !important;
+  border-radius: 1rem !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: transform 200ms ease, filter 200ms ease !important;
+}
+
+.footer-brand__logo:hover {
+  transform: translateY(-0.2rem) scale(1.04) !important;
+  filter: drop-shadow(0 14px 24px rgba(228, 211, 41, 0.24)) !important;
 }
 
 .footer-brand__logo img {
-  width: 3.1rem !important;
-  height: 3.1rem !important;
+  width: 4.1rem !important;
+  height: 4.1rem !important;
   object-fit: contain !important;
 }
 
 .footer-brand h3 {
-  margin: 0 0 0.75rem !important;
+  margin: 0 0 0.35rem !important;
   color: #ffffff !important;
-  font-size: clamp(1.15rem, 2vw, 1.35rem) !important;
+  font-size: clamp(1.05rem, 1.75vw, 1.22rem) !important;
   font-weight: 800 !important;
   letter-spacing: 0 !important;
   line-height: 1.25 !important;
@@ -123,42 +129,50 @@ body {
 .footer-brand .subtitle {
   margin: 0 !important;
   color: #e4d329 !important;
-  font-size: 1rem !important;
+  font-size: 0.92rem !important;
   font-weight: 800 !important;
   opacity: 1 !important;
 }
 
 .footer-desc {
-  max-width: 24rem !important;
-  margin-top: 2rem !important;
+  max-width: 21rem !important;
+  margin-top: 1.05rem !important;
   color: rgba(226, 232, 240, 0.72) !important;
-  font-size: 1rem !important;
-  line-height: 1.85 !important;
+  font-size: 0.92rem !important;
+  line-height: 1.62 !important;
   opacity: 1 !important;
 }
 
 .footer-col h4 {
-  margin: 0 0 1.35rem !important;
+  margin: 0 0 0.95rem !important;
   color: #e4d329 !important;
-  font-size: 1rem !important;
+  font-size: 0.88rem !important;
   font-weight: 900 !important;
-  letter-spacing: 0.28em !important;
+  letter-spacing: 0.22em !important;
   text-transform: uppercase !important;
 }
 
 .footer-col p,
 .footer-col a {
   color: rgba(255, 255, 255, 0.9) !important;
-  font-size: 1rem !important;
-  line-height: 1.7 !important;
+  font-size: 0.94rem !important;
+  line-height: 1.55 !important;
   text-decoration: none !important;
   overflow-wrap: anywhere !important;
   word-break: normal !important;
 }
 
+.footer-container .footer-col:nth-child(4) p {
+  overflow-wrap: normal !important;
+}
+
+.footer-container .footer-col:nth-child(4) p:has(.fa-envelope) {
+  white-space: nowrap !important;
+}
+
 .footer-col a {
   display: block !important;
-  margin-bottom: 0.95rem !important;
+  margin-bottom: 0.52rem !important;
   transition: color 180ms ease, transform 180ms ease !important;
 }
 
@@ -182,20 +196,20 @@ body {
 }
 
 .footer-social__title {
-  margin: 1.75rem 0 1rem !important;
+  margin: 1.05rem 0 0.75rem !important;
   color: #ffffff !important;
   font-weight: 800 !important;
 }
 
 .footer-social__icons {
   display: flex !important;
-  gap: 1rem !important;
+  gap: 0.75rem !important;
 }
 
 .footer-social__icons a {
   display: grid !important;
-  width: 3.75rem !important;
-  height: 3.75rem !important;
+  width: 2.85rem !important;
+  height: 2.85rem !important;
   margin: 0 !important;
   place-items: center !important;
   border-radius: 999px !important;
@@ -218,14 +232,18 @@ body {
   position: relative !important;
   z-index: 1 !important;
   width: min(100%, 80rem) !important;
-  margin: clamp(2.5rem, 5vw, 4rem) auto 0 !important;
+  margin: clamp(1.5rem, 3vw, 2.2rem) auto 0 !important;
   border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding-top: 1.5rem !important;
+  padding-top: 1rem !important;
   color: rgba(226, 232, 240, 0.45) !important;
   text-align: center !important;
-  font-size: 0.9rem !important;
+  font-size: 0.82rem !important;
   font-weight: 700 !important;
   opacity: 1 !important;
+}
+
+.footer-container .footer-col:nth-child(3) a {
+  margin-bottom: 0.52rem !important;
 }
 
 img,
@@ -1164,6 +1182,7 @@ html:not(.js) [data-aos] {
 
   .footer-container {
     grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem !important;
   }
 
   .footer-brand {
@@ -1256,38 +1275,42 @@ html:not(.js) [data-aos] {
     padding: 0.65rem 0.35rem !important;
   }
 
-  .footer {
-    padding-inline: 1rem !important;
+  .footer.footer {
+    padding: 2rem 1rem 1.2rem !important;
   }
 
   .footer-container {
     grid-template-columns: 1fr !important;
-    gap: 2rem !important;
+    gap: 1.45rem !important;
   }
 
   .footer-brand {
-    flex-direction: column !important;
-    gap: 1rem !important;
+    flex-direction: row !important;
+    gap: 0.7rem !important;
   }
 
   .footer-brand__logo {
-    width: 4.5rem !important;
-    height: 4.5rem !important;
-    flex-basis: 4.5rem !important;
+    width: 4.35rem !important;
+    height: 4.35rem !important;
+    flex-basis: 4.35rem !important;
   }
 
   .footer-brand__logo img {
-    width: 2.7rem !important;
-    height: 2.7rem !important;
+    width: 3.55rem !important;
+    height: 3.55rem !important;
   }
 
   .footer-desc {
-    margin-top: 1.25rem !important;
+    margin-top: 0.85rem !important;
   }
 
   .footer-social__icons a {
-    width: 3.25rem !important;
-    height: 3.25rem !important;
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+  }
+
+  .footer-container .footer-col:nth-child(4) p:has(.fa-envelope) {
+    white-space: normal !important;
   }
 
   .feedback-title {

@@ -38,6 +38,7 @@ Sistem admin ini dibangun terpisah dari frontend agar visual public tetap aman.
    - `DB_NAME`
    - `DB_USER`
    - `DB_PASS`
+   Nilai tersebut juga dapat diatur lewat environment variable sesuai `.env.example`.
 4. Import file SQL `admin-schema.sql` ke database MySQL.
 5. Ganti nilai `REPLACE_WITH_PASSWORD_HASH` di `users` dengan hash password aman dari PHP.
    - Contoh di server: `<?php echo password_hash('Admin123!', PASSWORD_DEFAULT); ?>`

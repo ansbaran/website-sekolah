@@ -47,3 +47,9 @@ project/
 ## Cara Menjalankan
 
 Buka `index.html` langsung di browser.
+
+## Environment
+
+Konfigurasi database dapat diatur lewat environment variable. Salin `.env.example`
+sebagai referensi untuk hosting/server, lalu set nilai yang sesuai di panel server
+atau konfigurasi web server.

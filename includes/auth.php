@@ -31,7 +31,10 @@ function restore_remembered(): void
     $statement->execute(['id' => $userId]);
     $user = $statement->fetch();
 
-    if ($user && hash_equals($user['remember_token'] ?? '', $token)) {
+    $storedToken = (string)($user['remember_token'] ?? '');
+    $tokenHash = hash('sha256', $token);
+
+    if ($user && $storedToken !== '' && hash_equals($storedToken, $tokenHash)) {
         $_SESSION['admin_user'] = [
             'id' => $user['id'],
             'name' => $user['name'],
@@ -71,10 +74,17 @@ function login_user(array $user, bool $remember = false): void
 
     if ($remember) {
         $token = bin2hex(random_bytes(32));
+        $tokenHash = hash('sha256', $token);
         $statement = $pdo->prepare('UPDATE users SET remember_token = :token WHERE id = :id');
-        $statement->execute(['token' => $token, 'id' => $user['id']]);
+        $statement->execute(['token' => $tokenHash, 'id' => $user['id']]);
 
-        setcookie('remember_me', $user['id'] . '|' . $token, time() + 60 * 60 * 24 * 30, '/', '', isset($_SERVER['HTTPS']), true);
+        setcookie('remember_me', $user['id'] . '|' . $token, [
+            'expires' => time() + 60 * 60 * 24 * 30,
+            'path' => '/',
+            'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
     }
 
     session_regenerate_id(true);

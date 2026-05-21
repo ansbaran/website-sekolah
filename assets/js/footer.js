@@ -14,27 +14,23 @@ async function loadFooter() {
         `${window.location.origin}/components/footer.html`
     ];
 
-    console.log('[Footer] mencari komponen di path:', candidatePaths);
 
     for (const componentUrl of candidatePaths) {
         try {
             const response = await fetch(componentUrl, { cache: 'no-cache' });
 
             if (!response.ok) {
-                console.warn('[Footer] path tidak ditemukan:', componentUrl, response.status);
                 continue;
             }
 
             const data = await response.text();
             footer.innerHTML = data;
-            console.log('[Footer] berhasil dimuat dari:', componentUrl);
             return;
         } catch (error) {
-            console.warn('[Footer] gagal memuat path:', componentUrl, error);
+            continue;
         }
     }
 
-    console.error('Footer gagal dimuat: komponen footer tidak ditemukan pada semua path fallback');
 }
 
 loadFooter();

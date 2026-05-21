@@ -167,6 +167,22 @@ function initMobileMenu() {
 function initDropdownMenus() {
     const dropdowns = document.querySelectorAll(".dropdown");
     const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    const header = document.querySelector("[data-header]");
+
+    const closeDropdowns = (lockDesktopHover = false) => {
+        dropdowns.forEach((dropdown) => {
+            dropdown.classList.remove("open");
+            dropdown.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
+        });
+
+        if (lockDesktopHover && desktopQuery.matches) {
+            header?.classList.add("navbar--dropdowns-locked");
+        }
+    };
+
+    const unlockDesktopHover = () => {
+        header?.classList.remove("navbar--dropdowns-locked");
+    };
 
     dropdowns.forEach((dropdown) => {
         const toggle = dropdown.querySelector(".dropdown-toggle");
@@ -181,6 +197,7 @@ function initDropdownMenus() {
             if (desktopQuery.matches) return;
 
             event.preventDefault();
+            unlockDesktopHover();
 
             const isOpen = dropdown.classList.toggle("open");
             toggle.setAttribute("aria-expanded", String(isOpen));
@@ -194,6 +211,7 @@ function initDropdownMenus() {
 
         dropdown.addEventListener("mouseenter", () => {
             if (!desktopQuery.matches) return;
+            if (header?.classList.contains("navbar--dropdowns-locked")) return;
             dropdown.classList.add("open");
             toggle.setAttribute("aria-expanded", "true");
         });
@@ -203,16 +221,32 @@ function initDropdownMenus() {
             dropdown.classList.remove("open");
             toggle.setAttribute("aria-expanded", "false");
         });
+
+        dropdown.addEventListener("focusin", () => {
+            unlockDesktopHover();
+        });
     });
 
+    header?.addEventListener("mouseleave", unlockDesktopHover);
+
     document.addEventListener("click", (event) => {
-        if (desktopQuery.matches) return;
         if (event.target.closest(".dropdown")) return;
 
-        dropdowns.forEach((dropdown) => {
-            dropdown.classList.remove("open");
-            dropdown.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
-        });
+        closeDropdowns(desktopQuery.matches);
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeDropdowns(desktopQuery.matches);
+        }
+    });
+
+    window.addEventListener("scroll", () => {
+        closeDropdowns(true);
+    }, { passive: true });
+
+    window.addEventListener("resize", () => {
+        closeDropdowns(true);
     });
 }
 

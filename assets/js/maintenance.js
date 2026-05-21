@@ -16,6 +16,5 @@ document.addEventListener('DOMContentLoaded', async function () {
             window.location.replace('/maintenance.html');
         }
     } catch (error) {
-        console.warn('Maintenance check failed:', error);
     }
 });

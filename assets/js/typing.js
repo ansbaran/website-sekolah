@@ -7,7 +7,6 @@ export function initTypingAnimation() {
   const element = document.querySelector(TYPING_SELECTOR);
 
   if (!element) {
-    console.log("Typing element tidak ditemukan");
     return;
   }
 
@@ -20,7 +19,6 @@ export function initTypingAnimation() {
   }
 
   if (!words || words.length === 0) {
-    console.log("Tidak ada kata untuk typing");
     return;
   }
 

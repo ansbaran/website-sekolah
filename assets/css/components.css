@@ -1734,20 +1734,19 @@ html {
   margin: 20px 0 40px;
 }
 
-/* Tombol gradient */
+/* Tombol Instagram disamakan dengan tombol Lihat Berita */
 .btn--gradient {
-  background: linear-gradient(135deg, #ff4ecb, #7b61ff);
-  color: white;
-  padding: 12px 26px;
-  border-radius: 30px;
-  font-weight: 600;
-  display: inline-block;
-  transition: 0.3s;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 18px rgba(124, 58, 237, 0.2);
+  border: none;
 }
 
 .btn--gradient:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(123, 97, 255, 0.4);
+  background: linear-gradient(135deg, #4338ca, #6d28d9, #db2777) !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 25px rgba(124, 58, 237, 0.35);
 }
 
 /* Grid media */
@@ -1857,7 +1856,7 @@ html {
   isolation: isolate;
   overflow: hidden;
 
-  background: linear-gradient(135deg, #1e3a8a, #1e293b);
+  background: linear-gradient(135deg, #dbeafe, #eef6ff);
 
   /* FIX: breathing space bawah proporsional (tanpa gap putih besar) */
   padding: 48px 0 36px;
@@ -1872,7 +1871,7 @@ html {
   position: absolute;
   width: 420px;
   height: 420px;
-  background: rgba(59,130,246,0.08);
+  background: rgba(59,130,246,0.12);
 
   /* lebih diffuse tapi intensitas lebih kecil */
   filter: blur(120px);
@@ -1895,13 +1894,7 @@ html {
   /* lebih subtle: fade tidak dominan di area tengah */
   height: 44px;
   pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(15,23,54,0) 0%,
-    rgba(15,23,54,0.08) 35%,
-    rgba(15,23,54,0.16) 70%,
-    rgba(15,23,54,0.24) 100%
-  );
+  background: linear-gradient(180deg, rgba(219,234,254,0), rgba(219,234,254,0.72));
 
   opacity: 0.72;
   filter: blur(0.35px);
@@ -1921,6 +1914,8 @@ html {
 
   height: auto;
   min-height: auto;
+  background: linear-gradient(135deg, #1e3a8a, #294669) !important;
+  box-shadow: 0 28px 70px rgba(30, 58, 138, 0.22) !important;
 }
 
 /* LEFT */
@@ -1991,6 +1986,20 @@ html {
   font-size: 15px;
   color: #374151;
   line-height: 1.8;
+}
+
+.visit-list li i {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 34px;
+  margin-top: 0 !important;
+  border-radius: 12px;
+  background: #dbeafe;
+  color: #1d4ed8 !important;
+  font-size: 16px;
 }
 
 .visit-info {

@@ -61,10 +61,14 @@ require_once __DIR__ . '/includes/header.php';
             </div>
         <?php else : ?>
             <?php foreach ($activities as $activity) : ?>
+                <?php
+                $activity['type'] = $activity['activity_type'] ?? '';
+                $activity['date'] = $activity['created_at'] ?? '';
+                ?>
                 <div class="preview-card">
                     <div class="preview-content">
-                        <h3><?= htmlspecialchars($activity['label']) ?></h3>
-                        <small><?= htmlspecialchars($activity['type']) ?> • <?= htmlspecialchars($activity['date']) ?></small>
+                        <h3><?= escape($activity['description'] ?: $activity['activity_type']) ?></h3>
+                        <small><?= escape($activity['type']) ?> &bull; <?= escape($activity['date']) ?></small>
                     </div>
                 </div>
             <?php endforeach; ?>

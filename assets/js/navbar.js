@@ -52,6 +52,11 @@ function setActiveMenu() {
         "ekstrakurikuler.html"
     ];
 
+    const newsPages = [
+        "berita.html",
+        "berita-detail.php"
+    ];
+
     // ambil menu utama navbar
     const navLinks =
         document.querySelectorAll(".nav-menu > li > a");
@@ -73,6 +78,7 @@ function setActiveMenu() {
         // cocokkan halaman
         if (
             cleanHref === currentPage ||
+            (newsPages.includes(currentPage) && cleanHref === "berita.html") ||
             (activityPages.includes(currentPage) && link.textContent.trim() === "Aktivitas")
         ) {
 
@@ -184,6 +190,15 @@ function initDropdownMenus() {
         header?.classList.remove("navbar--dropdowns-locked");
     };
 
+    const closeSiblingDropdowns = (activeDropdown) => {
+        dropdowns.forEach((dropdown) => {
+            if (dropdown === activeDropdown) return;
+
+            dropdown.classList.remove("open");
+            dropdown.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
+        });
+    };
+
     dropdowns.forEach((dropdown) => {
         const toggle = dropdown.querySelector(".dropdown-toggle");
         const menu = dropdown.querySelector(".dropdown-menu");
@@ -212,6 +227,7 @@ function initDropdownMenus() {
         dropdown.addEventListener("mouseenter", () => {
             if (!desktopQuery.matches) return;
             if (header?.classList.contains("navbar--dropdowns-locked")) return;
+            closeSiblingDropdowns(dropdown);
             dropdown.classList.add("open");
             toggle.setAttribute("aria-expanded", "true");
         });
@@ -224,6 +240,7 @@ function initDropdownMenus() {
 
         dropdown.addEventListener("focusin", () => {
             unlockDesktopHover();
+            closeSiblingDropdowns(dropdown);
         });
     });
 

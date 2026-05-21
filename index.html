@@ -290,8 +290,8 @@
       </section>
 
       <section class="section section--default section--divider feedback-section px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="feedback-title">
-        <div class="container mx-auto max-w-7xl">
-          <div class="feedback-heading mx-auto max-w-3xl text-center" data-aos="fade-up" data-aos-custom="true">
+        <div class="container feedback-showcase mx-auto max-w-7xl">
+          <div class="feedback-header feedback-heading" data-aos="fade-up" data-aos-custom="true">
             <p class="eyebrow text-xs font-extrabold uppercase tracking-[0.24em]">Feedback Orang Tua</p>
             <h2 class="feedback-title mt-4 text-3xl font-black tracking-tight sm:text-4xl" id="feedback-title">
               <span class="feedback-title__typing" aria-label="Apa kata mereka Tentang Kami?">
@@ -301,39 +301,88 @@
             </h2>
           </div>
 
-          <div class="feedback-grid mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <article class="feedback-card" data-aos="fade-up" data-aos-delay="0" data-aos-custom="true">
-              <div class="feedback-card__avatar" aria-hidden="true">AR</div>
-              <p class="feedback-card__text">
-                Anak kami menjadi lebih percaya diri, disiplin, dan senang bercerita tentang kegiatan belajar di sekolah.
-              </p>
-              <div class="feedback-card__author">
-                <strong>Angela R.</strong>
-                <span>Orang tua siswa kelas 3</span>
+          <div class="feedback-carousel mt-12" data-testimonial-slider data-aos="fade-up" data-aos-delay="80" data-aos-custom="true">
+            <div class="feedback-stage">
+              <div class="feedback-track" data-testimonial-track tabindex="0" aria-label="Testimonial orang tua">
+              <div class="feedback-slide" data-testimonial-slide>
+                <article class="feedback-card">
+                  <div class="feedback-card__avatar" aria-hidden="true">AR</div>
+                  <div class="feedback-card__author">
+                    <strong>Angela R.</strong>
+                    <span>Orang tua siswa kelas 3</span>
+                  </div>
+                  <div class="feedback-card__rating" aria-label="Rating 5 dari 5">
+                    <span aria-hidden="true">★★★★★</span>
+                    <strong>5.0</strong>
+                  </div>
+                  <p class="feedback-card__text">
+                    Anak kami menjadi lebih percaya diri, disiplin, dan senang bercerita tentang kegiatan belajar di sekolah.
+                  </p>
+                </article>
               </div>
-            </article>
 
-            <article class="feedback-card" data-aos="fade-up" data-aos-delay="80" data-aos-custom="true">
-              <div class="feedback-card__avatar feedback-card__avatar--green" aria-hidden="true">BP</div>
-              <p class="feedback-card__text">
-                Guru-gurunya komunikatif dan lingkungan sekolah terasa hangat. Kami merasa perkembangan anak dipantau dengan baik.
-              </p>
-              <div class="feedback-card__author">
-                <strong>Budi P.</strong>
-                <span>Orang tua siswa kelas 5</span>
+              <div class="feedback-slide" data-testimonial-slide>
+                <article class="feedback-card">
+                  <div class="feedback-card__avatar feedback-card__avatar--green" aria-hidden="true">BP</div>
+                  <div class="feedback-card__author">
+                    <strong>Budi P.</strong>
+                    <span>Orang tua siswa kelas 5</span>
+                  </div>
+                  <div class="feedback-card__rating" aria-label="Rating 5 dari 5">
+                    <span aria-hidden="true">★★★★★</span>
+                    <strong>5.0</strong>
+                  </div>
+                  <p class="feedback-card__text">
+                    Guru-gurunya komunikatif dan lingkungan sekolah terasa hangat. Kami merasa perkembangan anak dipantau dengan baik.
+                  </p>
+                </article>
               </div>
-            </article>
 
-            <article class="feedback-card" data-aos="fade-up" data-aos-delay="160" data-aos-custom="true">
-              <div class="feedback-card__avatar feedback-card__avatar--gold" aria-hidden="true">MS</div>
-              <p class="feedback-card__text">
-                Kegiatan akademik dan karakter berjalan seimbang. Anak-anak dibimbing untuk berprestasi tanpa kehilangan nilai kasih.
-              </p>
-              <div class="feedback-card__author">
-                <strong>Maria S.</strong>
-                <span>Alumni orang tua siswa</span>
+              <div class="feedback-slide" data-testimonial-slide>
+                <article class="feedback-card">
+                  <div class="feedback-card__avatar feedback-card__avatar--gold" aria-hidden="true">MS</div>
+                  <div class="feedback-card__author">
+                    <strong>Maria S.</strong>
+                    <span>Alumni orang tua siswa</span>
+                  </div>
+                  <div class="feedback-card__rating" aria-label="Rating 5 dari 5">
+                    <span aria-hidden="true">★★★★★</span>
+                    <strong>5.0</strong>
+                  </div>
+                  <p class="feedback-card__text">
+                    Kegiatan akademik dan karakter berjalan seimbang. Anak-anak dibimbing untuk berprestasi tanpa kehilangan nilai kasih.
+                  </p>
+                </article>
               </div>
-            </article>
+
+              <div class="feedback-slide" data-testimonial-slide>
+                <article class="feedback-card">
+                  <div class="feedback-card__avatar feedback-card__avatar--indigo" aria-hidden="true">FR</div>
+                  <div class="feedback-card__author">
+                    <strong>Frans R.</strong>
+                    <span>Orang tua siswa kelas 1</span>
+                  </div>
+                  <div class="feedback-card__rating" aria-label="Rating 5 dari 5">
+                    <span aria-hidden="true">★★★★★</span>
+                    <strong>5.0</strong>
+                  </div>
+                  <p class="feedback-card__text">
+                    Komunikasi sekolah dengan orang tua jelas, dan anak kami merasa aman untuk bertanya serta mencoba hal baru.
+                  </p>
+                </article>
+              </div>
+            </div>
+
+              <div class="feedback-controls" aria-label="Navigasi testimonial">
+                <button class="feedback-control" type="button" data-testimonial-prev data-feedback-prev aria-label="Testimonial sebelumnya">
+                  <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
+                </button>
+                <div class="feedback-dots" data-testimonial-dots aria-label="Posisi testimonial"></div>
+                <button class="feedback-control" type="button" data-testimonial-next data-feedback-next aria-label="Testimonial berikutnya">
+                  <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -341,6 +390,7 @@
 
     <div id="footer"></div>
     <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/testimonial-slider.js"></script>
     <script src="assets/js/seo.js"></script>
     <script src="assets/js/maintenance.js"></script>
     <script src="assets/js/cms-connector.js"></script>

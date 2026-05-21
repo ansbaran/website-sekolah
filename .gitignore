@@ -23,3 +23,6 @@ build/
 
 # Runtime cache sessions
 cache/sessions/
+
+# Local migration reconciliation draft
+scripts/reconcile-schema-migrations.sql

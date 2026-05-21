@@ -1,12 +1,60 @@
 const slider = document.querySelector("[data-testimonial-slider]");
+const typingTarget = document.querySelector(".feedback-title__typing");
+const typingLead = typingTarget?.querySelector(".feedback-title__lead");
+const typingHighlight = typingTarget?.querySelector(".feedback-title__highlight");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+if (typingTarget && typingLead && typingHighlight && !reduceMotion.matches) {
+  const leadText = typingLead.textContent.trim();
+  const highlightText = typingHighlight.textContent.trim();
+  const fullText = `${leadText} ${highlightText}`;
+  let characterIndex = 0;
+  let isDeleting = false;
+  let typingTimer = 0;
+
+  typingTarget.classList.add("feedback-title__typing--active");
+  typingTarget.setAttribute("aria-label", fullText);
+
+  const renderTypingText = () => {
+    const currentText = fullText.slice(0, characterIndex);
+    const leadPart = currentText.slice(0, Math.min(currentText.length, leadText.length));
+    const highlightPart = currentText.length > leadText.length
+      ? currentText.slice(leadText.length + 1)
+      : "";
+
+    typingLead.textContent = leadPart;
+    typingHighlight.textContent = highlightPart ? ` ${highlightPart}` : "";
+
+    if (!isDeleting && characterIndex >= fullText.length) {
+      isDeleting = true;
+      typingTimer = window.setTimeout(renderTypingText, 1700);
+      return;
+    }
+
+    if (isDeleting && characterIndex <= 0) {
+      isDeleting = false;
+      typingTimer = window.setTimeout(renderTypingText, 450);
+      return;
+    }
+
+    characterIndex += isDeleting ? -1 : 1;
+    typingTimer = window.setTimeout(renderTypingText, isDeleting ? 34 : 58);
+  };
+
+  renderTypingText();
+
+  window.addEventListener("pagehide", () => {
+    window.clearTimeout(typingTimer);
+  });
+}
 
 if (slider) {
   const track = slider.querySelector("[data-testimonial-track]");
+  const dragSurface = slider.querySelector(".feedback-stage") || track;
   const slides = Array.from(slider.querySelectorAll("[data-testimonial-slide]"));
-  const previousButton = slider.querySelector("[data-testimonial-prev]");
-  const nextButton = slider.querySelector("[data-testimonial-next]");
+  const previousButton = slider.querySelector("[data-feedback-prev], [data-testimonial-prev]");
+  const nextButton = slider.querySelector("[data-feedback-next], [data-testimonial-next]");
   const dotsContainer = slider.querySelector("[data-testimonial-dots]");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   let activeIndex = 0;
   let autoplayId = 0;
@@ -74,7 +122,7 @@ if (slider) {
     }, 3600);
   };
 
-  if (track && slides.length > 0) {
+  if (track && dragSurface && slides.length > 0) {
     slider.classList.add("feedback-carousel--ready");
 
     const resumeAutoplay = () => {
@@ -85,6 +133,7 @@ if (slider) {
 
     const beginPointerDrag = (event) => {
       if (event.button !== undefined && event.button !== 0) return;
+      if (event.target.closest("button, .feedback-dot, [data-feedback-prev], [data-feedback-next], [data-feedback-dot], [data-testimonial-prev], [data-testimonial-next]")) return;
 
       pointerId = event.pointerId;
       pointerStartX = event.clientX;
@@ -94,7 +143,7 @@ if (slider) {
       hasMovedSlide = false;
       stopAutoplay();
       slider.classList.add("is-dragging");
-      track.setPointerCapture?.(event.pointerId);
+      dragSurface.setPointerCapture?.(event.pointerId);
     };
 
     const movePointerDrag = (event) => {
@@ -104,7 +153,7 @@ if (slider) {
       const deltaY = event.clientY - pointerStartY;
       const absX = Math.abs(deltaX);
       const absY = Math.abs(deltaY);
-      const threshold = event.pointerType === "touch" ? 44 : 58;
+      const threshold = event.pointerType === "touch" ? 38 : 44;
 
       if (!isHorizontalDrag && absY > absX && absY > 12) {
         return;
@@ -124,7 +173,7 @@ if (slider) {
     const endPointerDrag = (event) => {
       if (!isPointerActive || pointerId !== event.pointerId) return;
 
-      track.releasePointerCapture?.(event.pointerId);
+      dragSurface.releasePointerCapture?.(event.pointerId);
       pointerId = null;
       isPointerActive = false;
       isHorizontalDrag = false;
@@ -137,8 +186,11 @@ if (slider) {
         const dot = document.createElement("button");
         dot.className = "feedback-dot";
         dot.type = "button";
+        dot.dataset.feedbackDot = String(index);
         dot.setAttribute("aria-label", `Lihat testimonial ${index + 1}`);
-        dot.addEventListener("click", () => {
+        dot.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
           stopAutoplay();
           setActiveSlide(index);
         });
@@ -146,21 +198,25 @@ if (slider) {
       })
     );
 
-    previousButton?.addEventListener("click", () => {
+    previousButton?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
       stopAutoplay();
       setActiveSlide(activeIndex - 1);
     });
 
-    nextButton?.addEventListener("click", () => {
+    nextButton?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
       stopAutoplay();
       setActiveSlide(activeIndex + 1);
     });
 
-    track.addEventListener("pointerdown", beginPointerDrag);
-    track.addEventListener("pointermove", movePointerDrag);
-    track.addEventListener("pointerup", endPointerDrag);
-    track.addEventListener("pointercancel", endPointerDrag);
-    track.addEventListener("pointerleave", (event) => {
+    dragSurface.addEventListener("pointerdown", beginPointerDrag);
+    dragSurface.addEventListener("pointermove", movePointerDrag);
+    dragSurface.addEventListener("pointerup", endPointerDrag);
+    dragSurface.addEventListener("pointercancel", endPointerDrag);
+    dragSurface.addEventListener("pointerleave", (event) => {
       if (event.pointerType === "mouse") {
         endPointerDrag(event);
       }

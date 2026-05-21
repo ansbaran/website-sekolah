@@ -262,7 +262,7 @@ $readingTime = max(1, ceil($wordCount / 200));
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ["Manrope", "ui-sans-serif", "system-ui", "sans-serif"]
+                        sans: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"]
                     },
                     colors: {
                         school: {
@@ -383,12 +383,7 @@ $readingTime = max(1, ceil($wordCount / 200));
     >
 
     <link
-        rel="stylesheet"
-        href="assets/css/news-detail.css"
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
         rel="stylesheet"
     >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">

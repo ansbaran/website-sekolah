@@ -153,7 +153,7 @@ require_once __DIR__ . '/includes/header.php';
             <?php foreach ($backupFiles as $fileName): ?>
                 <tr>
                     <td><?= escape($fileName) ?></td>
-                    <td><a class="btn-tertiary" href="<?= escape('backups/' . $fileName) ?>" download>Unduh</a></td>
+                    <td><a class="btn-tertiary" href="<?= escape('download-backup.php?file=' . rawurlencode($fileName)) ?>">Unduh</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

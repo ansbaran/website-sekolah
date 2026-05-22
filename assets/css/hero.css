@@ -128,16 +128,22 @@
   letter-spacing: 2px;
 
   color: #ffffff;
+  white-space: nowrap;
 
   text-shadow:
     0 0 8px rgba(59,130,246,0.6),
     0 0 20px rgba(59,130,246,0.4);
 }
+
 @media (max-width: 992px) {
   .hero__title {
-    white-space: normal;
+    white-space: nowrap;
+  }
+  .hero__typing {
+    font-size: clamp(1.4rem, 4vw, var(--font-size-xl));
   }
 }
+
 .hero__title::after {
   content: "";
   position: absolute;
@@ -176,10 +182,13 @@
   min-height: 2rem;
   margin-top: var(--space-4);
 
-  color: var(--color-secondary);
+  color: #E4D329;
   font-size: var(--font-size-xl);
   font-weight: 800;
+  white-space: nowrap;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.35);
 }
+
 
 .hero__typing span::after {
   content: "";

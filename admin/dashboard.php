@@ -11,6 +11,8 @@ $totalNews = count_table('news');
 $totalGallery = count_table('gallery');
 $totalAnnouncements = count_table('announcements');
 $totalSlides = count_table('slider');
+$totalStaff = count_table('staff');
+$totalAchievements = count_table('achievements');
 $activities = get_recent_activities();
 $pageTitle = 'Dashboard';
 
@@ -30,22 +32,38 @@ require_once __DIR__ . '/includes/header.php';
         <div class="stat-value"><?= $totalAnnouncements ?></div>
     </section>
     <section class="card stat-card">
+        <span>Total Guru & Staff</span>
+        <div class="stat-value"><?= $totalStaff ?></div>
+    </section>
+    <section class="card stat-card">
+        <span>Total Prestasi</span>
+        <div class="stat-value"><?= $totalAchievements ?></div>
+    </section>
+    <section class="card stat-card">
         <span>Total Slider</span>
         <div class="stat-value"><?= $totalSlides ?></div>
     </section>
 </div>
 
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
+    <div class="panel-header">
         <div>
-            <h2>Quick Actions</h2>
+            <h2>Shortcut Cepat</h2>
             <p class="footer-note">Akses cepat ke modul utama CMS.</p>
         </div>
-        <div class="form-actions">
+    </div>
+    <div class="dashboard-actions">
+        <?php if (can('publish')): ?>
             <a class="btn-primary" href="news-form.php">Tambah Berita</a>
-            <a class="btn-secondary" href="gallery-form.php">Tambah Galeri</a>
+            <a class="btn-secondary" href="staff-form.php">Tambah Guru & Staff</a>
+            <a class="btn-secondary" href="achievement-form.php">Tambah Prestasi</a>
             <a class="btn-secondary" href="announcement-form.php">Tambah Pengumuman</a>
-        </div>
+            <a class="btn-tertiary" href="system.php">Pengaturan PPDB</a>
+        <?php endif; ?>
+        <?php if (can('upload')): ?>
+            <a class="btn-secondary" href="gallery-form.php">Tambah Galeri</a>
+            <a class="btn-tertiary" href="media.php">Media Manager</a>
+        <?php endif; ?>
     </div>
 </section>
 

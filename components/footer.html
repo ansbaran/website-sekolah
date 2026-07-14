@@ -1,56 +1,95 @@
-<footer class="footer !relative !z-10 !overflow-hidden !bg-[#0D0B61] !px-4 !py-8 !text-white sm:!px-6">
-  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(228,211,41,0.18),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(71,139,141,0.34),transparent_32%),linear-gradient(135deg,rgba(13,11,97,0.98),rgba(41,70,105,0.94))]"></div>
+<footer class="footer site-footer" aria-labelledby="footer-title">
+  <div class="site-footer__glow" aria-hidden="true"></div>
 
-  <div class="footer-container !relative !mx-auto !grid !max-w-7xl !gap-8 md:!grid-cols-2 lg:!grid-cols-[1.4fr_0.8fr_0.8fr_1.1fr]">
-    <div class="footer-col footer-brand !flex !gap-4">
-      <div class="footer-brand__logo !grid !h-14 !w-14 !shrink-0 !place-items-center">
-        <img src="/website-sekolah/assets/img/logo.png" alt="Logo SD Cahaya Harapan Bekasi" class="!h-10 !w-10 !object-contain">
-      </div>
-      <div class="footer-brand__text !min-w-0">
-        <h3 class="!mb-1 !text-lg !font-extrabold !tracking-tight !text-white">SD Cahaya Harapan Bekasi</h3>
-        <p class="subtitle !text-sm !font-semibold !text-[#E4D329]">Sekolah Dasar</p>
-        <p class="footer-desc !mt-4 !max-w-sm !text-sm !leading-7 !text-slate-300">
-          Mendidik generasi berkarakter, cerdas, dan siap menghadapi masa depan.
-        </p>
-      </div>
-    </div>
-
-    <div class="footer-col !space-y-3">
-      <h4 class="!text-sm !font-extrabold !uppercase !tracking-[0.18em] !text-[#E4D329]">Alamat</h4>
-      <p class="!text-sm !text-slate-300">Bekasi, Jawa Barat</p>
-      <p class="!text-sm !text-slate-300">Indonesia</p>
-    </div>
-
-    <div class="footer-col !flex !flex-col !items-start !gap-3">
-      <h4 class="!mb-1 !text-sm !font-extrabold !uppercase !tracking-[0.18em] !text-[#E4D329]">Menu</h4>
-      <a href="index.html" class="!text-sm !text-slate-300 !transition hover:!translate-x-1 hover:!text-white">Beranda</a>
-      <a href="tentang.html" class="!text-sm !text-slate-300 !transition hover:!translate-x-1 hover:!text-white">Tentang</a>
-      <a href="berita.html" class="!text-sm !text-slate-300 !transition hover:!translate-x-1 hover:!text-white">Berita</a>
-      <a href="galeri.html#galeri" class="!text-sm !text-slate-300 !transition hover:!translate-x-1 hover:!text-white">Aktivitas</a>
-      <a href="index.html#kontak" class="!text-sm !text-slate-300 !transition hover:!translate-x-1 hover:!text-white">Kontak</a>
-    </div>
-
-    <div class="footer-col !space-y-3">
-      <h4 class="!text-sm !font-extrabold !uppercase !tracking-[0.18em] !text-[#E4D329]">Kontak</h4>
-      <p class="!flex !items-center !gap-3 !text-sm !text-slate-300"><i class="fas fa-phone !text-[#E4D329]"></i> 085692890015</p>
-      <p class="!flex !items-start !gap-3 !break-words !text-sm !text-slate-300"><i class="fas fa-envelope !mt-1 !text-[#E4D329]"></i> sdcahayaharapanbekasi2020@gmail.com</p>
-
-      <div class="footer-social !pt-3">
-        <p class="footer-social__title !mb-3 !text-sm !font-bold !text-white">Ikuti Kami</p>
-        <div class="footer-social__icons !flex !gap-3">
-          <a href="https://www.tiktok.com/@sd.cahaya.harapan?_r=1&_t=ZS-95vcF01lUPt" class="!grid !h-10 !w-10 !place-items-center !rounded-full !bg-white/10 !text-white !transition hover:!-translate-y-1 hover:!bg-white hover:!text-slate-950" aria-label="TikTok SD Cahaya Harapan"><i class="fab fa-tiktok"></i></a>
-          <a href="https://www.instagram.com/sdcahayaharapanbekasi?igsh=MXVxbGd0OW81emh3aw==" class="!grid !h-10 !w-10 !place-items-center !rounded-full !bg-white/10 !text-white !transition hover:!-translate-y-1 hover:!bg-white hover:!text-slate-950" aria-label="Instagram SD Cahaya Harapan"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com/@SDCahayaHarapan" class="!grid !h-10 !w-10 !place-items-center !rounded-full !bg-white/10 !text-white !transition hover:!-translate-y-1 hover:!bg-white hover:!text-slate-950" aria-label="YouTube SD Cahaya Harapan"><i class="fab fa-youtube"></i></a>
+  <div class="footer-container site-footer__grid">
+    <section class="footer-col footer-brand site-footer__brand" aria-labelledby="footer-title">
+      <div class="footer-brand__head">
+        <div class="footer-brand__logo">
+          <img src="assets/img/logo.png" alt="Logo SD Cahaya Harapan Bekasi">
+        </div>
+        <div class="footer-brand__text">
+          <h3 id="footer-title">SD Cahaya Harapan Bekasi</h3>
+          <p class="subtitle">Sekolah Dasar Katholik</p>
         </div>
       </div>
-    </div>
+
+      <p class="footer-desc">
+        Mendidik generasi berkarakter, cerdas, dan siap menghadapi masa depan melalui lingkungan belajar yang aman dan penuh perhatian.
+      </p>
+
+      <div class="footer-social" aria-label="Media sosial SD Cahaya Harapan Bekasi">
+        <a href="https://www.tiktok.com/@sd.cahaya.harapan?_r=1&_t=ZS-95vcF01lUPt" aria-label="TikTok SD Cahaya Harapan" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-tiktok" aria-hidden="true"></i>
+        </a>
+        <a href="https://www.instagram.com/sdcahayaharapanbekasi?igsh=MXVxbGd0OW81emh3aw==" aria-label="Instagram SD Cahaya Harapan" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </a>
+        <a href="https://www.youtube.com/@SDCahayaHarapan" aria-label="YouTube SD Cahaya Harapan" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-youtube" aria-hidden="true"></i>
+        </a>
+      </div>
+    </section>
+
+    <nav class="footer-col footer-nav" aria-label="Menu footer">
+      <h4>Menu</h4>
+      <a href="index.html"><span>Beranda</span></a>
+      <a href="tentang.html"><span>Tentang</span></a>
+      <a href="berita.html"><span>Berita</span></a>
+      <a href="pengumuman.php"><span>Pengumuman</span></a>
+      <a href="galeri.html#galeri"><span>Aktivitas</span></a>
+      <a href="agenda.php"><span>Agenda</span></a>
+      <a href="index.html#kontak"><span>Kontak</span></a>
+    </nav>
+
+    <section class="footer-col footer-contact" aria-labelledby="footer-contact-title">
+      <h4 id="footer-contact-title">Kontak</h4>
+      <a class="footer-contact__item" href="tel:+6285692890015">
+        <span class="footer-contact__icon"><i class="fas fa-phone" aria-hidden="true"></i></span>
+        <span>085692890015</span>
+      </a>
+      <a class="footer-contact__item" href="mailto:sdcahayaharapanbekasi2020@gmail.com">
+        <span class="footer-contact__icon"><i class="fas fa-envelope" aria-hidden="true"></i></span>
+        <span>sdcahayaharapanbekasi2020@gmail.com</span>
+      </a>
+      <div class="footer-contact__item">
+        <span class="footer-contact__icon"><i class="fas fa-clock" aria-hidden="true"></i></span>
+        <span>Senin - Jumat<br>07.00 - 15.30 WIB</span>
+      </div>
+    </section>
+
+    <section class="footer-col footer-location" aria-labelledby="footer-location-title">
+      <h4 id="footer-location-title">Lokasi Sekolah</h4>
+      <address class="footer-address">
+        Jl. Komp. Boulevard No.17131,<br>
+        RT.008/RW.030, Pejuang,<br>
+        Kecamatan Medan Satria,<br>
+        Kota Bekasi, Jawa Barat 17131
+      </address>
+      <div class="footer-map" aria-label="Peta lokasi SD Cahaya Harapan Bekasi">
+        <iframe
+          title="Lokasi SD Cahaya Harapan Bekasi"
+          src="https://www.google.com/maps?q=Jl.%20Komp.%20Boulevard%20No.17131%20Pejuang%20Medan%20Satria%20Kota%20Bekasi%20Jawa%20Barat%2017131&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <a class="footer-map__button" href="https://www.google.com/maps/search/?api=1&query=Jl.%20Komp.%20Boulevard%20No.17131%20Pejuang%20Medan%20Satria%20Kota%20Bekasi%20Jawa%20Barat%2017131" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-location-dot" aria-hidden="true"></i>
+        Lihat di Google Maps
+      </a>
+    </section>
   </div>
 
-  <div class="footer-bottom !relative !mx-auto !mt-6 !max-w-7xl !border-t !border-white/10 !pt-4 !text-center !text-xs !font-semibold !text-slate-400">
-    &copy; 2026 SD Cahaya Harapan Bekasi
+  <div class="footer-bottom">
+    <span>&copy; 2026 SD Cahaya Harapan Bekasi. All rights reserved.</span>
+    <span class="footer-bottom__links">Kebijakan Privasi <span aria-hidden="true">|</span> Syarat & Ketentuan</span>
   </div>
 </footer>
 
-<button id="scrollTopBtn" aria-label="Scroll to top" type="button" data-scroll-top-btn="1">
-  <i class="fas fa-arrow-up"></i>
+<button id="scrollTopBtn" class="scroll-top-button" aria-label="Kembali ke atas" type="button" data-scroll-top-btn="1">
+  <span class="scroll-top-button__ring" aria-hidden="true"></span>
+  <span class="scroll-top-button__icon" aria-hidden="true">
+    <i class="fas fa-arrow-up"></i>
+  </span>
 </button>

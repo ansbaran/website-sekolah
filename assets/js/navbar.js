@@ -46,15 +46,24 @@ function setActiveMenu() {
         window.location.pathname.split("/").pop() || "index.html";
 
     const activityPages = [
-        "prestasi.html",
+        "prestasi.php",
         "galeri.html",
         "kegiatan.html",
-        "ekstrakurikuler.html"
+        "kegiatan.php",
+        "ekstrakurikuler.html",
+        "ekstrakurikuler.php",
+        "agenda.html",
+        "agenda.php"
     ];
 
     const newsPages = [
         "berita.html",
         "berita-detail.php"
+    ];
+
+    const aboutPages = [
+        "tentang.html",
+        "guru-staff.html"
     ];
 
     // ambil menu utama navbar
@@ -78,6 +87,7 @@ function setActiveMenu() {
         // cocokkan halaman
         if (
             cleanHref === currentPage ||
+            (aboutPages.includes(currentPage) && cleanHref === "tentang.html") ||
             (newsPages.includes(currentPage) && cleanHref === "berita.html") ||
             (activityPages.includes(currentPage) && link.textContent.trim() === "Aktivitas")
         ) {
@@ -202,8 +212,40 @@ function initDropdownMenus() {
     dropdowns.forEach((dropdown) => {
         const toggle = dropdown.querySelector(".dropdown-toggle");
         const menu = dropdown.querySelector(".dropdown-menu");
+        let closeTimer = null;
 
         if (!toggle || !menu) return;
+
+        const cancelClose = () => {
+            if (!closeTimer) return;
+            window.clearTimeout(closeTimer);
+            closeTimer = null;
+        };
+
+        const openDropdown = () => {
+            cancelClose();
+            if (header?.classList.contains("navbar--dropdowns-locked")) return;
+            closeSiblingDropdowns(dropdown);
+            dropdown.classList.add("open");
+            toggle.setAttribute("aria-expanded", "true");
+        };
+
+        const closeDropdown = (delay = 0) => {
+            cancelClose();
+
+            const close = () => {
+                dropdown.classList.remove("open");
+                toggle.setAttribute("aria-expanded", "false");
+                closeTimer = null;
+            };
+
+            if (delay > 0) {
+                closeTimer = window.setTimeout(close, delay);
+                return;
+            }
+
+            close();
+        };
 
         toggle.setAttribute("aria-haspopup", "true");
         toggle.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
@@ -226,21 +268,27 @@ function initDropdownMenus() {
 
         dropdown.addEventListener("mouseenter", () => {
             if (!desktopQuery.matches) return;
-            if (header?.classList.contains("navbar--dropdowns-locked")) return;
-            closeSiblingDropdowns(dropdown);
-            dropdown.classList.add("open");
-            toggle.setAttribute("aria-expanded", "true");
+            openDropdown();
         });
 
         dropdown.addEventListener("mouseleave", () => {
             if (!desktopQuery.matches) return;
-            dropdown.classList.remove("open");
-            toggle.setAttribute("aria-expanded", "false");
+            closeDropdown(260);
+        });
+
+        menu.addEventListener("mouseenter", () => {
+            if (!desktopQuery.matches) return;
+            cancelClose();
+        });
+
+        menu.addEventListener("mouseleave", () => {
+            if (!desktopQuery.matches) return;
+            closeDropdown(180);
         });
 
         dropdown.addEventListener("focusin", () => {
             unlockDesktopHover();
-            closeSiblingDropdowns(dropdown);
+            openDropdown();
         });
     });
 

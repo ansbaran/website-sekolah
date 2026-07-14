@@ -3,11 +3,20 @@
 .env.local
 
 # Logs
-logs/
+logs/*
+!logs/.htaccess
+!logs/index.html
 *.log
 
 # Runtime uploads
-uploads/
+uploads/*
+!uploads/.htaccess
+!uploads/index.html
+
+# Runtime cache
+cache/*
+!cache/.htaccess
+!cache/index.html
 
 # OS / editor
 .DS_Store
@@ -21,8 +30,10 @@ vendor/
 dist/
 build/
 
-# Runtime cache sessions
-cache/sessions/
+# Local backups
+backups/*
+!backups/.htaccess
+!backups/index.html
 
 # Local migration reconciliation draft
 scripts/reconcile-schema-migrations.sql

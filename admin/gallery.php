@@ -6,6 +6,7 @@ define('ADMIN_CONTEXT', true);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_login();
+require_permission('upload');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
@@ -35,7 +36,7 @@ $pageTitle = 'Galeri';
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;">
+    <div class="panel-header">
         <div>
             <h2>Kelola Galeri</h2>
             <p class="footer-note">Upload foto sekolah, preview gambar, dan hapus file yang sudah tidak diperlukan.</p>
@@ -58,21 +59,22 @@ require_once __DIR__ . '/includes/header.php';
         <tbody>
             <?php if (empty($galleryItems)): ?>
                 <tr>
-                    <td colspan="5">Belum ada foto galeri.</td>
+                    <td colspan="5" class="empty-row">Belum ada foto galeri.</td>
                 </tr>
             <?php endif; ?>
             <?php foreach ($galleryItems as $item): ?>
                 <tr>
-                    <td><img src="<?= build_upload_url('gallery', $item['filename']) ?>" style="width: 120px; height: 80px; object-fit: cover; border-radius: 12px;"></td>
+                    <td><img class="table-thumb" src="<?= escape(build_upload_url('gallery', $item['filename'])) ?>" alt="<?= escape($item['title']) ?>" loading="lazy" data-fallback-src="../assets/img/logo.png"></td>
                     <td><?= htmlspecialchars($item['title']) ?></td>
                     <td><?= htmlspecialchars($item['category']) ?></td>
                     <td><?= htmlspecialchars($item['created_at']) ?></td>
                     <td>
-                        <form method="post" style="display:inline-block; margin:0;" onsubmit="return confirm('Hapus foto galeri ini?');">
+                        <a class="btn-tertiary" href="gallery-form.php?id=<?= (int)$item['id'] ?>">Edit</a>
+                        <form method="post" class="inline-form">
                             <?= csrf_field() ?>
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                            <button type="submit" class="btn-secondary">Hapus</button>
+                            <button type="submit" class="btn-danger" data-confirm="Hapus foto galeri ini?">Hapus</button>
                         </form>
                     </td>
                 </tr>

@@ -57,7 +57,7 @@ if (empty($news)) {
             Berita Tidak Ditemukan - SD Cahaya Harapan
         </title>
 
-        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/style.css?v=20260709-scroll-icon-only">
 
         <style>
 
@@ -178,7 +178,9 @@ increment_news_views($newsId);
 |--------------------------------------------------------------------------
 */
 
-$relatedNews = get_related_news($newsId, 3);
+$relatedNewsPayload = get_related_news_payload($newsId, 3);
+$relatedNews = $relatedNewsPayload['items'];
+$relatedSidebarTitle = $relatedNewsPayload['is_fallback'] ? 'Berita Lainnya' : 'Berita Terkait';
 $galleryImages = get_news_gallery($newsId);
 
 /*
@@ -255,28 +257,6 @@ $readingTime = max(1, ceil($wordCount / 200));
         <?= escape($seoTitle) ?> - SD Cahaya Harapan Bekasi
     </title>
 
-    <script>
-        window.tailwind = window.tailwind || {};
-        window.tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"]
-                    },
-                    colors: {
-                        school: {
-                            navy: "#0D0B61",
-                            blue: "#294669",
-                            teal: "#478B8D",
-                            gold: "#E4D329"
-                        }
-                    }
-                }
-            }
-        };
-    </script>
-
     <meta
         name="description"
         content="<?= escape($seoDescription) ?>"
@@ -337,7 +317,7 @@ $readingTime = max(1, ceil($wordCount / 200));
 
     <!-- SCHEMA -->
 
-    <script type="application/ld+json">
+    <script type="application/ld+json" nonce="<?= escape(CSP_NONCE) ?>">
     <?= json_encode([
 
         "@context" => "https://schema.org",
@@ -379,7 +359,7 @@ $readingTime = max(1, ceil($wordCount / 200));
 
     <link
         rel="stylesheet"
-        href="assets/css/style.css"
+        href="assets/css/style.css?v=20260709-scroll-icon-only"
     >
 
     <link
@@ -388,6 +368,7 @@ $readingTime = max(1, ceil($wordCount / 200));
     >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <script src="assets/js/tailwind-config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
@@ -667,8 +648,8 @@ $readingTime = max(1, ceil($wordCount / 200));
 
                     <button
                         class="news-detail-share__button news-detail-share__button--copy"
-
-                        onclick="copyLink(this)"
+                        type="button"
+                        data-copy-current-url
                     >
                         Salin Link
                     </button>
@@ -699,7 +680,7 @@ $readingTime = max(1, ceil($wordCount / 200));
             <div class="news-detail-sidebar__box">
 
                 <h4 class="news-detail-sidebar__title">
-                    Berita Terkait
+                    <?= escape($relatedSidebarTitle) ?>
                 </h4>
 
                 <div class="news-detail-sidebar__list">
@@ -721,6 +702,10 @@ $readingTime = max(1, ceil($wordCount / 200));
 
                                 <div class="news-detail-sidebar__item-image">
 
+                                    <?php
+                                        $relatedImage = $related['featured_image'] ?: ($related['thumbnail'] ?? '');
+                                    ?>
+
                                     <img
 
                                         loading="lazy"
@@ -729,11 +714,11 @@ $readingTime = max(1, ceil($wordCount / 200));
 
                                         src="<?= escape(
 
-                                            $related['thumbnail']
+                                            $relatedImage
 
                                             ? build_upload_url(
                                                 'news',
-                                                $related['thumbnail']
+                                                $relatedImage
                                             )
 
                                             : 'assets/img/berita/berita1.jpeg'
@@ -814,49 +799,14 @@ $readingTime = max(1, ceil($wordCount / 200));
 
     <script
         type="module"
-        src="assets/js/main.js"
+        src="assets/js/main.js?v=20260709-scroll-icon-only"
     ></script>
 
     <script src="assets/js/seo.js"></script>
 
     <script src="assets/js/maintenance.js"></script>
 
-    <script>
-
-        function copyLink(button) {
-
-            const url = window.location.href;
-
-            navigator.clipboard.writeText(url)
-
-            .then(() => {
-
-                const originalText =
-                    button.textContent;
-
-                button.textContent =
-                    'Berhasil disalin!';
-
-                setTimeout(() => {
-
-                    button.textContent =
-                        originalText;
-
-                }, 2000);
-
-            })
-
-            .catch(() => {
-
-                window.prompt(
-                    'Salin URL berikut:',
-                    url
-                );
-
-            });
-        }
-
-    </script>
+    <script src="assets/js/news-detail.js"></script>
 
 </body>
 </html>

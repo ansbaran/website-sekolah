@@ -6,6 +6,7 @@ define('ADMIN_CONTEXT', true);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_login();
+require_permission('publish');
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $editing = $id > 0;
@@ -31,9 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $level = clean($_POST['level'] ?? '');
         $description = clean($_POST['description'] ?? '');
 
+        $item = array_merge($item, [
+            'title' => $title,
+            'level' => $level,
+            'description' => $description,
+        ]);
+
         if ($title === '' || $level === '') {
             $error = 'Nama prestasi dan tingkat wajib diisi.';
         } else {
+            $fileToDeleteAfterSave = null;
             $imageName = $item['image'];
             if (!empty($_FILES['image']['name'])) {
                 $uploadName = upload_image($_FILES['image'], 'achievements', $uploadError);
@@ -41,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error = $uploadError;
                 } else {
                     if (!empty($imageName)) {
-                        delete_file(UPLOAD_BASE . '/achievements/' . $imageName);
+                        $fileToDeleteAfterSave = UPLOAD_BASE . '/achievements/' . $imageName;
                     }
                     $imageName = $uploadName;
                 }
@@ -70,6 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     log_activity('Tambah prestasi', 'Prestasi baru ditambahkan: ' . $title, 'achievements:new');
                     flash('success', 'Prestasi baru berhasil ditambahkan.');
                 }
+                if ($fileToDeleteAfterSave !== null) {
+                    delete_file($fileToDeleteAfterSave);
+                }
                 redirect('achievements.php');
             }
         }
@@ -80,7 +91,7 @@ $pageTitle = $editing ? 'Edit Prestasi' : 'Tambah Prestasi';
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+    <div class="panel-header">
         <div>
             <h2><?= htmlspecialchars($pageTitle) ?></h2>
             <p class="footer-note">Simpan informasi prestasi dan foto pendukung.</p>
@@ -94,6 +105,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <form method="post" enctype="multipart/form-data" class="form-card">
         <?= csrf_field() ?>
+        <input type="hidden" name="MAX_FILE_SIZE" value="<?= MAX_IMAGE_SIZE ?>">
         <div class="form-grid">
             <div>
                 <label for="title">Nama Prestasi</label>
@@ -103,15 +115,15 @@ require_once __DIR__ . '/includes/header.php';
                 <label for="level">Tingkat Lomba</label>
                 <input type="text" id="level" name="level" value="<?= htmlspecialchars($item['level']) ?>" required>
             </div>
-            <div style="grid-column:1/-1;">
+            <div class="full-span">
                 <label for="description">Deskripsi</label>
                 <textarea id="description" name="description"><?= htmlspecialchars($item['description']) ?></textarea>
             </div>
-            <div style="grid-column:1/-1;">
+            <div class="full-span">
                 <label for="image">Foto Prestasi</label>
-                <input type="file" id="image" name="image" accept="image/*">
+                <input type="file" id="image" name="image" accept="image/*" data-max-size="4194304">
                 <?php if (!empty($item['image'])) : ?>
-                    <p class="footer-note">Foto saat ini: <?= htmlspecialchars($item['image']) ?></p>
+                    <div class="admin-current-media"><img src="<?= escape(build_upload_url('achievements', $item['image'])) ?>" alt="Foto prestasi saat ini" loading="lazy"><span>Foto saat ini</span></div>
                 <?php endif; ?>
             </div>
         </div>

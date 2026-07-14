@@ -22,6 +22,12 @@ export function initTypingAnimation() {
     return;
   }
 
+  element.style.minWidth = "0";
+  element.style.contain = "content";
+  element.style.overflow = "visible";
+  element.style.whiteSpace = "nowrap";
+  element.setAttribute("aria-label", words.join(", "));
+
   let wordIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
@@ -35,7 +41,7 @@ export function initTypingAnimation() {
       charIndex--;
     }
 
-    element.textContent = currentWord.substring(0, charIndex);
+    element.textContent = currentWord.substring(0, charIndex) || "\u00a0";
 
     let speed = isDeleting ? DELETE_SPEED : TYPE_SPEED;
 
@@ -55,5 +61,5 @@ export function initTypingAnimation() {
     setTimeout(loop, speed);
   }
 
-  loop(); // 🔥 INI PENTING (sebelumnya hilang)
+  loop(); // ðŸ”¥ INI PENTING (sebelumnya hilang)
 }

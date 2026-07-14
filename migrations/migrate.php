@@ -6,10 +6,11 @@ if (PHP_SAPI !== 'cli') {
     exit('This migration script must be run from the command line.');
 }
 
+define('SKIP_DB_BOOTSTRAP', true);
 require_once __DIR__ . '/../config/config.php';
 
 try {
-    $dsn = sprintf('mysql:host=%s;charset=%s', DB_HOST, DB_CHARSET);
+    $dsn = sprintf('mysql:host=%s;port=%s;charset=%s', DB_HOST, DB_PORT, DB_CHARSET);
     $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -23,8 +24,73 @@ try {
 
 function parse_sql_script(string $sql): array
 {
-    $commands = array_filter(array_map('trim', explode(';', $sql)));
+    $commands = [];
+    $buffer = '';
+    $quote = null;
+    $length = strlen($sql);
+
+    for ($index = 0; $index < $length; $index++) {
+        $char = $sql[$index];
+        $next = $sql[$index + 1] ?? '';
+
+        if ($quote === null && $char === '-' && $next === '-') {
+            while ($index < $length && !in_array($sql[$index], ["\r", "\n"], true)) {
+                $index++;
+            }
+            $buffer .= "\n";
+            continue;
+        }
+
+        if ($quote === null && $char === '#') {
+            while ($index < $length && !in_array($sql[$index], ["\r", "\n"], true)) {
+                $index++;
+            }
+            $buffer .= "\n";
+            continue;
+        }
+
+        if ($quote === null && $char === '/' && $next === '*') {
+            $index += 2;
+            while ($index < $length && !($sql[$index] === '*' && ($sql[$index + 1] ?? '') === '/')) {
+                $index++;
+            }
+            $index++;
+            continue;
+        }
+
+        if ($quote !== null && $char === $quote && $next === $quote) {
+            $buffer .= $char . $next;
+            $index++;
+            continue;
+        }
+
+        if (($char === "'" || $char === '"' || $char === '`') && ($index === 0 || $sql[$index - 1] !== '\\')) {
+            $quote = $quote === $char ? null : ($quote ?? $char);
+        }
+
+        if ($char === ';' && $quote === null) {
+            $command = trim($buffer);
+            if ($command !== '') {
+                $commands[] = $command;
+            }
+            $buffer = '';
+            continue;
+        }
+
+        $buffer .= $char;
+    }
+
+    $command = trim($buffer);
+    if ($command !== '') {
+        $commands[] = $command;
+    }
+
     return $commands;
+}
+
+function quote_identifier(string $identifier): string
+{
+    return '`' . str_replace('`', '``', $identifier) . '`';
 }
 
 function applied_versions(PDO $pdo): array
@@ -46,9 +112,9 @@ function migration_files(string $folder): array
 
 function ensure_schema_migrations(PDO $pdo): void
 {
-    $sql = 'CREATE DATABASE IF NOT EXISTS `' . DB_NAME . '` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
+    $sql = 'CREATE DATABASE IF NOT EXISTS ' . quote_identifier(DB_NAME) . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
     $pdo->exec($sql);
-    $pdo->exec('USE `' . DB_NAME . '`;');
+    $pdo->exec('USE ' . quote_identifier(DB_NAME) . ';');
     $pdo->exec(
         'CREATE TABLE IF NOT EXISTS `schema_migrations` (
             `version` VARCHAR(100) NOT NULL,
@@ -72,20 +138,15 @@ function run_migration(PDO $pdo, string $filePath): bool
     }
 
     try {
-        $pdo->beginTransaction();
         foreach ($commands as $command) {
             $pdo->exec($command);
         }
         $version = basename($filePath);
         $stmt = $pdo->prepare('INSERT INTO schema_migrations (version) VALUES (:version)');
         $stmt->execute(['version' => $version]);
-        $pdo->commit();
         echo "Migrasi diterapkan: $version\n";
         return true;
     } catch (PDOException $exception) {
-        if ($pdo->inTransaction()) {
-            $pdo->rollBack();
-        }
         echo "Gagal menerapkan migrasi $filePath: " . $exception->getMessage() . "\n";
         return false;
     }

@@ -1,0 +1,10 @@
+-- Migration version 004: Optional public contact and social links for staff profiles
+
+ALTER TABLE `staff`
+  ADD COLUMN IF NOT EXISTS `email` VARCHAR(160) DEFAULT NULL AFTER `deskripsi`,
+  ADD COLUMN IF NOT EXISTS `whatsapp` VARCHAR(32) DEFAULT NULL AFTER `email`,
+  ADD COLUMN IF NOT EXISTS `instagram` VARCHAR(255) DEFAULT NULL AFTER `whatsapp`,
+  ADD COLUMN IF NOT EXISTS `facebook` VARCHAR(255) DEFAULT NULL AFTER `instagram`,
+  ADD COLUMN IF NOT EXISTS `tiktok` VARCHAR(255) DEFAULT NULL AFTER `facebook`,
+  ADD COLUMN IF NOT EXISTS `youtube` VARCHAR(255) DEFAULT NULL AFTER `tiktok`,
+  ADD COLUMN IF NOT EXISTS `website` VARCHAR(255) DEFAULT NULL AFTER `youtube`;

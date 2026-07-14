@@ -80,7 +80,7 @@ function uploaded_file_path(string $subDir, string $fileName): ?string
     $path = UPLOAD_BASE . '/' . $safeSubDir . '/' . $safeFileName;
     $base = realpath(UPLOAD_BASE);
     $dir = realpath(dirname($path));
-    if ($base === false || $dir === false || strpos($dir, $base) !== 0) {
+    if ($base === false || $dir === false || ($dir !== $base && strpos($dir, $base . DIRECTORY_SEPARATOR) !== 0)) {
         return null;
     }
 
@@ -160,12 +160,22 @@ function send_secure_headers(): void
         return;
     }
 
+    $serverSoftware = $_SERVER['SERVER_SOFTWARE'] ?? '';
+    if (stripos($serverSoftware, 'Apache') !== false) {
+        return;
+    }
+
+    $isHttps = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+        || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+
     header('X-Frame-Options: SAMEORIGIN');
     header('X-Content-Type-Options: nosniff');
     header('Referrer-Policy: strict-origin-when-cross-origin');
-    header('Permissions-Policy: geolocation=(), microphone=(), camera=()');
-    header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://unpkg.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self'; frame-ancestors 'self'; base-uri 'self';");
+    header('Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()');
+    if ($isHttps) {
+        header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+    }
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://unpkg.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self'; frame-src 'self' https://www.google.com https://maps.google.com; child-src 'self' https://www.google.com https://maps.google.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self';");
 }
 
 function cache_file_path(string $key): string
@@ -247,7 +257,11 @@ function validate_image_upload(array $file, ?string &$error = null): bool
     }
 
     if ($file['error'] !== UPLOAD_ERR_OK) {
-        $error = 'Terjadi kesalahan saat mengunggah file.';
+        $error = match ($file['error']) {
+            UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Ukuran file maksimal ' . (MAX_IMAGE_SIZE / 1024 / 1024) . 'MB.',
+            UPLOAD_ERR_PARTIAL => 'Upload belum selesai. Silakan pilih file dan coba lagi.',
+            default => 'Terjadi kesalahan saat mengunggah file.',
+        };
         return false;
     }
 
@@ -262,13 +276,20 @@ function validate_image_upload(array $file, ?string &$error = null): bool
         return false;
     }
 
+    $originalName = str_replace('\\', '/', (string)$file['name']);
+    if (basename($originalName) !== $originalName || strpos($originalName, '..') !== false) {
+        $error = 'Nama file tidak valid.';
+        return false;
+    }
+
+
     $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     if (!in_array($extension, ALLOWED_IMAGE_EXT, true)) {
         $error = 'Ekstensi file tidak valid.';
         return false;
     }
 
-    if (preg_match('/\.(php|phtml|phps|php3|php4|php5|cgi|pl|asp|aspx)$/i', $file['name'])) {
+    if (preg_match('/\.(php|phtml|phps|php3|php4|php5|phar|cgi|pl|asp|aspx|exe|sh|bat|cmd|js|html|svg)(\.|$)/i', $originalName)) {
         $error = 'Nama file tidak boleh mengandung ekstensi berbahaya.';
         return false;
     }
@@ -286,7 +307,8 @@ function validate_image_upload(array $file, ?string &$error = null): bool
     }
 
     if ($width > MAX_IMAGE_WIDTH || $height > MAX_IMAGE_HEIGHT) {
-        return true;
+        $error = 'Resolusi gambar terlalu besar. Maksimal ' . MAX_IMAGE_WIDTH . 'x' . MAX_IMAGE_HEIGHT . ' piksel.';
+        return false;
     }
 
     return true;
@@ -432,13 +454,25 @@ function upload_image(array $file, string $subDir, ?string &$error = null): ?str
 function delete_file(string $path): void
 {
     $base = realpath(BASE_PATH);
-    $realPath = realpath($path);
-    if ($base === false || $realPath === false || strpos($realPath, $base) !== 0) {
+    if ($base === false || $path === '') {
         return;
     }
 
-    if ($path !== '' && file_exists($path) && is_file($path)) {
-        @unlink($path);
+    $targets = [$path];
+    $webpPath = preg_replace('/\.[^.]+$/', '.webp', $path);
+    if (is_string($webpPath) && $webpPath !== $path) {
+        $targets[] = $webpPath;
+    }
+
+    foreach (array_unique($targets) as $target) {
+        $realPath = realpath($target);
+        if ($realPath === false || ($realPath !== $base && strpos($realPath, $base . DIRECTORY_SEPARATOR) !== 0)) {
+            continue;
+        }
+
+        if (is_file($realPath)) {
+            @unlink($realPath);
+        }
     }
 }
 
@@ -582,8 +616,12 @@ function get_setting(string $name, $default = null)
 function set_setting(string $name, string $value): bool
 {
     global $pdo;
-    $stmt = $pdo->prepare('INSERT INTO settings (name, value, updated_at) VALUES (:name, :value, NOW()) ON DUPLICATE KEY UPDATE value = :value, updated_at = NOW()');
-    return $stmt->execute(['name' => $name, 'value' => $value]);
+    $stmt = $pdo->prepare('INSERT INTO settings (name, value, updated_at) VALUES (:name, :value_insert, NOW()) ON DUPLICATE KEY UPDATE value = :value_update, updated_at = NOW()');
+    return $stmt->execute([
+        'name' => $name,
+        'value_insert' => $value,
+        'value_update' => $value,
+    ]);
 }
 
 function is_maintenance_mode(): bool
@@ -932,3 +970,519 @@ function delete_gallery_image(int $galleryId): void
     $stmt->execute(['id' => $galleryId]);
 }
 
+function enforce_rate_limit(string $bucket, int $maxAttempts = 120, int $windowSeconds = 60): bool
+{
+    $bucket = preg_replace('/[^a-z0-9_-]/i', '-', $bucket) ?: 'public';
+    $cacheDir = CACHE_DIR . '/rate-limit';
+    if (!maybe_create_directory($cacheDir)) {
+        return true;
+    }
+
+    $cacheFile = $cacheDir . '/' . $bucket . '-' . sha1(get_client_ip()) . '.json';
+    $now = time();
+    $hits = [];
+    if (is_file($cacheFile)) {
+        $decoded = json_decode((string)file_get_contents($cacheFile), true);
+        if (is_array($decoded)) {
+            $hits = array_values(array_filter($decoded, static fn($hit) => is_int($hit) && $hit > ($now - $windowSeconds)));
+        }
+    }
+
+    if (count($hits) >= $maxAttempts) {
+        http_response_code(429);
+        if (!headers_sent()) {
+            header('Retry-After: ' . $windowSeconds);
+        }
+        return false;
+    }
+
+    $hits[] = $now;
+    file_put_contents($cacheFile, json_encode($hits), LOCK_EX);
+    return true;
+}
+
+function gallery_categories(): array
+{
+    return ['Fasilitas', 'Kegiatan', 'Prestasi', 'Ekstrakurikuler', 'Akademik'];
+}
+
+function normalize_gallery_category(string $value): ?string
+{
+    $value = trim($value);
+    if ($value === '' || in_array(strtolower($value), ['semua', 'all'], true)) {
+        return null;
+    }
+
+    foreach (gallery_categories() as $category) {
+        if (strcasecmp($value, $category) === 0) {
+            return $category;
+        }
+    }
+
+    return null;
+}
+
+function normalize_public_text($value, string $default = '', int $maxLength = 5000): string
+{
+    $text = trim(strip_tags((string)$value));
+    $text = preg_replace('/[ \t]+/', ' ', $text) ?? $text;
+    return $text === '' ? $default : mb_substr($text, 0, $maxLength);
+}
+
+function normalize_public_stat_count($value, int $default = 0): int
+{
+    $number = filter_var($value, FILTER_VALIDATE_INT);
+    return $number === false ? $default : max(0, min(99999, (int)$number));
+}
+
+function normalize_public_stat_label($value, string $default, int $maxLength = 32): string
+{
+    return normalize_public_text($value, $default, $maxLength);
+}
+
+function decode_json_setting(string $name, array $default = []): array
+{
+    $decoded = json_decode((string)get_setting($name, ''), true);
+    return is_array($decoded) ? $decoded : $default;
+}
+
+function normalize_public_image_value(string $value, string $default = ''): string
+{
+    $value = trim(str_replace('\\', '/', $value));
+    if ($value === '') {
+        return $default;
+    }
+    if (preg_match('/^(javascript|data|vbscript):/i', $value) || preg_match('/\.\./', $value)) {
+        return $default;
+    }
+    return $value;
+}
+
+function public_content_image_url(string $value, string $fallback = 'assets/img/logo.png'): string
+{
+    $value = normalize_public_image_value($value, $fallback);
+    if (preg_match('#^https?://#i', $value)) {
+        return $value;
+    }
+    if (strpos($value, 'assets/') === 0 || strpos($value, 'uploads/') === 0) {
+        return BASE_URL . '/' . ltrim($value, '/');
+    }
+    return build_upload_url('misc', $value);
+}
+
+function get_public_stats_settings(): array
+{
+    return [
+        'students_count' => normalize_public_stat_count(get_setting('stat_students_count', '500'), 500),
+        'achievements_year_count' => normalize_public_stat_count(get_setting('stat_achievements_year_count', '35'), 35),
+        'educators_count' => normalize_public_stat_count(get_setting('stat_educators_count', '32'), 32),
+        'featured_programs_count' => normalize_public_stat_count(get_setting('stat_featured_programs_count', '12'), 12),
+        'teachers_count' => normalize_public_stat_count(get_setting('stat_teachers_count', '24'), 24),
+        'staff_count' => normalize_public_stat_count(get_setting('stat_staff_count', '8'), 8),
+        'accreditation_label' => normalize_public_stat_label(get_setting('stat_accreditation_label', 'A'), 'A', 16),
+        'professional_label' => normalize_public_stat_label(get_setting('stat_professional_label', 'A+'), 'A+', 16),
+    ];
+}
+
+function normalize_whatsapp_number(string $value)
+{
+    $value = trim($value);
+    if ($value === '') {
+        return null;
+    }
+    if (preg_match('/[a-z]/i', $value)) {
+        return false;
+    }
+    $digits = preg_replace('/\D+/', '', $value);
+    if ($digits === '') {
+        return false;
+    }
+    if (strpos($digits, '0') === 0) {
+        $digits = '62' . substr($digits, 1);
+    }
+    return strlen($digits) >= 8 && strlen($digits) <= 16 ? $digits : false;
+}
+
+function normalize_public_url(string $value)
+{
+    $value = trim($value);
+    if ($value === '') {
+        return null;
+    }
+    if (preg_match('/^(javascript|data|vbscript):/i', $value) || preg_match('/[\x00-\x1F\x7F]/', $value)) {
+        return false;
+    }
+    if (!preg_match('#^https?://#i', $value)) {
+        $value = 'https://' . ltrim($value, '/');
+    }
+    return filter_var($value, FILTER_VALIDATE_URL) ? $value : false;
+}
+
+function normalize_social_link(string $value, string $platform)
+{
+    $value = trim($value);
+    if ($value === '') {
+        return null;
+    }
+    if (preg_match('#^https?://#i', $value)) {
+        return normalize_public_url($value);
+    }
+    $username = ltrim($value, '@');
+    if (!preg_match('/^[A-Za-z0-9._-]{1,80}$/', $username)) {
+        return false;
+    }
+    $baseUrls = [
+        'instagram' => 'https://www.instagram.com/',
+        'facebook' => 'https://www.facebook.com/',
+        'tiktok' => 'https://www.tiktok.com/@',
+        'youtube' => 'https://www.youtube.com/@',
+    ];
+    $platform = strtolower($platform);
+    return isset($baseUrls[$platform]) ? $baseUrls[$platform] . rawurlencode($username) : false;
+}
+
+function normalize_ppdb_status(string $value): string
+{
+    $value = strtolower(trim($value));
+    return in_array($value, ['open', 'upcoming', 'closed'], true) ? $value : 'open';
+}
+
+function normalize_ppdb_date(string $value, string $default = ''): string
+{
+    $value = trim($value);
+    if ($value === '') {
+        return $default;
+    }
+    foreach (['Y-m-d', 'd/m/Y', 'd-m-Y'] as $format) {
+        $date = DateTimeImmutable::createFromFormat('!' . $format, $value);
+        if ($date instanceof DateTimeImmutable && $date->format($format) === $value) {
+            return $date->format('Y-m-d');
+        }
+    }
+    return $default;
+}
+
+function get_ppdb_settings(): array
+{
+    $year = normalize_public_stat_count(get_setting('ppdb_year', (string)date('Y')), (int)date('Y'));
+    if ($year < 2024 || $year > 2100) {
+        $year = (int)date('Y');
+    }
+    $whatsapp = normalize_whatsapp_number((string)get_setting('ppdb_whatsapp_number', '6285692890015'));
+    return [
+        'status' => normalize_ppdb_status((string)get_setting('ppdb_status', 'open')),
+        'year' => (string)$year,
+        'start_date' => normalize_ppdb_date((string)get_setting('ppdb_start_date', ''), $year . '-01-01'),
+        'end_date' => normalize_ppdb_date((string)get_setting('ppdb_end_date', ''), $year . '-07-31'),
+        'whatsapp_number' => $whatsapp === false || $whatsapp === null ? '6285692890015' : $whatsapp,
+        'whatsapp_message' => normalize_public_text(get_setting('ppdb_whatsapp_message', 'Halo, saya ingin mendaftar PPDB SD Cahaya Harapan Bekasi.'), 'Halo, saya ingin mendaftar PPDB SD Cahaya Harapan Bekasi.', 500),
+        'description' => normalize_public_text(get_setting('ppdb_description', ''), '', 700),
+    ];
+}
+
+function feedback_initials(string $name): string
+{
+    $parts = preg_split('/\s+/', trim($name)) ?: [];
+    $initials = '';
+    foreach ($parts as $part) {
+        $initials .= strtoupper(substr($part, 0, 1));
+        if (strlen($initials) >= 2) {
+            break;
+        }
+    }
+    return $initials !== '' ? $initials : 'OT';
+}
+
+function feedback_avatar_url(?string $email, int $size = 160): ?string
+{
+    $email = strtolower(trim((string)$email));
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return null;
+    }
+    $size = max(40, min(240, $size));
+    return 'https://www.gravatar.com/avatar/' . md5($email) . '?s=' . $size . '&d=initials';
+}
+
+function default_leadership_team(): array
+{
+    return [];
+}
+
+function get_school_profile_settings(): array
+{
+    $missions = decode_json_setting('about_missions', [
+        'Menyelenggarakan pendidikan yang menumbuhkan iman, karakter, dan prestasi.',
+        'Membangun lingkungan belajar yang aman, disiplin, kreatif, dan penuh kasih.',
+        'Menguatkan kerja sama sekolah, orang tua, dan masyarakat.',
+    ]);
+    $team = decode_json_setting('about_leadership_team', default_leadership_team());
+    $team = array_values(array_filter(array_map(static function ($item): array {
+        $item = is_array($item) ? $item : [];
+        return [
+            'active' => !isset($item['active']) || filter_var($item['active'], FILTER_VALIDATE_BOOLEAN),
+            'name' => normalize_public_text($item['name'] ?? '', '', 120),
+            'role' => normalize_public_text($item['role'] ?? '', '', 140),
+            'description' => normalize_public_text($item['description'] ?? '', '', 500),
+            'email' => normalize_public_text($item['email'] ?? '', '', 160),
+            'phone' => normalize_public_text($item['phone'] ?? '', '', 60),
+            'image' => normalize_public_image_value((string)($item['image'] ?? ''), 'assets/img/logo.png'),
+        ];
+    }, $team), static fn($item) => $item['active'] && $item['name'] !== '' && $item['role'] !== ''));
+
+    return [
+        'principal' => [
+            'badge' => normalize_public_text(get_setting('about_principal_badge', 'Sambutan Kepala Sekolah'), 'Sambutan Kepala Sekolah', 80),
+            'title' => normalize_public_text(get_setting('about_principal_title', 'Iman Kuat, Karakter Hebat, Prestasi Bermartabat'), 'Iman Kuat, Karakter Hebat, Prestasi Bermartabat', 180),
+            'message' => normalize_public_text(get_setting('about_principal_message', ''), '', 5000),
+            'name' => normalize_public_text(get_setting('about_principal_name', 'Paulus Ngabur, S.Pd'), 'Paulus Ngabur, S.Pd', 120),
+            'role' => normalize_public_text(get_setting('about_principal_role', 'Kepala Sekolah'), 'Kepala Sekolah', 120),
+            'image' => normalize_public_image_value((string)get_setting('about_principal_image', 'assets/img/tim-kep/kepsek.jpg?v=1'), 'assets/img/tim-kep/kepsek.jpg?v=1'),
+        ],
+        'vision' => normalize_public_text(get_setting('about_vision', 'Menjadi sekolah Katolik yang unggul dalam iman, karakter, dan prestasi.'), 'Menjadi sekolah Katolik yang unggul dalam iman, karakter, dan prestasi.', 1000),
+        'missions' => array_values(array_filter(array_map(static fn($item) => normalize_public_text($item, '', 700), $missions))),
+        'leadership_team' => $team,
+    ];
+}
+
+function ensure_agendas_table(): void
+{
+    global $pdo;
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `agendas` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `title` VARCHAR(255) NOT NULL, `slug` VARCHAR(255) NOT NULL, `event_date` DATE NOT NULL, `event_time` VARCHAR(50) NOT NULL DEFAULT '', `location` VARCHAR(180) NOT NULL DEFAULT '', `contact` VARCHAR(180) NOT NULL DEFAULT '', `summary` TEXT DEFAULT NULL, `description` TEXT DEFAULT NULL, `points` TEXT DEFAULT NULL, `closing` TEXT DEFAULT NULL, `views` INT UNSIGNED NOT NULL DEFAULT 0, `is_active` TINYINT(1) NOT NULL DEFAULT 1, `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (`id`), UNIQUE KEY `agendas_slug_unique` (`slug`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+}
+
+function ensure_unique_agenda_slug(string $baseSlug, ?int $excludeId = null): string
+{
+    global $pdo;
+    ensure_agendas_table();
+    $slug = $baseSlug !== '' ? $baseSlug : 'agenda';
+    $counter = 1;
+    while (true) {
+        $query = 'SELECT id FROM agendas WHERE slug = :slug';
+        $params = ['slug' => $slug];
+        if ($excludeId !== null) {
+            $query .= ' AND id != :excludeId';
+            $params['excludeId'] = $excludeId;
+        }
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        if ($stmt->rowCount() === 0) {
+            return $slug;
+        }
+        $slug = $baseSlug . '-' . (++$counter);
+    }
+}
+
+function normalize_agenda_points(string $points): string
+{
+    return implode("\n", array_values(array_filter(array_map(static fn($line) => trim(strip_tags($line)), preg_split('/\R+/', $points) ?: []))));
+}
+
+function agenda_points_to_array(?string $points): array
+{
+    return array_values(array_filter(array_map('trim', preg_split('/\R+/', (string)$points) ?: [])));
+}
+
+function get_default_agendas(): array
+{
+    return [
+        ['id' => 0, 'title' => 'Pertemuan Orang Tua Siswa', 'slug' => 'pertemuan-orang-tua-siswa', 'event_date' => date('Y-m-d'), 'event_time' => '08.00 WIB', 'location' => 'Aula Sekolah', 'contact' => 'Tata Usaha', 'summary' => 'Informasi akademik dan agenda sekolah.', 'description' => '', 'points' => '', 'closing' => '', 'views' => 0, 'is_active' => 1],
+    ];
+}
+
+function get_public_agendas(int $limit = 3): array
+{
+    global $pdo;
+    try {
+        ensure_agendas_table();
+        $stmt = $pdo->prepare('SELECT * FROM agendas WHERE is_active = 1 ORDER BY event_date ASC, id ASC LIMIT :limit');
+        $stmt->bindValue(':limit', max(1, min(50, $limit)), PDO::PARAM_INT);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        return $items ?: array_slice(get_default_agendas(), 0, $limit);
+    } catch (Throwable $exception) {
+        log_exception($exception);
+        return array_slice(get_default_agendas(), 0, $limit);
+    }
+}
+
+function get_agenda_by_slug(string $slug): ?array
+{
+    global $pdo;
+    try {
+        ensure_agendas_table();
+        $stmt = $pdo->prepare('SELECT * FROM agendas WHERE slug = :slug AND is_active = 1 LIMIT 1');
+        $stmt->execute(['slug' => $slug]);
+        return $stmt->fetch() ?: null;
+    } catch (Throwable $exception) {
+        log_exception($exception);
+        foreach (get_default_agendas() as $agenda) {
+            if ($agenda['slug'] === $slug) {
+                return $agenda;
+            }
+        }
+        return null;
+    }
+}
+
+function increment_agenda_views(string $slug): void
+{
+    global $pdo;
+    try {
+        ensure_agendas_table();
+        $stmt = $pdo->prepare('UPDATE agendas SET views = views + 1 WHERE slug = :slug');
+        $stmt->execute(['slug' => $slug]);
+    } catch (Throwable $exception) {
+        log_exception($exception);
+    }
+}
+
+function get_public_achievements(int $limit = 24): array
+{
+    global $pdo;
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM achievements ORDER BY created_at DESC, id DESC LIMIT :limit');
+        $stmt->bindValue(':limit', max(1, min(100, $limit)), PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll() ?: [];
+    } catch (Throwable $exception) {
+        log_exception($exception);
+        return [];
+    }
+}
+
+function get_public_announcements(int $limit = 20): array
+{
+    global $pdo;
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM announcements WHERE status = 1 ORDER BY published_at DESC, id DESC LIMIT :limit');
+        $stmt->bindValue(':limit', max(1, min(100, $limit)), PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll() ?: [];
+    } catch (Throwable $exception) {
+        log_exception($exception);
+        return [];
+    }
+}
+
+function get_public_announcement_by_id(int $id): ?array
+{
+    global $pdo;
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM announcements WHERE id = :id AND status = 1 LIMIT 1');
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch() ?: null;
+    } catch (Throwable $exception) {
+        log_exception($exception);
+        return null;
+    }
+}
+
+function normalize_school_program_type(string $type): string
+{
+    $type = strtolower(trim($type));
+    return in_array($type, ['kegiatan', 'ekstrakurikuler'], true) ? $type : 'kegiatan';
+}
+
+function school_program_type_label(string $type): string
+{
+    return normalize_school_program_type($type) === 'ekstrakurikuler' ? 'Ekstrakurikuler' : 'Kegiatan';
+}
+
+function ensure_school_programs_table(): void
+{
+    global $pdo;
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `school_programs` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `type` VARCHAR(32) NOT NULL DEFAULT 'kegiatan', `title` VARCHAR(180) NOT NULL, `category` VARCHAR(80) NOT NULL DEFAULT '', `icon` VARCHAR(80) NOT NULL DEFAULT 'fa-solid fa-star', `description` TEXT DEFAULT NULL, `image` VARCHAR(255) DEFAULT NULL, `sort_order` INT NOT NULL DEFAULT 0, `is_active` TINYINT(1) NOT NULL DEFAULT 1, `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+}
+
+function get_default_school_programs(string $type): array
+{
+    $type = normalize_school_program_type($type);
+    return [
+        ['id' => 0, 'type' => $type, 'title' => $type === 'ekstrakurikuler' ? 'Pramuka Siaga' : 'Belajar Aktif di Kelas', 'category' => $type === 'ekstrakurikuler' ? 'Pramuka' : 'Pembelajaran', 'icon' => 'fa-solid fa-star', 'description' => 'Program sekolah untuk menumbuhkan karakter, kreativitas, dan prestasi siswa.', 'image' => 'assets/img/logo.png', 'sort_order' => 1, 'is_active' => 1],
+    ];
+}
+
+function get_public_school_programs(string $type, int $limit = 24): array
+{
+    global $pdo;
+    $type = normalize_school_program_type($type);
+    try {
+        ensure_school_programs_table();
+        $stmt = $pdo->prepare('SELECT * FROM school_programs WHERE type = :type AND is_active = 1 ORDER BY sort_order ASC, id ASC LIMIT :limit');
+        $stmt->bindValue(':type', $type, PDO::PARAM_STR);
+        $stmt->bindValue(':limit', max(1, min(100, $limit)), PDO::PARAM_INT);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        return $items ?: array_slice(get_default_school_programs($type), 0, $limit);
+    } catch (Throwable $exception) {
+        log_exception($exception);
+        return array_slice(get_default_school_programs($type), 0, $limit);
+    }
+}
+
+function school_program_icon_options(): array
+{
+    return [
+        'fa-solid fa-star' => 'Umum',
+        'fa-solid fa-calendar-check' => 'Kegiatan Sekolah',
+        'fa-solid fa-language' => 'Mandarin / Bahasa',
+        'fa-solid fa-campground' => 'Pramuka',
+        'fa-solid fa-futbol' => 'Sepak Bola / Futsal',
+        'fa-solid fa-person-running' => 'Olahraga',
+        'fa-solid fa-palette' => 'Seni',
+        'fa-solid fa-music' => 'Musik',
+        'fa-solid fa-book-open-reader' => 'Literasi',
+        'fa-solid fa-laptop-code' => 'Komputer / Coding',
+        'fa-solid fa-hands-praying' => 'Rohani',
+    ];
+}
+
+function normalize_school_program_icon(string $icon): string
+{
+    return array_key_exists($icon, school_program_icon_options()) ? $icon : 'fa-solid fa-star';
+}
+
+function normalize_staff_status($value): int
+{
+    return in_array(strtolower((string)$value), ['1', 'aktif', 'active', 'on', 'true', 'yes'], true) ? 1 : 0;
+}
+
+function normalize_optional_email(string $value)
+{
+    $value = trim($value);
+    if ($value === '') {
+        return null;
+    }
+    return filter_var($value, FILTER_VALIDATE_EMAIL) ? $value : false;
+}
+
+function get_related_news_payload(int $newsId, int $limit = 3): array
+{
+    global $pdo;
+    $limit = max(1, min(10, $limit));
+    try {
+        $categoryStatement = $pdo->prepare('SELECT category FROM news WHERE id = :id LIMIT 1');
+        $categoryStatement->execute(['id' => $newsId]);
+        $category = (string)($categoryStatement->fetchColumn() ?: '');
+        $items = [];
+        if ($category !== '') {
+            $statement = $pdo->prepare('SELECT * FROM news WHERE category = :category AND id != :id AND is_active = 1 ORDER BY published_at DESC, created_at DESC LIMIT :limit');
+            $statement->bindValue(':category', $category, PDO::PARAM_STR);
+            $statement->bindValue(':id', $newsId, PDO::PARAM_INT);
+            $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $statement->execute();
+            $items = $statement->fetchAll() ?: [];
+        }
+        if (!empty($items)) {
+            return ['items' => $items, 'is_fallback' => false];
+        }
+        $fallback = $pdo->prepare('SELECT * FROM news WHERE id != :id AND is_active = 1 ORDER BY published_at DESC, created_at DESC LIMIT :limit');
+        $fallback->bindValue(':id', $newsId, PDO::PARAM_INT);
+        $fallback->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $fallback->execute();
+        return ['items' => $fallback->fetchAll() ?: [], 'is_fallback' => true];
+    } catch (Throwable $exception) {
+        log_exception($exception);
+        return ['items' => [], 'is_fallback' => true];
+    }
+}

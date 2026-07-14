@@ -6,6 +6,7 @@ define('ADMIN_CONTEXT', true);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_login();
+require_permission('publish');
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $editing = $id > 0;
@@ -31,6 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $content = clean($_POST['content'] ?? '');
         $publishedAt = $_POST['published_at'] ?? date('Y-m-d');
         $status = isset($_POST['status']) ? 1 : 0;
+
+        $item = array_merge($item, [
+            'title' => $title,
+            'content' => $content,
+            'published_at' => $publishedAt,
+            'status' => $status,
+        ]);
 
         if ($title === '' || $content === '') {
             $error = 'Judul dan isi pengumuman wajib diisi.';
@@ -66,7 +74,7 @@ $pageTitle = $editing ? 'Edit Pengumuman' : 'Tambah Pengumuman';
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+    <div class="panel-header">
         <div>
             <h2><?= htmlspecialchars($pageTitle) ?></h2>
             <p class="footer-note">Kelola pengumuman untuk tampilkan informasi penting ke publik.</p>
@@ -89,11 +97,11 @@ require_once __DIR__ . '/includes/header.php';
                 <label for="published_at">Tanggal</label>
                 <input type="date" id="published_at" name="published_at" value="<?= htmlspecialchars($item['published_at']) ?>" required>
             </div>
-            <div style="grid-column:1/-1;">
+            <div class="full-span">
                 <label for="content">Isi Pengumuman</label>
                 <textarea id="content" name="content" required><?= htmlspecialchars($item['content']) ?></textarea>
             </div>
-            <div style="grid-column:1/-1; display:flex; align-items:center; gap:12px;">
+            <div class="full-span field-inline">
                 <label>
                     <input type="checkbox" name="status" <?= $item['status'] ? 'checked' : '' ?>> Aktifkan pengumuman
                 </label>

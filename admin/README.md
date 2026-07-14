@@ -1,60 +1,60 @@
-# Admin CMS Setup
+﻿# Admin CMS Setup
 
-Sistem admin ini dibangun terpisah dari frontend agar visual public tetap aman.
+Sistem admin mengelola konten website publik: berita, pengumuman, agenda, prestasi, galeri, kegiatan, ekstrakurikuler, guru/staff, tentang sekolah, media, dan pengaturan akun.
 
-## Struktur folder
+## Struktur Utama
 
-- `admin/`
-  - `login.php`
-  - `dashboard.php`
-  - `news.php`, `news-form.php`
-  - `gallery.php`, `gallery-form.php`
-  - `achievements.php`, `achievement-form.php`
-  - `slider.php`, `slider-form.php`
-  - `announcements.php`, `announcement-form.php`
-  - `logout.php`
-  - `assets/css/admin.css`
-  - `assets/js/admin.js`
-  - `includes/header.php`, `sidebar.php`, `footer.php`
-- `config/`
-  - `config.php`
-  - `db.php`
-- `includes/`
-  - `functions.php`
-  - `auth.php`
-  - `csrf.php`
-- `api/`
-  - `upload.php`
-- `uploads/`
-  - `news/`, `gallery/`, `achievements/`, `slider/`
-- `admin-schema.sql`
+- `admin/`: halaman dashboard dan form pengelolaan konten.
+- `api/`: endpoint publik dan endpoint internal admin.
+- `config/`: konfigurasi aplikasi dan database.
+- `includes/`: helper, auth, CSRF, upload, dan fungsi data.
+- `uploads/`: file gambar yang diunggah dari admin.
+- `migrations/`: migrasi database production.
+- `admin-schema.sql`: schema referensi untuk instalasi awal.
 
-## Langkah pemasangan di hosting / cPanel
+## Setup Hosting
 
-1. Upload seluruh folder ke root website (`public_html` atau folder publik).
-2. Pastikan folder `uploads/` dapat ditulis oleh web server.
-3. Buka `config/config.php` dan sesuaikan:
-   - `DB_HOST`
-   - `DB_NAME`
-   - `DB_USER`
-   - `DB_PASS`
-   Nilai tersebut juga dapat diatur lewat environment variable sesuai `.env.example`.
-4. Import file SQL `admin-schema.sql` ke database MySQL.
-5. Ganti nilai `REPLACE_WITH_PASSWORD_HASH` di `users` dengan hash password aman dari PHP.
-   - Contoh di server: `<?php echo password_hash('Admin123!', PASSWORD_DEFAULT); ?>`
-6. Akses admin melalui `https://domainanda.com/admin/login.php`.
+1. Upload proyek ke hosting.
+2. Isi environment production sesuai `.env.example`.
+3. Pastikan folder berikut writable: `uploads/`, `backups/`, `cache/`, `logs/`.
+4. Jalankan migrasi:
 
-## Koneksi frontend dengan database admin
+```bash
+php migrations/migrate.php status
+php migrations/migrate.php apply
+```
 
-Sistem admin saat ini tidak mengubah frontend existing. Untuk menampilkan konten database di halaman publik, gunakan salah satu pendekatan berikut:
+5. Buat akun admin pertama dengan email aktif sekolah. Untuk membuat hash password:
 
-1. Ubah halaman yang ingin terintegrasi menjadi PHP dan ambil data dari tabel seperti `news`, `gallery`, `announcements`, dsb.
-2. Buat endpoint API tambahan (misalnya `api/public-news.php`) yang mengembalikan JSON, kemudian panggil dari frontend.
-3. Biarkan halaman public tetap statis, lalu export/refresh data dari admin secara manual jika diperlukan.
+```bash
+php reset-admin.php "PasswordBaruYangKuat"
+```
 
-## Best practice pemeliharaan
+6. Jalankan contoh `INSERT` yang sudah disesuaikan di `admin-schema.sql`, atau buat akun langsung dari database dengan hash tersebut.
+7. Login melalui `/admin/login.php`.
+8. Buka menu `Akun Saya` untuk memastikan email dan password admin sudah benar.
 
-- Jangan hapus folder `config/` dan `includes/`.
-- Pastikan `uploads/` hanya dapat menulis file gambar.
-- Gunakan HTTPS dan aktifkan `session.cookie_secure` di `config/config.php` jika tersedia.
-- Buat akun operator terpisah untuk staff yang tidak perlu akses superuser.
+## Email dan Lupa Password
+
+Fitur lupa password memakai email admin yang tersimpan di tabel `users`. Untuk production, isi SMTP di environment:
+
+```env
+MAIL_FROM_ADDRESS=no-reply@domain-sekolah.sch.id
+MAIL_FROM_NAME="SD Cahaya Harapan Bekasi"
+SMTP_HOST=smtp.domain-sekolah.sch.id
+SMTP_PORT=587
+SMTP_USERNAME=no-reply@domain-sekolah.sch.id
+SMTP_PASSWORD=password_email_atau_app_password
+SMTP_ENCRYPTION=tls
+```
+
+Jika SMTP belum diatur, aplikasi akan mencoba `mail()` PHP dan menulis fallback ke `logs/password-reset.log` saat pengiriman gagal.
+
+## Best Practice
+
+- Gunakan HTTPS.
+- Jangan commit file `.env`.
+- Gunakan email admin yang benar-benar aktif.
+- Ganti password secara berkala lewat menu `Akun Saya`.
+- Backup database dan `uploads/` sebelum update besar.
+- Pastikan `uploads/.htaccess` tetap melarang eksekusi script.

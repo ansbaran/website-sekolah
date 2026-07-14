@@ -6,6 +6,7 @@ define('ADMIN_CONTEXT', true);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_login();
+require_permission('publish');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
@@ -31,7 +32,7 @@ $pageTitle = 'Pengumuman';
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;">
+    <div class="panel-header">
         <div>
             <h2>Kelola Pengumuman</h2>
             <p class="footer-note">Buat pesan penting untuk ditampilkan di website.</p>
@@ -53,22 +54,26 @@ require_once __DIR__ . '/includes/header.php';
         <tbody>
             <?php if (empty($announcements)): ?>
                 <tr>
-                    <td colspan="4">Belum ada pengumuman.</td>
+                    <td colspan="4" class="empty-row">Belum ada pengumuman.</td>
                 </tr>
             <?php endif; ?>
             <?php foreach ($announcements as $item): ?>
                 <tr>
                     <td><?= htmlspecialchars($item['title']) ?></td>
                     <td><?= htmlspecialchars($item['published_at']) ?></td>
-                    <td><?= $item['status'] ? 'Aktif' : 'Tertunda' ?></td>
+                    <td>
+                        <span class="status-pill <?= $item['status'] ? 'status-pill--active' : 'status-pill--muted' ?>">
+                            <?= $item['status'] ? 'Aktif' : 'Tertunda' ?>
+                        </span>
+                    </td>
                     <td>
                         <a class="btn-tertiary" href="announcement-form.php?id=<?= $item['id'] ?>">Edit</a>
                         <?php if (can('delete')): ?>
-                            <form method="post" style="display:inline-block; margin:0;" onsubmit="return confirm('Hapus pengumuman ini?');">
+                            <form method="post" class="inline-form">
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                <button type="submit" class="btn-secondary">Hapus</button>
+                                <button type="submit" class="btn-danger" data-confirm="Hapus pengumuman ini?">Hapus</button>
                             </form>
                         <?php endif; ?>
                     </td>

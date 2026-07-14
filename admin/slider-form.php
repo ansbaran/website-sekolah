@@ -6,6 +6,7 @@ define('ADMIN_CONTEXT', true);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_login();
+require_permission('publish');
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $editing = $id > 0;
@@ -31,9 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $subtitle = clean($_POST['subtitle'] ?? '');
         $isActive = isset($_POST['is_active']) ? 1 : 0;
 
+        $slide = array_merge($slide, [
+            'title' => $title,
+            'subtitle' => $subtitle,
+            'is_active' => $isActive,
+        ]);
+
         if ($title === '' || empty($_FILES['background']['name']) && !$editing) {
             $error = 'Judul dan gambar latar wajib diisi.';
         } else {
+            $fileToDeleteAfterSave = null;
             $background = $slide['background'];
             if (!empty($_FILES['background']['name'])) {
                 $uploadName = upload_image($_FILES['background'], 'slider', $uploadError);
@@ -41,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error = $uploadError;
                 } else {
                     if (!empty($background)) {
-                        delete_file(UPLOAD_BASE . '/slider/' . $background);
+                        $fileToDeleteAfterSave = UPLOAD_BASE . '/slider/' . $background;
                     }
                     $background = $uploadName;
                 }
@@ -70,6 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     log_activity('Tambah slider', 'Slider baru ditambahkan: ' . $title, 'slider:new');
                     flash('success', 'Slide baru berhasil ditambahkan.');
                 }
+                if ($fileToDeleteAfterSave !== null) {
+                    delete_file($fileToDeleteAfterSave);
+                }
                 redirect('slider.php');
             }
         }
@@ -80,7 +91,7 @@ $pageTitle = $editing ? 'Edit Slide Hero' : 'Tambah Slide Hero';
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+    <div class="panel-header">
         <div>
             <h2><?= htmlspecialchars($pageTitle) ?></h2>
             <p class="footer-note">Kelola slide hero untuk halaman utama website.</p>
@@ -94,6 +105,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <form method="post" enctype="multipart/form-data" class="form-card">
         <?= csrf_field() ?>
+        <input type="hidden" name="MAX_FILE_SIZE" value="<?= MAX_IMAGE_SIZE ?>">
         <div class="form-grid">
             <div>
                 <label for="title">Judul Slide</label>
@@ -105,12 +117,12 @@ require_once __DIR__ . '/includes/header.php';
             </div>
             <div>
                 <label for="background">Gambar Latar</label>
-                <input type="file" id="background" name="background" accept="image/*" <?= $editing ? '' : 'required' ?>>
+                <input type="file" id="background" name="background" accept="image/*" data-max-size="4194304" <?= $editing ? '' : 'required' ?>>
                 <?php if (!empty($slide['background'])) : ?>
                     <p class="footer-note">Gambar saat ini: <?= htmlspecialchars($slide['background']) ?></p>
                 <?php endif; ?>
             </div>
-            <div style="grid-column:1/-1; display:flex; align-items:center; gap:12px;">
+            <div class="full-span field-inline">
                 <label>
                     <input type="checkbox" name="is_active" <?= $slide['is_active'] ? 'checked' : '' ?>> Aktifkan slide
                 </label>

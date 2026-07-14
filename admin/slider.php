@@ -6,6 +6,7 @@ define('ADMIN_CONTEXT', true);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_login();
+require_permission('publish');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
@@ -28,13 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     redirect('slider.php');
 }
 
-$statement = $pdo->query('SELECT * FROM slider ORDER BY created_at DESC');
+$statement = $pdo->query('SELECT * FROM slider ORDER BY created_at DESC, id DESC');
 $sliderItems = $statement->fetchAll();
 $pageTitle = 'Slider Hero';
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;">
+    <div class="panel-header">
         <div>
             <h2>Kelola Slider Hero</h2>
             <p class="footer-note">Atur slide utama, judul, subtitle, dan status aktif.</p>
@@ -57,23 +58,27 @@ require_once __DIR__ . '/includes/header.php';
         <tbody>
             <?php if (empty($sliderItems)): ?>
                 <tr>
-                    <td colspan="5">Belum ada slide hero.</td>
+                    <td colspan="5" class="empty-row">Belum ada slide hero.</td>
                 </tr>
             <?php endif; ?>
             <?php foreach ($sliderItems as $item): ?>
                 <tr>
-                    <td><img src="<?= build_upload_url('slider', $item['background']) ?>" style="width: 120px; height: 80px; object-fit: cover; border-radius: 12px;"></td>
+                    <td><img class="table-thumb" src="<?= escape(build_upload_url('slider', $item['background'])) ?>" alt="<?= escape($item['title']) ?>" loading="lazy" data-fallback-src="../assets/img/logo.png"></td>
                     <td><?= htmlspecialchars($item['title']) ?></td>
-                    <td><?= $item['is_active'] ? 'Aktif' : 'Nonaktif' ?></td>
+                    <td>
+                        <span class="status-pill <?= $item['is_active'] ? 'status-pill--active' : 'status-pill--muted' ?>">
+                            <?= $item['is_active'] ? 'Aktif' : 'Nonaktif' ?>
+                        </span>
+                    </td>
                     <td><?= htmlspecialchars($item['created_at']) ?></td>
                     <td>
                         <a class="btn-tertiary" href="slider-form.php?id=<?= $item['id'] ?>">Edit</a>
                         <?php if (can('delete')): ?>
-                            <form method="post" style="display:inline-block; margin:0;" onsubmit="return confirm('Hapus slide ini?');">
+                            <form method="post" class="inline-form">
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                <button type="submit" class="btn-secondary">Hapus</button>
+                                <button type="submit" class="btn-danger" data-confirm="Hapus slide ini?">Hapus</button>
                             </form>
                         <?php endif; ?>
                     </td>

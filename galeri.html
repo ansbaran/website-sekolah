@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <base href="/website-sekolah/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeri Sekolah - SD Cahaya Harapan</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <script>
-      window.tailwind = window.tailwind || {};
-      window.tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { sans: ["Manrope", "ui-sans-serif", "system-ui", "sans-serif"] }, colors: { school: { navy: "#0D0B61", blue: "#294669", teal: "#478B8D", gold: "#E4D329" } } } } };
-    </script>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="assets/js/tailwind-config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="galeri-page bg-white font-sans text-slate-700 antialiased">
@@ -32,9 +28,13 @@
                 <button class="filter-btn rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="fasilitas" aria-pressed="false">Fasilitas</button>
                 <button class="filter-btn rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="kegiatan" aria-pressed="false">Kegiatan</button>
                 <button class="filter-btn rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="prestasi" aria-pressed="false">Prestasi</button>
+                <button class="filter-btn rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="ekstrakurikuler" aria-pressed="false">Ekstrakurikuler</button>
+                <button class="filter-btn rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="akademik" aria-pressed="false">Akademik</button>
             </div>
 
-            <div class="simple-gallery-grid grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+            <div class="gallery-loading hidden justify-center py-10 text-sm font-bold text-slate-500" data-gallery-loading>Memuat galeri...</div>
+            <div class="simple-gallery-grid grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
+            <p class="gallery-empty hidden py-10 text-center text-sm font-bold text-slate-500" data-gallery-empty>Belum ada foto untuk kategori ini.</p>
 
         </div>
     </section>

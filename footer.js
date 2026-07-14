@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', async function loadFooter() {
 
         footer.innerHTML = data;
 
-        console.log('Footer loaded successfully');
 
     } catch (error) {
 

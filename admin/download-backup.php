@@ -6,7 +6,7 @@ define('ADMIN_CONTEXT', true);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_login();
-require_role('super_admin', 'admin');
+require_permission('backup');
 
 $fileName = basename((string)($_GET['file'] ?? ''));
 $path = BACKUP_DIR . '/' . $fileName;

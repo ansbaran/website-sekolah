@@ -3,7 +3,19 @@
 declare(strict_types=1);
 
 header('Content-Type: application/json; charset=utf-8');
+
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
+    echo json_encode(['status' => 'error', 'message' => 'Method not allowed'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 require_once __DIR__ . '/../includes/functions.php';
+header('Cache-Control: no-store, no-cache, must-revalidate');
+if (!enforce_rate_limit('public-news')) {
+    echo json_encode(['status' => 'error', 'message' => 'Too many requests'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
 if ($limit < 1 || $limit > 100) {

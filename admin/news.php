@@ -6,6 +6,7 @@ define('ADMIN_CONTEXT', true);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_login();
+require_permission('publish');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
@@ -38,7 +39,7 @@ $pageTitle = 'Berita';
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;">
+    <div class="panel-header">
         <div>
             <h2>Kelola Berita</h2>
             <p class="footer-note">Tambahkan, edit, dan hapus berita sekolah.</p>
@@ -61,7 +62,7 @@ require_once __DIR__ . '/includes/header.php';
         <tbody>
             <?php if (empty($newsItems)): ?>
                 <tr>
-                    <td colspan="5">Belum ada berita.</td>
+                    <td colspan="5" class="empty-row">Belum ada berita.</td>
                 </tr>
             <?php endif; ?>
             <?php foreach ($newsItems as $news): ?>
@@ -69,15 +70,19 @@ require_once __DIR__ . '/includes/header.php';
                     <td><?= htmlspecialchars($news['title']) ?></td>
                     <td><?= htmlspecialchars($news['category']) ?></td>
                     <td><?= htmlspecialchars($news['published_at']) ?></td>
-                    <td><?= $news['is_active'] ? 'Aktif' : 'Nonaktif' ?></td>
+                    <td>
+                        <span class="status-pill <?= $news['is_active'] ? 'status-pill--active' : 'status-pill--muted' ?>">
+                            <?= $news['is_active'] ? 'Aktif' : 'Nonaktif' ?>
+                        </span>
+                    </td>
                     <td>
                         <a class="btn-tertiary" href="news-form.php?id=<?= $news['id'] ?>">Edit</a>
                         <?php if (can('delete')): ?>
-                            <form method="post" style="display:inline-block; margin:0;" onsubmit="return confirm('Hapus berita ini?');">
+                            <form method="post" class="inline-form">
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="id" value="<?= $news['id'] ?>">
-                                <button type="submit" class="btn-secondary">Hapus</button>
+                                <button type="submit" class="btn-danger" data-confirm="Hapus berita ini?">Hapus</button>
                             </form>
                         <?php endif; ?>
                     </td>

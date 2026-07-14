@@ -1,5 +1,19 @@
 # Prevent execution of uploaded scripts
+Options -Indexes -ExecCGI
+
+RemoveHandler .php .phtml .php3 .php4 .php5 .phps .cgi .pl .asp .aspx
+RemoveType .php .phtml .php3 .php4 .php5 .phps .cgi .pl .asp .aspx
+
 <FilesMatch "\.(php|phtml|php3|php4|php5|phps)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<FilesMatch "\.(cgi|pl|asp|aspx|jsp|sh|bat|cmd|exe|dll)$">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>

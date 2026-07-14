@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="id">
   <head>
-    <base href="/website-sekolah/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
@@ -13,28 +12,28 @@
       window.tailwind = window.tailwind || {};
       window.tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { sans: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"] }, colors: { school: { navy: "#0D0B61", blue: "#294669", teal: "#478B8D", gold: "#E4D329" } } } } };
     </script>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260709-public-fixes">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-slate-50 font-sans text-slate-700 antialiased">
     <div id="navbar"></div>
-    <main class="overflow-hidden">
+    <main class="overflow-hidden" data-about-page>
 <section class="section section--default section--divider principal reveal px-4 pb-16 pt-28 sm:px-6 lg:pb-24 lg:pt-32" id="profil">
   <div class="container principal__wrapper mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-14">
 
     <div class="principal__content rounded-[2rem] border border-white/80 bg-white/78 p-6 shadow-[0_28px_90px_rgba(13,11,97,0.10)] backdrop-blur-xl sm:p-8 lg:p-10">
       <span class="principal__badge inline-flex items-center gap-2 rounded-full border border-[#478B8D]/20 bg-[#478B8D]/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-[#0D0B61]">
         <span class="h-2 w-2 rounded-full bg-[#E4D329]"></span>
-        Sambutan Kepala Sekolah
+        <span data-about-principal-badge>Sambutan Kepala Sekolah</span>
       </span>
 
-      <h2 class="principal__title mt-6 max-w-3xl text-3xl font-black leading-tight tracking-tight text-[#0D0B61] sm:text-4xl lg:text-5xl">
+      <h2 class="principal__title mt-6 max-w-3xl text-3xl font-black leading-tight tracking-tight text-[#0D0B61] sm:text-4xl lg:text-5xl" data-about-principal-title>
         Iman Kuat, Karakter Hebat, Prestasi Bermartabat
       </h2>
 
-      <div class="mt-7 space-y-5 text-base leading-8 text-[#294669]">
+      <div class="mt-7 space-y-5 text-base leading-8 text-[#294669]" data-about-principal-message>
         <p class="principal__text">
           Dengan penuh syukur kepada Tuhan Yang Maha Kasih, 
           kami menyambut seluruh peserta didik, orang tua, 
@@ -66,7 +65,7 @@
           Karena itu, kami terus membangun kemitraan yang kolaboratif dan solutif demi menciptakan lingkungan belajar yang aman, nyaman, positif, dan penuh semangat kasih.         
         </p>
         <p class="principal__text">
-          Kiranya melalui semangat “Iman, Ilmu, dan Kasih”, SD Cahaya Harapan Bekasi dapat terus menjadi tempat bertumbuhnya
+          Kiranya melalui semangat â€œIman, Ilmu, dan Kasihâ€, SD Cahaya Harapan Bekasi dapat terus menjadi tempat bertumbuhnya
           generasi yang cerdas, berintegritas, serta menjadi terang dan harapan bagi sesama.
           Tuhan memberkati.
         </p>
@@ -94,11 +93,11 @@
       <div class="absolute -right-4 bottom-16 hidden h-36 w-36 rounded-full bg-[#478B8D]/25 blur-3xl sm:block"></div>
 
       <div class="relative overflow-hidden rounded-[2rem] border border-white/80 bg-white/75 p-3 shadow-[0_30px_90px_rgba(13,11,97,0.18)] backdrop-blur-xl">
-        <img src="assets/img/tim-kep/kepsek.jpg?v=1" alt="Kepala Sekolah" class="aspect-[4/5] w-full rounded-[1.45rem] object-cover object-center">
+        <img src="assets/img/tim-kep/kepsek.jpg?v=1" alt="Kepala Sekolah" class="aspect-[4/5] w-full rounded-[1.45rem] object-cover object-center" data-about-principal-image>
 
         <div class="principal__identity absolute bottom-5 left-5 right-5 rounded-[1.35rem] border border-white/60 bg-white/80 p-4 shadow-xl backdrop-blur-xl">
-          <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-[#478B8D]">Kepala Sekolah</span>
-          <strong class="mt-1 block text-lg font-black text-[#0D0B61]">Paulus Ngabur, S.Pd</strong>
+          <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-[#478B8D]" data-about-principal-role>Kepala Sekolah</span>
+          <strong class="mt-1 block text-lg font-black text-[#0D0B61]" data-about-principal-name>Paulus Ngabur, S.Pd</strong>
         </div>
       </div>
     </div>
@@ -120,7 +119,7 @@
         <div class="vm-block">
 
             <div class="vm-icon">
-                ✨
+                âœ¨
             </div>
 
             <h2 class="vm-title">
@@ -129,9 +128,9 @@
 
             <div class="vm-card">
 
-                <p>
-                "Menjadi sekolah Katolik yang unggul dalam iman, karakter, 
-                melalui pembelajaran mendalam yang berlandaskan 
+                <p data-about-vision-text>
+                "Menjadi sekolah Katolik yang unggul dalam iman, karakter,
+                melalui pembelajaran mendalam yang berlandaskan
                 nilai-nilai Pancasila."
                 </p>
 
@@ -143,14 +142,14 @@
         <div class="vm-block mission-block">
 
             <div class="vm-icon vm-icon--green">
-                ✔
+                âœ”
             </div>
 
             <h2 class="vm-title">
                 Misi Sekolah
             </h2>
 
-            <div class="vm-list">
+            <div class="vm-list" data-about-mission-list>
 
                 <div class="vm-list-item">
 
@@ -391,7 +390,7 @@
         </div>
 
         <!-- grid -->
-        <div class="team-grid">
+        <div class="team-grid" data-about-leadership-grid>
 
             <!-- CARD 1 -->
             <article class="leader-card leader-blue">
@@ -516,11 +515,64 @@
 
 </section>    
 
+<section class="staff-section" data-staff-section data-staff-limit="24" aria-labelledby="staff-section-title">
+  <div class="staff-section__inner">
+    <div class="staff-section__top">
+      <div class="staff-section__header">
+        <span class="staff-section__eyebrow">Guru dan Staff</span>
+        <h2 id="staff-section-title">Guru dan Staff SD Cahaya Harapan Bekasi</h2>
+        <p>Tenaga pendidik dan kependidikan yang mendampingi peserta didik berkembang secara akademik, karakter, dan keterampilan abad 21.</p>
+      </div>
+
+      <div class="staff-slider__controls" aria-label="Navigasi Guru dan Staff">
+        <button class="staff-slider__control" type="button" data-staff-prev aria-label="Staff sebelumnya">&lsaquo;</button>
+        <button class="staff-slider__control" type="button" data-staff-next aria-label="Staff berikutnya">&rsaquo;</button>
+      </div>
+    </div>
+
+    <div class="staff-stats" aria-label="Statistik Guru dan Staff">
+      <article class="staff-stat-card">
+        <span class="staff-stat-card__icon" aria-hidden="true" data-public-stat-text="teachers_count">25</span>
+        <strong>Guru</strong>
+        <small>Tenaga pendidik aktif</small>
+      </article>
+      <article class="staff-stat-card">
+        <span class="staff-stat-card__icon" aria-hidden="true" data-public-stat-text="staff_count">6</span>
+        <strong>Staff</strong>
+        <small>Dukungan operasional sekolah</small>
+      </article>
+      <article class="staff-stat-card">
+        <span class="staff-stat-card__icon" aria-hidden="true" data-public-stat-text="professional_label">A+</span>
+        <strong>Profesional</strong>
+        <small>Berpengalaman dan human friendly</small>
+      </article>
+    </div>
+
+    <div class="staff-slider" aria-label="Daftar Guru dan Staff">
+      <div class="staff-status" data-staff-status></div>
+      <div class="staff-slider__viewport">
+        <div class="staff-slider__track" data-staff-track></div>
+      </div>
+    </div>
+
+    <div class="staff-modal" data-staff-modal hidden role="dialog" aria-modal="true" aria-labelledby="staff-modal-name-about">
+      <div class="staff-modal__card">
+        <button class="staff-modal__close" type="button" data-staff-modal-close aria-label="Tutup detail staff">&times;</button>
+        <img class="staff-modal__image" data-staff-modal-image src="assets/img/logo.png" alt="">
+        <h3 id="staff-modal-name-about" data-staff-modal-name></h3>
+        <p class="staff-modal__role" data-staff-modal-role></p>
+        <p class="staff-modal__description" data-staff-modal-description></p>
+        <div class="staff-modal__links" data-staff-modal-links aria-label="Kontak publik staff"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
     </main>
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/main.js?v=20260709-public-fixes"></script>
     <script src="assets/js/seo.js"></script>
     <script src="assets/js/maintenance.js"></script>
-    <script src="assets/js/cms-connector.js"></script>
+    <script src="assets/js/cms-connector.js?v=20260709-public-fixes"></script>
   </body>
 </html>

@@ -23,27 +23,67 @@ function restore_remembered(): void
     }
 
     [$userId, $token] = explode('|', $_COOKIE['remember_me'] ?? '', 2) + [null, null];
-    if (!$userId || !$token) {
+    if (!$userId || !$token || !ctype_digit((string)$userId) || !ctype_xdigit((string)$token) || strlen((string)$token) !== 64) {
+        clear_remember_cookie();
         return;
     }
 
-    $statement = $pdo->prepare('SELECT id, name, email, role, remember_token FROM users WHERE id = :id LIMIT 1');
+    $statement = $pdo->prepare('SELECT id, name, email, role, remember_token, is_active FROM users WHERE id = :id LIMIT 1');
     $statement->execute(['id' => $userId]);
     $user = $statement->fetch();
 
     $storedToken = (string)($user['remember_token'] ?? '');
     $tokenHash = hash('sha256', $token);
 
-    if ($user && $storedToken !== '' && hash_equals($storedToken, $tokenHash)) {
+    if ($user && (int)($user['is_active'] ?? 1) === 1 && $storedToken !== '' && hash_equals($storedToken, $tokenHash)) {
+        session_regenerate_id(true);
         $_SESSION['admin_user'] = [
             'id' => $user['id'],
             'name' => $user['name'],
             'email' => $user['email'],
             'role' => $user['role'],
         ];
+        $_SESSION['last_activity'] = time();
     }
 }
 
+function clear_remember_cookie(): void
+{
+    setcookie('remember_me', '', [
+        'expires' => time() - 3600,
+        'path' => '/',
+        'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
+}
+
+function ensure_current_user_is_active(): bool
+{
+    global $pdo;
+
+    $user = current_user();
+    if (!$user || empty($user['id'])) {
+        return false;
+    }
+
+    $statement = $pdo->prepare('SELECT id, name, email, role, is_active FROM users WHERE id = :id LIMIT 1');
+    $statement->execute(['id' => $user['id']]);
+    $freshUser = $statement->fetch();
+
+    if (!$freshUser || (int)($freshUser['is_active'] ?? 0) !== 1) {
+        return false;
+    }
+
+    $_SESSION['admin_user'] = [
+        'id' => $freshUser['id'],
+        'name' => $freshUser['name'],
+        'email' => $freshUser['email'],
+        'role' => $freshUser['role'],
+    ];
+
+    return true;
+}
 function require_login(): void
 {
     restore_remembered();
@@ -55,6 +95,11 @@ function require_login(): void
     if (!check_session_activity()) {
         logout_user();
         redirect('login.php?expired=1');
+    }
+
+    if (!ensure_current_user_is_active()) {
+        logout_user();
+        redirect('login.php?inactive=1');
     }
 
     update_session_activity();
@@ -108,7 +153,7 @@ function logout_user(): void
         setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
     }
 
-    setcookie('remember_me', '', time() - 3600, '/');
+    clear_remember_cookie();
     session_destroy();
 }
 
@@ -116,6 +161,17 @@ function require_role(string ...$roles): void
 {
     $user = current_user();
     if (!$user || !in_array($user['role'], $roles, true)) {
+        redirect('dashboard.php');
+    }
+}
+
+function require_permission(string $permission): void
+{
+    if (!can($permission)) {
+        if (!headers_sent()) {
+            http_response_code(403);
+        }
+        flash('error', 'Anda tidak memiliki izin untuk mengakses fitur tersebut.');
         redirect('dashboard.php');
     }
 }

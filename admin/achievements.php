@@ -6,6 +6,21 @@ define('ADMIN_CONTEXT', true);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_login();
+require_permission('publish');
+
+function admin_achievement_excerpt(string $value, int $limit = 120): string
+{
+    $text = trim(strip_tags($value));
+    if ($text === '') {
+        return 'Belum ada deskripsi.';
+    }
+
+    if (mb_strlen($text) <= $limit) {
+        return $text;
+    }
+
+    return rtrim(mb_substr($text, 0, $limit), " \t\n\r\0\x0B.,") . '...';
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
@@ -34,12 +49,12 @@ $pageTitle = 'Prestasi';
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;">
+    <div class="panel-header">
         <div>
             <h2>Kelola Prestasi</h2>
-            <p class="footer-note">Tambahkan capaian siswa dan lomba secara rapi.</p>
+            <p class="footer-note">Tambahkan capaian siswa yang tampil di halaman Prestasi publik.</p>
         </div>
-        <a class="btn-primary" href="achievement-form.php">+ Tambah Prestasi</a>
+        <a class="btn-primary" href="achievement-form.php"><span class="admin-button-icon"><i class="fa-solid fa-plus" aria-hidden="true"></i></span> Tambah Prestasi</a>
     </div>
 </section>
 
@@ -48,8 +63,9 @@ require_once __DIR__ . '/includes/header.php';
         <thead>
             <tr>
                 <th>Preview</th>
-                <th>Nama Prestasi</th>
+                <th>Prestasi</th>
                 <th>Tingkat</th>
+                <th>Deskripsi</th>
                 <th>Tanggal</th>
                 <th>Aksi</th>
             </tr>
@@ -57,23 +73,24 @@ require_once __DIR__ . '/includes/header.php';
         <tbody>
             <?php if (empty($achievementsList)): ?>
                 <tr>
-                    <td colspan="5">Belum ada data prestasi.</td>
+                    <td colspan="6" class="empty-row">Belum ada data prestasi.</td>
                 </tr>
             <?php endif; ?>
             <?php foreach ($achievementsList as $item): ?>
                 <tr>
-                    <td><img src="<?= build_upload_url('achievements', $item['image']) ?>" style="width: 120px; height: 80px; object-fit: cover; border-radius: 12px;"></td>
-                    <td><?= htmlspecialchars($item['title']) ?></td>
-                    <td><?= htmlspecialchars($item['level']) ?></td>
-                    <td><?= htmlspecialchars($item['created_at']) ?></td>
+                    <td><img class="achievement-admin-thumb" src="<?= escape(build_upload_url('achievements', $item['image'])) ?>" alt="<?= escape($item['title']) ?>" loading="lazy" data-fallback-src="../assets/img/logo.png"></td>
+                    <td><strong><?= htmlspecialchars($item['title']) ?></strong></td>
+                    <td><span class="admin-soft-badge"><i class="fa-solid fa-medal" aria-hidden="true"></i><?= htmlspecialchars($item['level']) ?></span></td>
+                    <td class="admin-table-summary"><?= htmlspecialchars(admin_achievement_excerpt((string)($item['description'] ?? ''))) ?></td>
+                    <td><?= htmlspecialchars(date('d M Y', strtotime((string)$item['created_at']))) ?></td>
                     <td>
                         <a class="btn-tertiary" href="achievement-form.php?id=<?= $item['id'] ?>">Edit</a>
                         <?php if (can('delete')): ?>
-                            <form method="post" style="display:inline-block; margin:0;" onsubmit="return confirm('Hapus prestasi ini?');">
+                            <form method="post" class="inline-form">
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                <button type="submit" class="btn-secondary">Hapus</button>
+                                <button type="submit" class="btn-danger" data-confirm="Hapus prestasi ini?">Hapus</button>
                             </form>
                         <?php endif; ?>
                     </td>

@@ -100,7 +100,7 @@ export function initHashSectionNavigation() {
     });
   };
 
-  // 🔥 HANDLE CLICK LANGSUNG
+  // Ã°Å¸â€Â¥ HANDLE CLICK LANGSUNG
   document.addEventListener("click", (event) => {
     const link = event.target.closest('a[href*="#"]');
     if (!link) return;
@@ -221,7 +221,7 @@ export function initReveal() {
       }
     }, { passive: true });
 
-    // klik → scroll ke atas
+    // klik Ã¢â€ â€™ scroll ke atas
     scrollBtn.addEventListener("click", () => {
       window.scrollTo({
         top: 0,
@@ -274,10 +274,18 @@ export function initActiveMenu() {
         window.location.pathname.split("/").pop() || "index.html";
 
     const activityPages = [
-        "prestasi.html",
+        "prestasi.php",
         "galeri.html",
         "kegiatan.html",
-        "ekstrakurikuler.html"
+        "kegiatan.php",
+        "agenda.php",
+        "ekstrakurikuler.html",
+        "ekstrakurikuler.php"
+    ];
+
+    const aboutPages = [
+        "tentang.html",
+        "guru-staff.html"
     ];
 
     // hanya menu utama navbar
@@ -301,6 +309,7 @@ export function initActiveMenu() {
         // cocokkan halaman
         if (
             cleanHref === currentPage ||
+            (aboutPages.includes(currentPage) && cleanHref === "tentang.html") ||
             (activityPages.includes(currentPage) && link.textContent.trim() === "Aktivitas")
         ) {
 

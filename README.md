@@ -1,55 +1,56 @@
-# SD Cahaya Harapan Bekasi
+﻿# SD Cahaya Harapan Bekasi
 
-Website profil sekolah dengan arsitektur modular, design system, dan ES6 modules.
+Website profil sekolah dengan CMS admin untuk mengelola berita, pengumuman, agenda, prestasi, galeri, kegiatan, ekstrakurikuler, guru/staff, dan informasi sekolah.
 
 ## Struktur Folder
 
 ```text
-project/
-├── index.html
-├── assets/
-│   ├── css/
-│   │   ├── style.css
-│   │   ├── base.css
-│   │   ├── layout.css
-│   │   ├── components.css
-│   │   ├── hero.css
-│   │   ├── utilities.css
-│   │   └── responsive.css
-│   ├── js/
-│   │   ├── main.js
-│   │   ├── slider.js
-│   │   ├── typing.js
-│   │   └── ui.js
-│   └── img/
-│       ├── logo.png
-│       ├── sekolah.jpg
-│       └── sekolah2.JPG
-└── README.md
+website-sekolah/
+|-- index.html
+|-- admin/
+|-- api/
+|-- assets/
+|   |-- css/
+|   |-- js/
+|   `-- img/
+|-- components/
+|-- config/
+|-- includes/
+|-- migrations/
+|-- uploads/
+|-- backups/
+|-- cache/
+`-- logs/
 ```
 
 ## CSS Architecture
 
-- `base.css`: reset dan design tokens.
-- `layout.css`: container, section, grid, split layout.
-- `components.css`: navbar, button, card, stats, gallery, contact, footer.
-- `hero.css`: hero slider dan typing area.
-- `utilities.css`: helper classes.
-- `responsive.css`: breakpoint 576px, 768px, 992px, dan 1200px.
+- `assets/css/base.css`: reset dan design tokens.
+- `assets/css/layout.css`: container, section, grid, split layout.
+- `assets/css/components.css`: navbar, button, card, stats, gallery, contact, footer.
+- `assets/css/hero.css`: hero slider dan typing area.
+- `assets/css/utilities.css`: helper classes.
+- `assets/css/responsive.css`: breakpoint responsif.
 
 ## JavaScript Architecture
 
-- `main.js`: entry point.
-- `slider.js`: logic hero slider.
-- `typing.js`: typing animation.
-- `ui.js`: navbar dan header interaction.
+- `assets/js/main.js`: entry point.
+- `assets/js/navbar.js`: navbar dan dropdown.
+- `assets/js/typing.js`: typing animation.
+- `assets/js/cms-connector.js`: integrasi data publik dari CMS/API.
 
-## Cara Menjalankan
+## Cara Menjalankan Lokal
 
-Buka `index.html` langsung di browser.
+1. Letakkan folder di `htdocs` XAMPP.
+2. Jalankan Apache dan MySQL.
+3. Import database atau jalankan migrasi:
+
+```bash
+php migrations/migrate.php apply
+```
+
+4. Buka `http://localhost/website-sekolah/`.
 
 ## Environment
 
-Konfigurasi database dapat diatur lewat environment variable. Salin `.env.example`
-sebagai referensi untuk hosting/server, lalu set nilai yang sesuai di panel server
-atau konfigurasi web server.
+Konfigurasi production dapat dilihat di `.env.example`. Untuk deployment lengkap, ikuti `DEPLOYMENT.md`.

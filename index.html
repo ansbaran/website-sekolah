@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="id">
   <head>
-    <base href="/website-sekolah/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
@@ -9,30 +8,10 @@
       content="Website profil SD Cahaya Harapan Bekasi dengan informasi program, fasilitas, berita, aktivitas, dan kontak sekolah."
     >
     <title>SD Cahaya Harapan Bekasi</title>
-    <script>
-      window.tailwind = window.tailwind || {};
-      window.tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"]
-            },
-              colors: {
-                school: {
-                  navy: "#0D0B61",
-                  blue: "#294669",
-                  teal: "#478B8D",
-                  gold: "#E4D329"
-                }
-              }
-          }
-        }
-      };
-    </script>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260709-announcement-flow">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="assets/js/tailwind-config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-white font-sans text-slate-700 antialiased">
@@ -49,7 +28,7 @@
 
         <div class="hero__content container relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center">
           <p class="mb-5 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-blue-100 shadow-lg backdrop-blur-md">
-            Sekolah Dasar Modern Bekasi
+            Sekolah Dasar Katholik Bekasi
           </p>
 
           <h1 class="hero__title max-w-5xl text-balance text-4xl font-black leading-tight tracking-tight text-white drop-shadow-2xl sm:text-6xl lg:text-7xl" id="hero-title">
@@ -64,24 +43,23 @@
           <div class="hero__stats mt-12 grid w-full max-w-4xl grid-cols-1 gap-4 sm:grid-cols-3">
             <div class="hero__stat rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl shadow-blue-950/20 backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15">
               <div class="hero__stat-icon text-2xl"><i class="fa-solid fa-users"></i></div>
-              <div class="hero__stat-number mt-2 text-4xl font-black" data-target="500">0</div>
+              <div class="hero__stat-number mt-2 text-4xl font-black" data-target="500" data-public-stat-number="students_count" data-stat-suffix="+">0</div>
               <div class="hero__stat-label mt-1 text-sm font-semibold text-blue-100">Siswa Aktif</div>
             </div>
             <div class="hero__stat rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl shadow-blue-950/20 backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15">
               <div class="hero__stat-icon text-2xl"><i class="fa-solid fa-trophy"></i></div>
-              <div class="hero__stat-number mt-2 text-4xl font-black" data-target="50">0</div>
+              <div class="hero__stat-number mt-2 text-4xl font-black" data-target="50" data-public-stat-number="achievements_year_count" data-stat-suffix="+">0</div>
               <div class="hero__stat-label mt-1 text-sm font-semibold text-blue-100">Prestasi Tahun Ini</div>
             </div>
             <div class="hero__stat rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl shadow-blue-950/20 backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/15">
               <div class="hero__stat-icon text-2xl"><i class="fa-solid fa-book-open-reader"></i></div>
-              <div class="hero__stat-number mt-2 text-4xl font-black" data-target="25">0</div>
+              <div class="hero__stat-number mt-2 text-4xl font-black" data-target="25" data-public-stat-number="educators_count" data-stat-suffix="+">0</div>
               <div class="hero__stat-label mt-1 text-sm font-semibold text-blue-100">Tenaga Pendidik</div>
             </div>
           </div>
         </div>
       </section>
-
-      <section class="section section--default section--divider about reveal bg-white py-20 lg:py-28" id="profil">
+<section class="section section--default section--divider about reveal bg-white py-20 lg:py-28" id="profil">
         <div class="container about__wrapper mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div class="about__content">
             <span class="about__badge inline-flex rounded-full bg-blue-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">Tentang Sekolah</span>
@@ -93,17 +71,17 @@
             <div class="about__stats reveal-stagger mt-8 grid gap-4 sm:grid-cols-3">
               <div class="about__card blue rounded-3xl border border-blue-100 bg-white p-6 shadow-xl shadow-slate-200/60 transition hover:-translate-y-1 hover:shadow-2xl">
                 <div class="icon text-2xl text-blue-700" aria-hidden="true"><i class="fa-solid fa-award"></i></div>
-                <h3 class="mt-3 text-3xl font-black text-slate-950">A</h3>
+                <h3 class="mt-3 text-3xl font-black text-slate-950" data-public-stat-text="accreditation_label">A</h3>
                 <p class="text-sm font-bold text-slate-500">Akreditasi</p>
               </div>
               <div class="about__card green rounded-3xl border border-emerald-100 bg-white p-6 shadow-xl shadow-slate-200/60 transition hover:-translate-y-1 hover:shadow-2xl">
                 <div class="icon text-2xl text-emerald-600"><i class="fa-solid fa-user-group"></i></div>
-                <h3 class="counter mt-3 text-3xl font-black text-slate-950" data-target="500">0</h3>
+                <h3 class="counter mt-3 text-3xl font-black text-slate-950" data-target="500" data-public-stat-number="students_count" data-stat-suffix="+">0</h3>
                 <p class="text-sm font-bold text-slate-500">Siswa Aktif</p>
               </div>
               <div class="about__card purple rounded-3xl border border-indigo-100 bg-white p-6 shadow-xl shadow-slate-200/60 transition hover:-translate-y-1 hover:shadow-2xl">
                 <div class="icon text-2xl text-indigo-600" aria-hidden="true"><i class="fa-solid fa-book"></i></div>
-                <h3 class="counter mt-3 text-3xl font-black text-slate-950" data-target="15">0</h3>
+                <h3 class="counter mt-3 text-3xl font-black text-slate-950" data-target="15" data-public-stat-number="featured_programs_count" data-stat-suffix="+">0</h3>
                 <p class="text-sm font-bold text-slate-500">Program Unggulan</p>
               </div>
             </div>
@@ -121,45 +99,138 @@
           </div>
         </div>
       </section>
-
-      <section id="berita" class="section section--alt section--divider news-section-home bg-white py-20 lg:py-28">
-        <div class="container mx-auto max-w-7xl px-4 sm:px-6">
-          <div class="section-heading section-heading--center mx-auto mb-12 max-w-3xl text-center">
-            <p class="eyebrow text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-600">Berita</p>
-            <h2 class="section-title mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">Kegiatan dan Informasi Terbaru Sekolah</h2>
+      <section id="info-sekolah" class="school-info-section section section--divider" aria-labelledby="school-info-title">
+        <div class="school-info-section__inner">
+          <div class="school-info-section__heading">
+            <p class="school-info-section__eyebrow">Informasi Sekolah</p>
+            <h2 id="school-info-title">Agenda, Pengumuman, dan Artikel Terbaru</h2>
+            <p>Ringkasan informasi penting untuk membantu orang tua mengikuti kegiatan, kabar, dan pengumuman sekolah dengan mudah.</p>
           </div>
 
-          <div class="news-grid-home grid gap-6 md:grid-cols-2 xl:grid-cols-4"></div>
+          <div class="school-info-grid" data-school-info>
+            <article class="school-info-panel school-info-panel--agenda" aria-labelledby="agenda-home-title">
+              <div class="school-info-panel__top">
+                <div class="school-info-panel__title">
+                  <span class="school-info-panel__icon" aria-hidden="true"><i class="fa-regular fa-calendar-days"></i></span>
+                  <h3 id="agenda-home-title">Agenda</h3>
+                </div>
+                <a href="agenda.php" class="school-info-panel__link">Lihat Semua <span aria-hidden="true">&rarr;</span></a>
+              </div>
+              <div class="school-info-list school-info-list--agenda" data-agenda-list>
+                <a class="school-info-item school-info-item--agenda" href="agenda-detail.php?slug=pertemuan-orang-tua-siswa">
+                  <time class="school-info-datebox" datetime="2026-07-15"><strong>15</strong><span>Jul</span></time>
+                  <div class="school-info-item__body">
+                    <h4>Pertemuan Orang Tua Siswa</h4>
+                    <p><i class="fa-regular fa-clock" aria-hidden="true"></i> 08.00 WIB <span aria-hidden="true">&bull;</span> Aula Sekolah</p>
+                  </div>
+                </a>
+                <a class="school-info-item school-info-item--agenda" href="agenda-detail.php?slug=kegiatan-mpls-dan-pengenalan-kelas">
+                  <time class="school-info-datebox" datetime="2026-07-20"><strong>20</strong><span>Jul</span></time>
+                  <div class="school-info-item__body">
+                    <h4>Kegiatan MPLS dan Pengenalan Kelas</h4>
+                    <p><i class="fa-regular fa-clock" aria-hidden="true"></i> 07.30 WIB <span aria-hidden="true">&bull;</span> Area Sekolah</p>
+                  </div>
+                </a>
+                <a class="school-info-item school-info-item--agenda" href="agenda-detail.php?slug=ibadat-dan-pembinaan-karakter">
+                  <time class="school-info-datebox" datetime="2026-07-25"><strong>25</strong><span>Jul</span></time>
+                  <div class="school-info-item__body">
+                    <h4>Ibadat dan Pembinaan Karakter</h4>
+                    <p><i class="fa-regular fa-clock" aria-hidden="true"></i> 09.00 WIB <span aria-hidden="true">&bull;</span> Ruang Kelas</p>
+                  </div>
+                </a>
+              </div>
+            </article>
+
+            <article class="school-info-panel school-info-panel--announcement" aria-labelledby="announcements-title">
+              <div class="school-info-panel__top">
+                <div class="school-info-panel__title">
+                  <span class="school-info-panel__icon" aria-hidden="true"><i class="fa-solid fa-bullhorn"></i></span>
+                  <h3 id="announcements-title">Pengumuman</h3>
+                </div>
+                <a href="pengumuman.php" class="school-info-panel__link">Lihat Semua <span aria-hidden="true">&rarr;</span></a>
+              </div>
+              <div class="school-info-list school-info-list--announcements announcements-list" data-school-announcements-list>
+                <div class="school-info-empty">Memuat pengumuman...</div>
+              </div>
+            </article>
+
+            <article class="school-info-panel school-info-panel--article" aria-labelledby="articles-home-title">
+              <div class="school-info-panel__top">
+                <div class="school-info-panel__title">
+                  <span class="school-info-panel__icon" aria-hidden="true"><i class="fa-regular fa-newspaper"></i></span>
+                  <h3 id="articles-home-title">Artikel</h3>
+                </div>
+                <a href="berita.html" class="school-info-panel__link">Lihat Semua <span aria-hidden="true">&rarr;</span></a>
+              </div>
+              <div class="school-info-list school-info-list--articles" data-school-articles-list>
+                <div class="school-info-empty">Memuat artikel...</div>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section id="prestasi-home" class="section section--divider bg-white py-20 lg:py-28">
+      <section id="prestasi-home" class="section section--divider achievement-showcase-section bg-white py-20 lg:py-28" aria-labelledby="prestasi-home-title">
         <div class="container mx-auto max-w-7xl px-4 sm:px-6">
-          <div class="prestasi-highlight grid items-center gap-12 lg:grid-cols-2">
-            <div class="prestasi-highlight__content">
-              <h2 class="section-title text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">Prestasi, Program Unggulan & Aktivitas Sekolah</h2>
-              <p class="prestasi-highlight__desc mt-5 text-base leading-8 text-slate-600">
-                Dedikasi, kerja keras, dan bimbingan maksimal telah mengantarkan siswa-siswi kami meraih berbagai penghargaan bergengsi di tingkat kota, nasional, hingga internasional.
+          <div class="prestasi-highlight achievement-showcase-layout grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+            <div class="prestasi-highlight__content achievement-showcase-copy">
+              <p class="achievement-showcase__eyebrow">Prestasi Sekolah</p>
+              <h2 class="section-title text-3xl font-black tracking-tight text-slate-950 sm:text-4xl" id="prestasi-home-title">Prestasi, Program Unggulan & Aktivitas Sekolah</h2>
+              <p class="prestasi-highlight__desc achievement-showcase__desc mt-5 text-base leading-8 text-slate-600">
+                Dedikasi, kerja keras, dan bimbingan maksimal telah mengantarkan siswa-siswi kami meraih berbagai penghargaan di bidang akademik, seni, olahraga, dan karakter.
               </p>
-              <a href="prestasi.html" class="prestasi-highlight__btn mt-8 inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-6 py-4 text-sm font-extrabold text-white shadow-xl shadow-slate-900/20 transition hover:-translate-y-1 hover:bg-blue-700">
+              <div class="achievement-showcase__stats" aria-label="Ringkasan area prestasi">
+                <span><i class="fa-solid fa-trophy" aria-hidden="true"></i> Juara</span>
+                <span><i class="fa-solid fa-medal" aria-hidden="true"></i> Akademik & Nonakademik</span>
+                <span><i class="fa-solid fa-children" aria-hidden="true"></i> Pembinaan Berkelanjutan</span>
+              </div>
+              <a href="prestasi.php" class="prestasi-highlight__btn achievement-showcase__cta mt-8 inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-6 py-4 text-sm font-extrabold text-white shadow-xl shadow-slate-900/20 transition hover:-translate-y-1 hover:bg-blue-700">
                 Lihat Detail Prestasi <span>&rarr;</span>
               </a>
             </div>
 
-            <div class="prestasi-highlight__image-wrapper relative">
-              <img src="assets/img/prestasi/prestasi-utama.png" alt="Highlight Prestasi Sekolah" class="aspect-[4/3] w-full rounded-[2rem] object-cover shadow-2xl shadow-slate-300/70" loading="lazy" decoding="async">
-              <div class="prestasi-badge absolute bottom-5 left-5 flex max-w-[calc(100%-2.5rem)] items-center gap-4 rounded-3xl bg-white/90 p-4 shadow-2xl backdrop-blur">
-                <span class="prestasi-badge__icon grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-blue-50 text-blue-700"><i class="fa-solid fa-trophy"></i></span>
-                <div class="prestasi-badge__text">
-                  <strong class="block text-sm font-extrabold text-slate-950">Berbagai Penghargaan</strong>
-                  <span class="text-xs font-semibold text-slate-500">Tingkat Nasional & Provinsi</span>
+            <div class="achievement-showcase" data-achievement-showcase aria-label="Slider prestasi sekolah">
+              <div class="achievement-showcase__top">
+                <div>
+                  <span class="achievement-showcase__label">Achievement Showcase</span>
+                  <strong data-achievement-count>Memuat prestasi...</strong>
                 </div>
+                <div class="achievement-showcase__controls" aria-label="Navigasi prestasi">
+                  <button class="achievement-showcase__control" type="button" data-achievement-prev aria-label="Prestasi sebelumnya">
+                    <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
+                  </button>
+                  <button class="achievement-showcase__control" type="button" data-achievement-next aria-label="Prestasi berikutnya">
+                    <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="achievement-showcase__viewport" data-achievement-stage aria-live="polite">
+                <article class="achievement-showcase__card is-active" data-achievement-card>
+                  <div class="achievement-showcase__media">
+                    <img src="assets/img/prestasi/prestasi-utama.png" alt="Highlight Prestasi Sekolah" loading="lazy" decoding="async">
+                    <span class="achievement-showcase__badge">Juara</span>
+                  </div>
+                  <div class="achievement-showcase__body">
+                    <span class="achievement-showcase__level">Tingkat Sekolah</span>
+                    <h3>Berbagai Prestasi Siswa</h3>
+                    <p>Ruang apresiasi untuk pencapaian siswa SD Cahaya Harapan Bekasi di berbagai bidang.</p>
+                    <div class="achievement-showcase__meta">
+                      <span>Akademik</span>
+                      <span>Karakter</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <div class="achievement-showcase__bottom">
+                <div class="achievement-showcase__dots" data-achievement-dots aria-label="Indikator prestasi"></div>
+                <div class="achievement-showcase__preview" data-achievement-preview aria-hidden="true"></div>
               </div>
             </div>
           </div>
         </div>
       </section>
-
       <section class="section section--alt section--divider media-section bg-slate-50 py-20 lg:py-28">
         <div class="container mx-auto max-w-7xl px-4 sm:px-6">
           <div class="section-heading section-heading--center mx-auto mb-8 max-w-3xl text-center">
@@ -173,35 +244,35 @@
             </a>
           </div>
 
-          <div class="media-grid grid gap-6 md:grid-cols-3">
-            <div class="media-item">
-              <a href="https://www.instagram.com/p/DQk2uNMAXen/" target="_blank" rel="noopener noreferrer" class="media-card group relative block overflow-hidden rounded-[1.75rem] shadow-xl shadow-slate-200/70">
-                <img src="assets/img/instagram/ppdb.png" alt="PPDB SD Cahaya Harapan Bekasi" class="aspect-square w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
+          <div class="media-grid grid gap-6 md:grid-cols-3" data-instagram-grid data-instagram-limit="3">
+            <div class="media-item" data-instagram-post data-published-at="2026-07-14T07:30:00+07:00">
+              <a href="https://www.instagram.com/sdcahayaharapanbekasi/p/DauRDdiE3fA/" target="_blank" rel="noopener noreferrer" class="media-card group relative block overflow-hidden rounded-[1.75rem] shadow-xl shadow-slate-200/70">
+                <img src="assets/img/instagram/post-mpls-full.jpg?v=20260714-instagram-feed" alt="Hari pertama MPLS Ramah SD Cahaya Harapan Bekasi" class="aspect-[4/5] w-full bg-slate-100 object-contain transition duration-700 group-hover:scale-105" loading="lazy" decoding="async">
                 <div class="media-overlay absolute inset-0 grid place-items-center bg-slate-950/0 text-white transition group-hover:bg-slate-950/45">
                   <span class="translate-y-3 rounded-full bg-white/15 px-4 py-2 text-sm font-bold opacity-0 backdrop-blur transition group-hover:translate-y-0 group-hover:opacity-100"><i class="fa-brands fa-instagram"></i> Lihat Postingan</span>
                 </div>
               </a>
-              <div class="media-caption mt-4 text-sm font-bold text-slate-700">PPDB SD Cahaya Harapan Bekasi 2026</div>
+              <div class="media-caption mt-4 text-sm font-bold text-slate-700">Hari Pertama MPLS Ramah</div>
             </div>
 
-            <div class="media-item">
-              <a href="https://www.instagram.com/p/DXndKfSE4nZ/" target="_blank" rel="noopener noreferrer" class="media-card group relative block overflow-hidden rounded-[1.75rem] shadow-xl shadow-slate-200/70">
-                <img src="assets/img/instagram/siaga.png" alt="Permainan Besar Siaga" class="aspect-square w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
+            <div class="media-item" data-instagram-post data-published-at="2026-07-13T07:30:00+07:00">
+              <a href="https://www.instagram.com/sdcahayaharapanbekasi/p/Datas0nzoLb/" target="_blank" rel="noopener noreferrer" class="media-card group relative block overflow-hidden rounded-[1.75rem] shadow-xl shadow-slate-200/70">
+                <img src="assets/img/instagram/post-back-to-school-full.jpg?v=20260714-instagram-feed" alt="Back to School SD Cahaya Harapan Bekasi Tahun Ajaran 2026-2027" class="aspect-[4/5] w-full bg-slate-100 object-contain transition duration-700 group-hover:scale-105" loading="lazy" decoding="async">
                 <div class="media-overlay absolute inset-0 grid place-items-center bg-slate-950/0 text-white transition group-hover:bg-slate-950/45">
                   <span class="translate-y-3 rounded-full bg-white/15 px-4 py-2 text-sm font-bold opacity-0 backdrop-blur transition group-hover:translate-y-0 group-hover:opacity-100"><i class="fa-brands fa-instagram"></i> Lihat Postingan</span>
                 </div>
               </a>
-              <div class="media-caption mt-4 text-sm font-bold text-slate-700">Kegiatan Upacara Permainan Besar Siaga</div>
+              <div class="media-caption mt-4 text-sm font-bold text-slate-700">Back to School Tahun Ajaran 2026-2027</div>
             </div>
 
-            <div class="media-item">
-              <a href="https://www.instagram.com/p/DXvv40Gk0fE/" target="_blank" rel="noopener noreferrer" class="media-card group relative block overflow-hidden rounded-[1.75rem] shadow-xl shadow-slate-200/70">
-                <img src="assets/img/instagram/senam.png" alt="Senam Sehat Bersama" class="aspect-square w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" decoding="async">
+            <div class="media-item" data-instagram-post data-published-at="2026-07-12T07:30:00+07:00">
+              <a href="https://www.instagram.com/sdcahayaharapanbekasi/p/DZoEUKfTRwh/" target="_blank" rel="noopener noreferrer" class="media-card group relative block overflow-hidden rounded-[1.75rem] shadow-xl shadow-slate-200/70">
+                <img src="assets/img/instagram/post-tahun-baru-islam-full.jpg?v=20260714-instagram-feed" alt="Ucapan Selamat Tahun Baru Islam 1448 H SD Cahaya Harapan Bekasi" class="aspect-[4/5] w-full bg-slate-100 object-contain transition duration-700 group-hover:scale-105" loading="lazy" decoding="async">
                 <div class="media-overlay absolute inset-0 grid place-items-center bg-slate-950/0 text-white transition group-hover:bg-slate-950/45">
                   <span class="translate-y-3 rounded-full bg-white/15 px-4 py-2 text-sm font-bold opacity-0 backdrop-blur transition group-hover:translate-y-0 group-hover:opacity-100"><i class="fa-brands fa-instagram"></i> Lihat Postingan</span>
                 </div>
               </a>
-              <div class="media-caption mt-4 text-sm font-bold text-slate-700">Senam Sehat Bersama</div>
+              <div class="media-caption mt-4 text-sm font-bold text-slate-700">Selamat Tahun Baru Islam 1448 H</div>
             </div>
           </div>
         </div>
@@ -210,9 +281,9 @@
       <section class="section section--default section--divider ppdb-section bg-white py-20 lg:py-28" id="ppdb" aria-labelledby="ppdb-title">
         <div class="container ppdb-section__inner mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.82fr]">
           <div class="ppdb-section__content rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-xl shadow-slate-200/60 sm:p-10">
-            <p class="eyebrow text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-600">PPDB 2026 - Gelombang 1</p>
-            <h2 class="section-title mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl" id="ppdb-title">Pendaftaran Peserta Didik Baru Telah Dibuka</h2>
-            <p class="section-text mt-5 text-base leading-8 text-slate-600">
+            <p class="eyebrow text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-600" data-ppdb-eyebrow>PPDB 2026 - Gelombang 1</p>
+            <h2 class="section-title mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl" id="ppdb-title" data-ppdb-title>Pendaftaran Peserta Didik Baru Telah Dibuka</h2>
+            <p class="section-text mt-5 text-base leading-8 text-slate-600" data-ppdb-period>
               Periode Maret-Mei 2026. Konsultasi dan pendaftaran langsung bersama tim SD Cahaya Harapan Bekasi.
             </p>
 
@@ -223,11 +294,11 @@
             </ul>
 
             <div class="ppdb-section__actions mt-8" aria-label="Aksi PPDB">
-              <a class="btn btn--ppdb inline-flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-4 text-sm font-extrabold text-white shadow-xl shadow-emerald-700/20 transition hover:-translate-y-1 hover:bg-emerald-700" href="https://wa.me/6285692890015?text=Halo..." target="_blank" rel="noopener noreferrer">
+              <a class="btn btn--ppdb inline-flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-4 text-sm font-extrabold text-white shadow-xl shadow-emerald-700/20 transition hover:-translate-y-1 hover:bg-emerald-700" href="https://wa.me/6285692890015?text=Halo%2C%20saya%20ingin%20mendaftar%20PPDB%20SD%20Cahaya%20Harapan%20Bekasi%202026." target="_blank" rel="noopener noreferrer" data-ppdb-whatsapp>
                 <i class="fa-brands fa-whatsapp"></i> Daftar via WhatsApp
               </a>
             </div>
-            <p class="ppdb-note mt-5 text-sm font-bold text-blue-700">Pendaftaran terbatas, segera amankan tempat.</p>
+            <p class="ppdb-note mt-5 text-sm font-bold text-blue-700" data-ppdb-note>Pendaftaran terbatas, segera amankan tempat.</p>
           </div>
 
           <div class="ppdb-section__panel rounded-[2rem] border border-blue-100 bg-white p-6 shadow-2xl shadow-blue-100/80 sm:p-8" aria-label="Ringkasan PPDB 2026">
@@ -247,7 +318,7 @@
             </div>
 
             <div class="ppdb-countdown mt-6 rounded-3xl bg-slate-950 p-5 text-white">
-              <p class="countdown-label text-sm font-bold text-blue-100">Pendaftaran ditutup dalam:</p>
+              <p class="countdown-label text-sm font-bold text-blue-100" data-countdown-label>Pendaftaran ditutup dalam:</p>
               <div class="countdown-timer mt-4 grid grid-cols-4 gap-3" id="countdown">
                 <span class="rounded-2xl bg-white/10 p-3 text-center"><b id="days" class="block text-2xl font-black">0</b><small class="text-[11px] font-bold text-blue-100">Hari</small></span>
                 <span class="rounded-2xl bg-white/10 p-3 text-center"><b id="hours" class="block text-2xl font-black">0</b><small class="text-[11px] font-bold text-blue-100">Jam</small></span>
@@ -299,78 +370,33 @@
                 <span class="feedback-title__highlight" aria-hidden="true">Tentang Kami?</span>
               </span>
             </h2>
+            <p class="feedback-subtitle">
+              Bagikan pengalaman Bapak/Ibu bersama SD Cahaya Harapan Bekasi. Setiap masukan akan ditinjau admin sebelum ditampilkan di website.
+            </p>
+            <div class="feedback-actions" aria-label="Aksi feedback orang tua">
+              <button class="feedback-submit-trigger" type="button" data-feedback-open aria-haspopup="dialog" aria-controls="feedback-modal">
+                <i class="fa-solid fa-message" aria-hidden="true"></i>
+                Beri Masukan
+              </button>
+            </div>
           </div>
 
-          <div class="feedback-carousel mt-12" data-testimonial-slider data-aos="fade-up" data-aos-delay="80" data-aos-custom="true">
+          <div class="feedback-carousel mt-12" data-testimonial-slider>
             <div class="feedback-stage">
               <div class="feedback-track" data-testimonial-track tabindex="0" aria-label="Testimonial orang tua">
-              <div class="feedback-slide" data-testimonial-slide>
-                <article class="feedback-card">
-                  <div class="feedback-card__avatar" aria-hidden="true">AR</div>
-                  <div class="feedback-card__author">
-                    <strong>Angela R.</strong>
-                    <span>Orang tua siswa kelas 3</span>
-                  </div>
-                  <div class="feedback-card__rating" aria-label="Rating 5 dari 5">
-                    <span aria-hidden="true">★★★★★</span>
-                    <strong>5.0</strong>
-                  </div>
-                  <p class="feedback-card__text">
-                    Anak kami menjadi lebih percaya diri, disiplin, dan senang bercerita tentang kegiatan belajar di sekolah.
-                  </p>
-                </article>
-              </div>
+                <div class="feedback-slide is-active" data-testimonial-slide data-feedback-empty>
+                  <article class="feedback-card feedback-card--empty">
+                    <div class="feedback-card__avatar" aria-hidden="true">OT</div>
+                    <div class="feedback-card__author">
+                      <strong>Feedback orang tua</strong>
+                      <span>Menunggu data yang disetujui admin</span>
+                    </div>
+                    <p class="feedback-card__text">
+                      Feedback asli dari orang tua akan tampil di sini setelah diverifikasi dan disetujui oleh admin sekolah.
+                    </p>
+                  </article>
+                </div>
 
-              <div class="feedback-slide" data-testimonial-slide>
-                <article class="feedback-card">
-                  <div class="feedback-card__avatar feedback-card__avatar--green" aria-hidden="true">BP</div>
-                  <div class="feedback-card__author">
-                    <strong>Budi P.</strong>
-                    <span>Orang tua siswa kelas 5</span>
-                  </div>
-                  <div class="feedback-card__rating" aria-label="Rating 5 dari 5">
-                    <span aria-hidden="true">★★★★★</span>
-                    <strong>5.0</strong>
-                  </div>
-                  <p class="feedback-card__text">
-                    Guru-gurunya komunikatif dan lingkungan sekolah terasa hangat. Kami merasa perkembangan anak dipantau dengan baik.
-                  </p>
-                </article>
-              </div>
-
-              <div class="feedback-slide" data-testimonial-slide>
-                <article class="feedback-card">
-                  <div class="feedback-card__avatar feedback-card__avatar--gold" aria-hidden="true">MS</div>
-                  <div class="feedback-card__author">
-                    <strong>Maria S.</strong>
-                    <span>Alumni orang tua siswa</span>
-                  </div>
-                  <div class="feedback-card__rating" aria-label="Rating 5 dari 5">
-                    <span aria-hidden="true">★★★★★</span>
-                    <strong>5.0</strong>
-                  </div>
-                  <p class="feedback-card__text">
-                    Kegiatan akademik dan karakter berjalan seimbang. Anak-anak dibimbing untuk berprestasi tanpa kehilangan nilai kasih.
-                  </p>
-                </article>
-              </div>
-
-              <div class="feedback-slide" data-testimonial-slide>
-                <article class="feedback-card">
-                  <div class="feedback-card__avatar feedback-card__avatar--indigo" aria-hidden="true">FR</div>
-                  <div class="feedback-card__author">
-                    <strong>Frans R.</strong>
-                    <span>Orang tua siswa kelas 1</span>
-                  </div>
-                  <div class="feedback-card__rating" aria-label="Rating 5 dari 5">
-                    <span aria-hidden="true">★★★★★</span>
-                    <strong>5.0</strong>
-                  </div>
-                  <p class="feedback-card__text">
-                    Komunikasi sekolah dengan orang tua jelas, dan anak kami merasa aman untuk bertanya serta mencoba hal baru.
-                  </p>
-                </article>
-              </div>
             </div>
 
               <div class="feedback-controls" aria-label="Navigasi testimonial">
@@ -384,15 +410,74 @@
               </div>
             </div>
           </div>
+
+          <div class="feedback-modal" id="feedback-modal" data-feedback-modal role="dialog" aria-modal="true" aria-labelledby="feedback-modal-title" aria-describedby="feedback-modal-desc" hidden>
+            <div class="feedback-modal__backdrop" data-feedback-close></div>
+            <div class="feedback-modal__panel" role="document">
+              <button class="feedback-modal__close" type="button" data-feedback-close aria-label="Tutup form feedback">X</button>
+              <div class="feedback-modal__header">
+                <p class="feedback-modal__eyebrow">Feedback Orang Tua</p>
+                <h3 id="feedback-modal-title">Beri Masukan untuk Sekolah</h3>
+                <p id="feedback-modal-desc">Masukan Bapak/Ibu akan masuk ke admin terlebih dahulu dan hanya tampil setelah disetujui.</p>
+              </div>
+              <form class="feedback-form" data-feedback-form novalidate>
+                <div class="feedback-form__honeypot" aria-hidden="true">
+                  <label for="feedback-website-url">Website</label>
+                  <input type="text" id="feedback-website-url" name="website_url" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="feedback-form__grid">
+                  <div class="feedback-form__field">
+                    <label for="feedback-parent-name">Nama yang Ditampilkan</label>
+                    <input type="text" id="feedback-parent-name" name="parent_name" maxlength="120" placeholder="Contoh: Ibu Maria S." required>
+                  </div>
+                  <div class="feedback-form__field">
+                    <label for="feedback-parent-email">Email Aktif</label>
+                    <input type="email" id="feedback-parent-email" name="parent_email" maxlength="190" placeholder="nama@email.com" autocomplete="email" required>
+                    <small>Email dipakai untuk profil/avatar feedback dan tidak ditampilkan sebagai teks publik.</small>
+                  </div>
+                  <div class="feedback-form__field">
+                    <label for="feedback-relation">Keterangan</label>
+                    <select id="feedback-relation" name="relation_label" required>
+                      <option value="Orang tua siswa">Orang tua siswa</option>
+                      <option value="Wali siswa">Wali siswa</option>
+                      <option value="Alumni orang tua siswa">Alumni orang tua siswa</option>
+                    </select>
+                  </div>
+                  <div class="feedback-form__field">
+                    <label for="feedback-student-label">Kelas/Status Anak</label>
+                    <input type="text" id="feedback-student-label" name="student_label" maxlength="120" placeholder="Contoh: kelas 3 / alumni">
+                  </div>
+                  <div class="feedback-form__field">
+                    <label for="feedback-rating">Rating</label>
+                    <input type="number" id="feedback-rating" name="rating" min="1" max="5" step="0.5" value="5" required>
+                  </div>
+                  <div class="feedback-form__field feedback-form__field--full">
+                    <label for="feedback-message">Masukan / Feedback</label>
+                    <textarea id="feedback-message" name="message" rows="5" minlength="20" maxlength="700" placeholder="Tuliskan pengalaman atau masukan Bapak/Ibu untuk sekolah." required></textarea>
+                    <small>Maksimal 700 karakter. Hindari menulis data pribadi anak secara detail.</small>
+                  </div>
+                  <label class="feedback-form__consent feedback-form__field--full">
+                    <input type="checkbox" name="consent_given" value="1" required>
+                    Saya mengizinkan feedback ini ditinjau admin dan dapat ditampilkan di website sekolah setelah disetujui.
+                  </label>
+                </div>
+                <div class="feedback-form__status" data-feedback-status role="status" aria-live="polite"></div>
+                <div class="feedback-form__actions">
+                  <button class="feedback-form__submit" type="submit" data-feedback-submit>Kirim Feedback</button>
+                  <button class="feedback-form__cancel" type="button" data-feedback-close>Batal</button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
     </main>
 
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js"></script>
-    <script type="module" src="assets/js/testimonial-slider.js"></script>
+    <script type="module" src="assets/js/main.js?v=20260714-instagram-feed"></script>
+    <script type="module" src="assets/js/testimonial-slider.js?v=20260628-public-stats"></script>
     <script src="assets/js/seo.js"></script>
     <script src="assets/js/maintenance.js"></script>
-    <script src="assets/js/cms-connector.js"></script>
+    <script src="assets/js/cms-connector.js?v=20260709-announcement-flow"></script>
   </body>
 </html>

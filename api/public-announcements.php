@@ -3,7 +3,19 @@
 declare(strict_types=1);
 
 header('Content-Type: application/json; charset=utf-8');
+
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
+    echo json_encode(['status' => 'error', 'message' => 'Method not allowed'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 require_once __DIR__ . '/../includes/functions.php';
+header('Cache-Control: no-store, no-cache, must-revalidate');
+if (!enforce_rate_limit('public-announcements')) {
+    echo json_encode(['status' => 'error', 'message' => 'Too many requests'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
 if ($limit < 1 || $limit > 20) {
@@ -19,14 +31,16 @@ try {
     $data = [];
     foreach ($announcements as $item) {
         $data[] = [
-            'id' => $item['id'],
-            'title' => htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8'),
-            'content' => htmlspecialchars($item['content'], ENT_QUOTES, 'UTF-8'),
+            'id' => (int) $item['id'],
+            'title' => (string) $item['title'],
+            'content' => (string) $item['content'],
             'published_at' => $item['published_at'],
         ];
     }
 
-    echo json_encode(['status' => 'success', 'data' => $data]);
-} catch (Exception $e) {
-    echo json_encode(['status' => 'error', 'message' => 'Database error']);
+    echo json_encode(['status' => 'success', 'data' => $data], JSON_UNESCAPED_UNICODE);
+} catch (Throwable $e) {
+    log_exception($e);
+    http_response_code(500);
+    echo json_encode(['status' => 'error', 'message' => 'Database error'], JSON_UNESCAPED_UNICODE);
 }

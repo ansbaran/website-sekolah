@@ -39,7 +39,7 @@ $dbStatus = check_database_status();
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+    <div class="panel-header">
         <div>
             <h2>System Health</h2>
             <p class="footer-note">Memeriksa status server, database, backup, dan cache untuk deployment produksi.</p>

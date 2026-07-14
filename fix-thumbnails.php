@@ -1,33 +1,33 @@
 <?php
-/**
- * Fix Thumbnails - Point to existing images in assets/img/
- */
+declare(strict_types=1);
+
+if (PHP_SAPI !== 'cli') {
+    http_response_code(404);
+    exit;
+}
 
 require_once 'config/config.php';
-require_once 'config/db.php';
 
 try {
-    // Map news ID to available images
     $mapping = [
         1 => 'assets/img/berita/berita1.jpeg',
-        2 => 'assets/img/berita/berita2.jpeg', // Tadi di sini campuran " dan '
-        3 => 'assets/img/berita/berita3.jpeg'  // Tadi di sini kelebihan tanda '
+        2 => 'assets/img/berita/berita2.jpeg',
+        3 => 'assets/img/berita/berita3.jpeg',
     ];
+
     foreach ($mapping as $id => $image) {
-        $stmt = $pdo->prepare("UPDATE news SET thumbnail = ? WHERE id = ?");
+        $stmt = $pdo->prepare('UPDATE news SET thumbnail = ? WHERE id = ?');
         $stmt->execute([$image, $id]);
-        
-        $newsStmt = $pdo->prepare("SELECT title FROM news WHERE id = ?");
+
+        $newsStmt = $pdo->prepare('SELECT title FROM news WHERE id = ?');
         $newsStmt->execute([$id]);
         $news = $newsStmt->fetch(PDO::FETCH_ASSOC);
-        
-        echo "✓ ID {$id}: {$news['title']} → {$image}\n";
+
+        echo "Updated ID {$id}: " . ($news['title'] ?? 'Unknown') . " -> {$image}\n";
     }
 
-    echo "\n✓ Semua thumbnail berhasil diupdate\n";
-
-} 
-catch (Exception $e) {
-    echo "✗ Error: " . $e->getMessage() . "\n";
+    echo "\nSemua thumbnail berhasil diupdate\n";
+} catch (Exception $e) {
+    fwrite(STDERR, 'Error: ' . $e->getMessage() . "\n");
+    exit(1);
 }
-?>

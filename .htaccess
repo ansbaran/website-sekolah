@@ -3,6 +3,9 @@ Options -Indexes
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Serve dynamic XML sitemap from PHP generator.
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
 
     # Block direct access to dotfiles except ACME/.well-known challenges.
     RewriteRule "(^|/)\.(?!well-known/)" - [F]

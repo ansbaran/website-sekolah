@@ -8,4 +8,4 @@ Disallow: /cache/
 Disallow: /logs/
 Disallow: /backups/
 
-Sitemap: /sitemap.php
+Sitemap: https://sdcahayaharapanbekasi.sch.id/sitemap.xml

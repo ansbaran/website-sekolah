@@ -36,17 +36,13 @@ if (typingTarget && typingLead && typingHighlight && !reduceMotion.matches) {
   typingTarget.style.overflow = "hidden";
 
   const renderTypingText = () => {
-    const currentText = fullText.slice(0, characterIndex);
-    const leadPart = currentText.slice(0, Math.min(currentText.length, leadText.length));
-    const highlightPart = currentText.length > leadText.length
-      ? currentText.slice(leadText.length + 1)
-      : "";
+    const highlightPart = highlightText.slice(0, characterIndex);
 
-    typingLead.textContent = leadPart;
+    typingLead.textContent = leadText;
     typingHighlight.textContent = highlightPart ? ` ${highlightPart}` : "";
     typingTarget.appendChild(typingCursor);
 
-    if (!isDeleting && characterIndex >= fullText.length) {
+    if (!isDeleting && characterIndex >= highlightText.length) {
       isDeleting = true;
       typingTimer = window.setTimeout(renderTypingText, 1700);
       return;

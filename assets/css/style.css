@@ -5470,3 +5470,28 @@ html body #scrollTopBtn .scroll-top-button__label {
     color: #0d0b61 !important;
   }
 }
+
+/* Mobile visual hotfix 2026-07-30: keep feedback heading visible and caret inline. */
+@media (max-width: 640px) {
+  html body .feedback-title__typing {
+    display: inline-block !important;
+    width: min(100%, 23ch) !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    contain: none !important;
+    white-space: normal !important;
+    text-wrap: balance !important;
+    text-align: center !important;
+  }
+
+  html body .feedback-title__lead,
+  html body .feedback-title__highlight {
+    display: inline !important;
+  }
+
+  html body .feedback-title__cursor {
+    display: inline-block !important;
+    margin-left: 0.06em !important;
+    vertical-align: baseline !important;
+  }
+}

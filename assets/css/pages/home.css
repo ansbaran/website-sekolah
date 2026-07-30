@@ -1493,3 +1493,33 @@
     width: 100%;
   }
 }
+
+/* Mobile visual hotfix 2026-07-30: let achievement cards size to their content. */
+@media (max-width: 640px) {
+  .achievement-showcase__viewport {
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .achievement-showcase__card {
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .achievement-showcase__card.is-active {
+    position: relative;
+    inset: auto;
+  }
+
+  .achievement-showcase__card:not(.is-active) {
+    overflow: hidden;
+  }
+
+  .achievement-showcase__body p {
+    display: block;
+    min-height: 0;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+  }
+}

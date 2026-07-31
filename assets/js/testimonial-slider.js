@@ -194,6 +194,7 @@ const initFeedbackSlider = () => {
   slider.classList.add("aos-animate", "aos-fallback-visible");
 
   const track = slider.querySelector("[data-testimonial-track]");
+  const stage = slider.querySelector(".feedback-stage");
   const slides = Array.from(slider.querySelectorAll("[data-testimonial-slide]"));
   const previousButton = slider.querySelector("[data-feedback-prev], [data-testimonial-prev]");
   const nextButton = slider.querySelector("[data-feedback-next], [data-testimonial-next]");
@@ -205,6 +206,8 @@ const initFeedbackSlider = () => {
   const hasEmptySlide = slides.some((slide) => slide.hasAttribute("data-feedback-empty"));
   const canSlide = slides.length > 1 && !hasEmptySlide;
   let activeIndex = 0;
+  let heightSyncFrame = 0;
+  const mobileViewport = window.matchMedia("(max-width: 640px)");
 
   const normalizeIndex = (index) => (slides.length + index) % slides.length;
 
@@ -214,6 +217,40 @@ const initFeedbackSlider = () => {
     if (slides.length > 2 && index === normalizeIndex(activeIndex - 1)) return "prev";
     if (index === normalizeIndex(activeIndex + 1)) return "next";
     return "hidden";
+  };
+
+  const clearMobileHeights = () => {
+    track.style.removeProperty("height");
+    track.style.removeProperty("min-height");
+    stage?.style.removeProperty("min-height");
+  };
+
+  const syncActiveSlideHeight = () => {
+    if (!mobileViewport.matches) {
+      clearMobileHeights();
+      return;
+    }
+
+    const activeSlide = slides[activeIndex] || track.querySelector(".feedback-slide.is-active");
+    const activeCard = activeSlide?.querySelector(".feedback-card");
+    if (!stage || !activeSlide || !activeCard) return;
+
+    const trackRect = track.getBoundingClientRect();
+    const slideRect = activeSlide.getBoundingClientRect();
+    const cardRect = activeCard.getBoundingClientRect();
+    const contentBottom = Math.max(slideRect.bottom, cardRect.bottom) - trackRect.top;
+    const controlsHeight = controls && !controls.hidden ? controls.getBoundingClientRect().height : 0;
+    const trackHeight = Math.max(1, Math.ceil(contentBottom + 8));
+    const stageHeight = Math.ceil(trackHeight + controlsHeight + (controlsHeight ? 16 : 0));
+
+    track.style.setProperty("height", `${trackHeight}px`, "important");
+    track.style.setProperty("min-height", `${trackHeight}px`, "important");
+    stage.style.setProperty("min-height", `${stageHeight}px`, "important");
+  };
+
+  const queueActiveSlideHeight = () => {
+    window.cancelAnimationFrame(heightSyncFrame);
+    heightSyncFrame = window.requestAnimationFrame(syncActiveSlideHeight);
   };
 
   const setActiveSlide = (index) => {
@@ -241,8 +278,11 @@ const initFeedbackSlider = () => {
       dot.setAttribute("aria-current", String(dotIndex === activeIndex));
     });
 
+    queueActiveSlideHeight();
+
     window.requestAnimationFrame(() => {
       slider.classList.add("feedback-carousel--animated");
+      queueActiveSlideHeight();
     });
   };
 
@@ -288,6 +328,21 @@ const initFeedbackSlider = () => {
       setActiveSlide(activeIndex + 1);
     }
   });
+
+  window.addEventListener("resize", queueActiveSlideHeight, { passive: true });
+  if (typeof mobileViewport.addEventListener === "function") {
+    mobileViewport.addEventListener("change", queueActiveSlideHeight);
+  } else {
+    mobileViewport.addListener?.(queueActiveSlideHeight);
+  }
+  track.querySelectorAll("img").forEach((image) => {
+    if (!image.complete) {
+      image.addEventListener("load", queueActiveSlideHeight, { once: true });
+    }
+  });
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(queueActiveSlideHeight).catch(() => {});
+  }
 
   setActiveSlide(0);
 };

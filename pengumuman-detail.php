@@ -47,6 +47,7 @@ $currentUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'http
 <!doctype html>
 <html lang="id">
   <head>
+  <script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= escape($pageTitle) ?> - SD Cahaya Harapan Bekasi</title>

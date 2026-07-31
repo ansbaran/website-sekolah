@@ -23,6 +23,7 @@ function achievement_page_excerpt(string $value, int $limit = 220): string
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daftar prestasi siswa SD Cahaya Harapan Bekasi yang dikelola dari admin sekolah.">

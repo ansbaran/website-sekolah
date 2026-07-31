@@ -245,6 +245,7 @@ $readingTime = max(1, ceil($wordCount / 200));
 <html lang="id">
 
 <head>
+<script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
 
     <meta charset="UTF-8">
 

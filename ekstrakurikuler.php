@@ -21,6 +21,7 @@ function school_program_excerpt(string $value, int $limit = 170): string
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daftar ekstrakurikuler SD Cahaya Harapan Bekasi yang diperbarui dari admin.">

@@ -67,6 +67,10 @@ $adminIcon = static function (string $name): string {
                 <span class="sidebar-link__icon" aria-hidden="true"><?= $adminIcon('gallery') ?></span>
                 <span>Galeri</span>
             </a>
+            <a class="sidebar-link <?= $isActive(['gallery-albums.php', 'gallery-album-form.php', 'gallery-album-photos.php']) ?>" href="gallery-albums.php" <?= in_array($currentPage, ['gallery-albums.php', 'gallery-album-form.php', 'gallery-album-photos.php'], true) ? 'aria-current="page"' : '' ?>>
+                <span class="sidebar-link__icon" aria-hidden="true"><?= $adminIcon('gallery') ?></span>
+                <span>Album Galeri</span>
+            </a>
         <?php endif; ?>
 
         <?php if (can('publish')): ?>

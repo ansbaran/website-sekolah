@@ -40,10 +40,22 @@
                     <button class="filter-btn rounded-full border border-[#294669]/15 bg-white/80 px-5 py-2.5 text-sm font-extrabold text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#478B8D]/40 hover:text-[#0D0B61]" type="button" data-filter="akademik" aria-pressed="false">Akademik</button>
                 </div>
 
-                <div class="gallery-loading hidden justify-center py-10 text-sm font-bold text-slate-500" data-gallery-loading>Memuat galeri...</div>
+                <div class="gallery-loading hidden justify-center py-10 text-sm font-bold text-slate-500" data-gallery-loading role="status" aria-live="polite">Memuat galeri...</div>
                 <div class="simple-gallery-grid grid" data-gallery-grid aria-live="polite"></div>
-                <p class="gallery-empty hidden py-10 text-center text-sm font-bold text-slate-500" data-gallery-empty>Belum ada foto untuk kategori ini.</p>
+                <p class="gallery-empty hidden py-10 text-center text-sm font-bold text-slate-500" data-gallery-empty role="status">Belum ada album pada kategori ini.</p>
                 <nav class="gallery-pagination hidden" data-gallery-pagination aria-label="Navigasi halaman galeri"></nav>
+
+                <section class="gallery-album-detail hidden" data-album-detail aria-labelledby="album-detail-title">
+                    <button class="gallery-album-detail__back" type="button" data-album-detail-back>&larr; Kembali ke Galeri</button>
+                    <div class="gallery-album-detail__header">
+                        <h2 class="gallery-album-detail__title" id="album-detail-title" data-album-detail-title>Album Galeri</h2>
+                        <p class="gallery-album-detail__meta" data-album-detail-meta></p>
+                    </div>
+                    <div class="gallery-album-detail__loading hidden" data-album-detail-loading role="status" aria-live="polite">Memuat album...</div>
+                    <p class="gallery-album-detail__status hidden" data-album-detail-status role="status" aria-live="polite"></p>
+                    <div class="gallery-album-detail__grid" data-album-detail-grid aria-live="polite"></div>
+                    <nav class="gallery-album-detail__pagination hidden" data-album-detail-pagination aria-label="Navigasi foto album"></nav>
+                </section>
             </div>
         </section>
     </main>
@@ -52,7 +64,6 @@
     <script type="module" src="assets/js/main.js"></script>
     <script src="assets/js/seo.js"></script>
     <script src="assets/js/maintenance.js"></script>
-    <script src="assets/js/cms-connector.js"></script>
-    <script type="module" src="assets/js/gallery-lightbox.js"></script>
+    <script type="module" src="assets/js/gallery-albums-page.js"></script>
 </body>
 </html>

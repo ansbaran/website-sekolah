@@ -49,6 +49,12 @@ function unique_file_name(string $fileName): string
     return time() . '_' . bin2hex(random_bytes(6)) . '_' . sanitize_file_name($fileName);
 }
 
+function format_file_size_mb(int $bytes): string
+{
+    $mb = $bytes / 1024 / 1024;
+    return rtrim(rtrim(number_format($mb, 1, '.', ''), '0'), '.') . 'MB';
+}
+
 function build_upload_path(string $subDir, string $fileName): string
 {
     $safeSubDir = normalize_upload_subdir($subDir);
@@ -249,8 +255,15 @@ function get_client_ip(): string
     return $ip;
 }
 
-function validate_image_upload(array $file, ?string &$error = null): bool
+function validate_image_upload(array $file, ?string &$error = null, ?int $maxSize = null): bool
 {
+    $maxSize = $maxSize ?? MAX_IMAGE_SIZE;
+
+    if (!isset($file['error'])) {
+        $error = 'Silakan pilih file gambar.';
+        return false;
+    }
+
     if ($file['error'] === UPLOAD_ERR_NO_FILE) {
         $error = 'Silakan pilih file gambar.';
         return false;
@@ -258,15 +271,15 @@ function validate_image_upload(array $file, ?string &$error = null): bool
 
     if ($file['error'] !== UPLOAD_ERR_OK) {
         $error = match ($file['error']) {
-            UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Ukuran file maksimal ' . (MAX_IMAGE_SIZE / 1024 / 1024) . 'MB.',
+            UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Ukuran file maksimal ' . format_file_size_mb($maxSize) . '.',
             UPLOAD_ERR_PARTIAL => 'Upload belum selesai. Silakan pilih file dan coba lagi.',
             default => 'Terjadi kesalahan saat mengunggah file.',
         };
         return false;
     }
 
-    if ($file['size'] > MAX_IMAGE_SIZE) {
-        $error = 'Ukuran file maksimal ' . (MAX_IMAGE_SIZE / 1024 / 1024) . 'MB.';
+    if ($file['size'] > $maxSize) {
+        $error = 'Ukuran file maksimal ' . format_file_size_mb($maxSize) . '.';
         return false;
     }
 
@@ -590,17 +603,378 @@ function current_role(): string
     return current_user()['role'] ?? 'operator';
 }
 
-function can(string $permission): bool
+function user_initials(string $name): string
 {
-    $role = current_role();
-    $permissions = [
-        'super_admin' => ['delete', 'publish', 'upload', 'manage_user', 'backup', 'maintenance'],
-        'admin' => ['delete', 'publish', 'upload', 'backup', 'maintenance'],
-        'editor' => ['publish', 'upload'],
-        'operator' => ['upload'],
+    $name = trim(strip_tags($name));
+    if ($name === '') {
+        return 'U';
+    }
+
+    $parts = preg_split('/\s+/', $name) ?: [];
+    $letters = '';
+    foreach ($parts as $part) {
+        $part = trim($part);
+        if ($part !== '') {
+            $letters .= substr($part, 0, 1);
+        }
+
+        if (strlen($letters) >= 2) {
+            break;
+        }
+    }
+
+    return strtoupper($letters ?: substr($name, 0, 1));
+}
+
+function normalize_profile_photo_path(?string $path): ?string
+{
+    $path = ltrim(str_replace('\\', '/', trim((string)$path)), '/');
+    if ($path === '') {
+        return null;
+    }
+
+    if (strpos($path, 'uploads/profile/') === 0) {
+        $fileName = basename($path);
+    } elseif (strpos($path, '/') === false) {
+        $fileName = basename($path);
+    } else {
+        return null;
+    }
+
+    if ($fileName === '' || $fileName !== sanitize_file_name($fileName)) {
+        return null;
+    }
+
+    if (!preg_match('/\.(jpe?g|png|webp)$/i', $fileName)) {
+        return null;
+    }
+
+    return 'uploads/profile/' . $fileName;
+}
+
+function user_profile_photo_url(array $user): ?string
+{
+    $path = normalize_profile_photo_path($user['profile_photo'] ?? null);
+    if ($path === null) {
+        return null;
+    }
+
+    $filePath = managed_profile_photo_file_path($path);
+    if ($filePath === null || !is_file($filePath)) {
+        return null;
+    }
+
+    return BASE_URL . '/uploads/profile/' . rawurlencode(basename($path));
+}
+
+function user_avatar_html(array $user, string $size = 'small', string $extraClass = ''): string
+{
+    $allowedSizes = ['small', 'medium', 'large'];
+    $size = in_array($size, $allowedSizes, true) ? $size : 'small';
+    $classes = trim('user-avatar user-avatar--' . $size . ' ' . $extraClass);
+    $name = (string)($user['name'] ?? '');
+    $photoUrl = user_profile_photo_url($user);
+
+    if ($photoUrl !== null) {
+        return '<span class="' . escape($classes) . '"><img src="' . escape($photoUrl) . '" alt="' . escape($name !== '' ? 'Foto profil ' . $name : 'Foto profil') . '" loading="lazy"></span>';
+    }
+
+    return '<span class="' . escape($classes) . '" aria-hidden="true">' . escape(user_initials($name)) . '</span>';
+}
+
+function managed_profile_photo_file_path(?string $path): ?string
+{
+    $relativePath = normalize_profile_photo_path($path);
+    if ($relativePath === null) {
+        return null;
+    }
+
+    $target = BASE_PATH . '/' . $relativePath;
+    $profileDir = realpath(UPLOAD_BASE . '/profile');
+    $targetDir = realpath(dirname($target));
+    if ($profileDir === false || $targetDir === false || $targetDir !== $profileDir) {
+        return null;
+    }
+
+    return $target;
+}
+
+function resize_profile_photo(string $targetPath, string $mimeType, int $maxDimension = 800): bool
+{
+    if (!function_exists('imagecopyresampled')) {
+        return optimize_image($targetPath, $targetPath, $mimeType);
+    }
+
+    $imageInfo = @getimagesize($targetPath);
+    if ($imageInfo === false) {
+        return false;
+    }
+
+    [$width, $height] = $imageInfo;
+    if ($width <= 0 || $height <= 0) {
+        return false;
+    }
+
+    switch ($mimeType) {
+        case 'image/jpeg':
+            $source = @imagecreatefromjpeg($targetPath);
+            break;
+        case 'image/png':
+            $source = @imagecreatefrompng($targetPath);
+            break;
+        case 'image/webp':
+            $source = @imagecreatefromwebp($targetPath);
+            break;
+        default:
+            return false;
+    }
+
+    if (!$source) {
+        return false;
+    }
+
+    $scale = min(1, $maxDimension / max($width, $height));
+    $newWidth = max(1, (int)round($width * $scale));
+    $newHeight = max(1, (int)round($height * $scale));
+    $canvas = imagecreatetruecolor($newWidth, $newHeight);
+
+    if ($mimeType === 'image/png' || $mimeType === 'image/webp') {
+        imagealphablending($canvas, false);
+        imagesavealpha($canvas, true);
+        $transparent = imagecolorallocatealpha($canvas, 0, 0, 0, 127);
+        imagefilledrectangle($canvas, 0, 0, $newWidth, $newHeight, $transparent);
+    }
+
+    imagecopyresampled($canvas, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+    $result = match ($mimeType) {
+        'image/jpeg' => imagejpeg($canvas, $targetPath, 84),
+        'image/png' => imagepng($canvas, $targetPath, 6),
+        'image/webp' => imagewebp($canvas, $targetPath, 84),
+        default => false,
+    };
+
+    imagedestroy($source);
+    imagedestroy($canvas);
+
+    return $result;
+}
+
+function upload_profile_photo(array $file, int $userId, ?string &$error = null): ?string
+{
+    if ($userId <= 0) {
+        $error = 'Akun pengguna tidak valid.';
+        return null;
+    }
+
+    if (!validate_image_upload($file, $error, PROFILE_AVATAR_MAX_SIZE)) {
+        return null;
+    }
+
+    $mimeType = mime_content_type($file['tmp_name']) ?: '';
+    $extension = match ($mimeType) {
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp',
+        default => '',
+    };
+
+    if ($extension === '') {
+        $error = 'Format gambar tidak didukung. Gunakan JPG, PNG, atau WEBP.';
+        return null;
+    }
+
+    $targetDir = build_upload_path('profile', '');
+    if (!is_dir($targetDir) && !mkdir($targetDir, 0755, true) && !is_dir($targetDir)) {
+        $error = 'Gagal membuat direktori foto profil.';
+        return null;
+    }
+
+    $storedName = 'user-' . $userId . '-' . bin2hex(random_bytes(6)) . '.' . $extension;
+    $targetPath = rtrim($targetDir, '/\\') . DIRECTORY_SEPARATOR . $storedName;
+
+    if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
+        $error = 'Gagal menyimpan foto profil.';
+        return null;
+    }
+
+    $storedMimeType = mime_content_type($targetPath) ?: $mimeType;
+    if (!resize_profile_photo($targetPath, $storedMimeType)) {
+        optimize_image($targetPath, $targetPath, $storedMimeType);
+    }
+    strip_image_metadata($targetPath, $storedMimeType);
+
+    return 'uploads/profile/' . $storedName;
+}
+
+function admin_role_options(): array
+{
+    return [
+        'super_admin' => 'Super Admin',
+        'admin' => 'Admin Sekolah',
+        'kepala_sekolah' => 'Kepala Sekolah',
+        'guru_staff' => 'Guru / Staff',
+        'editor' => 'Editor',
+        'operator' => 'Operator',
+    ];
+}
+
+function admin_role_label(string $role): string
+{
+    return admin_role_options()[$role] ?? ucfirst(str_replace('_', ' ', $role));
+}
+
+function admin_role_description(string $role): string
+{
+    $descriptions = [
+        'super_admin' => 'Akses sistem tingkat tertinggi.',
+        'admin' => 'Akses administrasi utama sekolah.',
+        'kepala_sekolah' => 'Akses dashboard dan modul yang diberikan.',
+        'guru_staff' => 'Akses terbatas sesuai tugas dan hak akses tambahan.',
+        'editor' => 'Fokus pada pengelolaan dan publikasi konten.',
+        'operator' => 'Fokus pada upload dan pengelolaan media sesuai akses.',
     ];
 
-    return in_array($permission, $permissions[$role] ?? [], true);
+    return $descriptions[$role] ?? 'Akses mengikuti pengaturan role.';
+}
+
+function admin_permission_definitions(): array
+{
+    return [
+        'publish' => [
+            'label' => 'Kelola Konten Publik',
+            'description' => 'Membuat, mengedit, dan menerbitkan konten yang diizinkan.',
+            'group' => 'Konten',
+            'sensitive' => '',
+        ],
+        'upload' => [
+            'label' => 'Upload & Kelola Media',
+            'description' => 'Mengunggah dan mengelola gambar atau media pada modul yang diizinkan.',
+            'group' => 'Konten',
+            'sensitive' => '',
+        ],
+        'delete' => [
+            'label' => 'Hapus Konten',
+            'description' => 'Menghapus konten pada modul yang dapat diakses.',
+            'group' => 'Konten',
+            'sensitive' => 'Permission ini memberikan akses sensitif.',
+        ],
+        'backup' => [
+            'label' => 'Backup & Log Sistem',
+            'description' => 'Mengakses fitur backup serta informasi sistem yang relevan.',
+            'group' => 'Sistem',
+            'sensitive' => 'Permission ini memberikan akses sensitif.',
+        ],
+        'maintenance' => [
+            'label' => 'Maintenance Sistem',
+            'description' => 'Mengakses fitur pemeliharaan dan konfigurasi teknis sistem.',
+            'group' => 'Sistem',
+            'sensitive' => 'Permission ini memberikan akses sensitif.',
+        ],
+        'manage_user' => [
+            'label' => 'Kelola Akun Pengguna',
+            'description' => 'Menambah, mengedit, mengaktifkan, dan mengatur hak akses pengguna.',
+            'group' => 'Pengguna',
+            'sensitive' => 'Pengguna dapat mengelola akun dan hak akses pengguna lain.',
+        ],
+    ];
+}
+
+function admin_permission_options(): array
+{
+    return array_map(static fn(array $definition): string => $definition['label'], admin_permission_definitions());
+}
+
+function admin_permission_label(string $permission): string
+{
+    return admin_permission_definitions()[$permission]['label'] ?? $permission;
+}
+
+function admin_permission_description(string $permission): string
+{
+    return admin_permission_definitions()[$permission]['description'] ?? '';
+}
+
+function admin_permission_grouped_options(): array
+{
+    $groups = [];
+    foreach (admin_permission_definitions() as $permission => $definition) {
+        $groups[$definition['group']][$permission] = $definition;
+    }
+
+    return $groups;
+}
+
+function admin_permission_summary_label(int $grantCount): string
+{
+    return $grantCount > 0 ? $grantCount . ' akses tambahan' : 'Akses sesuai role';
+}
+
+function admin_role_base_permissions(string $role): array
+{
+    $permissions = [
+        'super_admin' => ['delete', 'publish', 'upload', 'manage_user', 'backup', 'maintenance'],
+        'admin' => ['delete', 'publish', 'upload', 'manage_user', 'backup', 'maintenance'],
+        'editor' => ['publish', 'upload'],
+        'operator' => ['upload'],
+        'kepala_sekolah' => [],
+        'guru_staff' => [],
+    ];
+
+    return $permissions[$role] ?? [];
+}
+
+function admin_user_granted_permissions(int $userId): array
+{
+    global $pdo;
+
+    static $cache = [];
+    if ($userId <= 0) {
+        return [];
+    }
+
+    if (array_key_exists($userId, $cache)) {
+        return $cache[$userId];
+    }
+
+    try {
+        $stmt = $pdo->prepare('SELECT permission FROM user_permissions WHERE user_id = :user_id ORDER BY permission ASC');
+        $stmt->execute(['user_id' => $userId]);
+        $cache[$userId] = array_values(array_intersect(
+            $stmt->fetchAll(PDO::FETCH_COLUMN) ?: [],
+            array_keys(admin_permission_options())
+        ));
+    } catch (Throwable $exception) {
+        $cache[$userId] = [];
+    }
+
+    return $cache[$userId];
+}
+
+function admin_user_effective_permissions(array $user): array
+{
+    $role = (string)($user['role'] ?? 'operator');
+    $userId = (int)($user['id'] ?? 0);
+
+    return array_values(array_unique(array_merge(
+        admin_role_base_permissions($role),
+        admin_user_granted_permissions($userId)
+    )));
+}
+
+function admin_user_has_permission(array $user, string $permission): bool
+{
+    return in_array($permission, admin_user_effective_permissions($user), true);
+}
+
+function can(string $permission): bool
+{
+    $user = current_user();
+    if (!$user) {
+        return false;
+    }
+
+    return admin_user_has_permission($user, $permission);
 }
 
 function get_setting(string $name, $default = null)

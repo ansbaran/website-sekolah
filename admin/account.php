@@ -19,7 +19,7 @@ if ($userId <= 0) {
 function admin_account_fetch_user(int $userId): ?array
 {
     global $pdo;
-    $stmt = $pdo->prepare('SELECT id, name, email, password, role, is_active, created_at FROM users WHERE id = :id LIMIT 1');
+    $stmt = $pdo->prepare('SELECT id, name, email, password, role, profile_photo, is_active, created_at FROM users WHERE id = :id LIMIT 1');
     $stmt->execute(['id' => $userId]);
     $user = $stmt->fetch();
 
@@ -111,6 +111,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect('account.php');
     }
 
+    if ($action === 'update_avatar') {
+        $uploadError = null;
+        $newPhotoPath = upload_profile_photo($_FILES['profile_photo'] ?? [], $userId, $uploadError);
+        if ($newPhotoPath === null) {
+            flash('error', $uploadError ?: 'Foto profil belum dapat diunggah.');
+            redirect('account.php');
+        }
+
+        $oldPhotoPath = (string)($account['profile_photo'] ?? '');
+
+        try {
+            $stmt = $pdo->prepare('UPDATE users SET profile_photo = :profile_photo WHERE id = :id');
+            $stmt->execute(['profile_photo' => $newPhotoPath, 'id' => $userId]);
+        } catch (Throwable $exception) {
+            $newFile = managed_profile_photo_file_path($newPhotoPath);
+            if ($newFile !== null) {
+                delete_file($newFile);
+            }
+
+            log_exception($exception);
+            flash('error', 'Foto profil gagal disimpan. Silakan coba lagi.');
+            redirect('account.php');
+        }
+
+        $oldFile = managed_profile_photo_file_path($oldPhotoPath);
+        if ($oldFile !== null) {
+            delete_file($oldFile);
+        }
+
+        $_SESSION['admin_user']['profile_photo'] = $newPhotoPath;
+        log_activity('profile_photo_update', 'Admin memperbarui foto profil.', 'users:' . $userId);
+        flash('success', 'Foto profil berhasil diperbarui.');
+        redirect('account.php');
+    }
+
+    if ($action === 'delete_avatar') {
+        $oldPhotoPath = (string)($account['profile_photo'] ?? '');
+        if ($oldPhotoPath === '') {
+            flash('success', 'Akun sudah menggunakan avatar inisial.');
+            redirect('account.php');
+        }
+
+        try {
+            $stmt = $pdo->prepare('UPDATE users SET profile_photo = NULL WHERE id = :id');
+            $stmt->execute(['id' => $userId]);
+        } catch (Throwable $exception) {
+            log_exception($exception);
+            flash('error', 'Foto profil gagal dihapus. Silakan coba lagi.');
+            redirect('account.php');
+        }
+
+        $oldFile = managed_profile_photo_file_path($oldPhotoPath);
+        if ($oldFile !== null) {
+            delete_file($oldFile);
+        }
+
+        $_SESSION['admin_user']['profile_photo'] = null;
+        log_activity('profile_photo_remove', 'Admin menghapus foto profil.', 'users:' . $userId);
+        flash('success', 'Foto profil dihapus. Avatar inisial kembali digunakan.');
+        redirect('account.php');
+    }
+
     if ($action === 'change_password') {
         $currentPassword = (string)($_POST['password_current'] ?? '');
         $newPassword = (string)($_POST['password_new'] ?? '');
@@ -165,18 +227,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $emailLooksPlaceholder = admin_account_is_placeholder_email((string)$account['email']);
-$initials = strtoupper(substr((string)$account['name'], 0, 1));
+$accountRoleLabel = function_exists('admin_role_label') ? admin_role_label((string)$account['role']) : strtoupper((string)$account['role']);
 
 require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="panel account-hero-panel">
-    <div class="account-avatar" aria-hidden="true"><?= htmlspecialchars($initials ?: 'A') ?></div>
+    <?= user_avatar_html($account, 'large', 'account-hero-avatar') ?>
     <div class="account-hero-copy">
         <span class="account-eyebrow">Keamanan Akun Admin</span>
         <h2><?= htmlspecialchars($account['name']) ?></h2>
         <p>Email yang tersimpan di sini digunakan untuk login admin dan fitur lupa password. Gunakan email aktif yang benar-benar dapat diakses.</p>
         <div class="account-meta-list">
-            <span><?= strtoupper(htmlspecialchars((string)$account['role'])) ?></span>
+            <span><?= htmlspecialchars($accountRoleLabel) ?></span>
             <span><?= htmlspecialchars((string)$account['email']) ?></span>
             <span><?= (int)$account['is_active'] === 1 ? 'Aktif' : 'Nonaktif' ?></span>
         </div>
@@ -186,6 +248,35 @@ require_once __DIR__ . '/includes/header.php';
 <?php if ($emailLooksPlaceholder): ?>
     <div class="alert alert-danger">Email akun saat ini masih terlihat seperti email lokal/contoh. Ganti dengan email aktif agar fitur lupa password dapat dipakai dengan benar.</div>
 <?php endif; ?>
+
+<section class="panel account-photo-panel">
+    <div class="account-photo-preview">
+        <?= user_avatar_html($account, 'large') ?>
+    </div>
+    <div class="account-photo-copy">
+        <span class="account-eyebrow">Foto Profil</span>
+        <h2><?= htmlspecialchars($account['name']) ?></h2>
+        <p><?= htmlspecialchars($accountRoleLabel) ?></p>
+        <small>Format JPG, PNG, atau WEBP. Maksimal 2 MB.</small>
+    </div>
+    <div class="account-photo-actions">
+        <form method="post" enctype="multipart/form-data" class="avatar-upload-form">
+            <?= csrf_field() ?>
+            <input type="hidden" name="action" value="update_avatar">
+            <input type="hidden" name="MAX_FILE_SIZE" value="<?= (int)PROFILE_AVATAR_MAX_SIZE ?>">
+            <label for="profile_photo">Pilih Foto Profil</label>
+            <input type="file" id="profile_photo" name="profile_photo" accept="image/jpeg,image/png,image/webp" data-max-size="<?= (int)PROFILE_AVATAR_MAX_SIZE ?>" required>
+            <button type="submit" class="btn-primary">Ganti Foto</button>
+        </form>
+        <?php if (normalize_profile_photo_path($account['profile_photo'] ?? null) !== null): ?>
+            <form method="post" class="inline-form">
+                <?= csrf_field() ?>
+                <input type="hidden" name="action" value="delete_avatar">
+                <button type="submit" class="btn-secondary" data-confirm="Hapus foto profil ini?">Hapus Foto</button>
+            </form>
+        <?php endif; ?>
+    </div>
+</section>
 
 <div class="account-settings-grid">
     <section class="panel account-form-panel">

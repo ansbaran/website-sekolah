@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($email === '' || $password === '') {
         $error = 'Email dan password wajib diisi.';
     } else {
-        $statement = $pdo->prepare('SELECT id, name, email, password, role, is_active FROM users WHERE email = :email LIMIT 1');
+        $statement = $pdo->prepare('SELECT id, name, email, password, role, profile_photo, is_active FROM users WHERE email = :email LIMIT 1');
         $statement->execute(['email' => $email]);
         $user = $statement->fetch();
 

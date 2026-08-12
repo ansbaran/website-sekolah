@@ -95,9 +95,10 @@ define('UPLOAD_OUTPUT_MAX_HEIGHT', 1920);
 define('MAX_IMAGE_SIZE', 4 * 1024 * 1024);
 define('MAX_IMAGE_WIDTH', 4096);
 define('MAX_IMAGE_HEIGHT', 4096);
+define('PROFILE_AVATAR_MAX_SIZE', 2 * 1024 * 1024);
 define('ALLOWED_IMAGE_TYPES', ['image/jpeg', 'image/png', 'image/webp']);
 define('ALLOWED_IMAGE_EXT', ['jpg', 'jpeg', 'png', 'webp']);
-define('ALLOWED_UPLOAD_DIRS', ['news', 'gallery', 'achievements', 'slider', 'staff', 'misc']);
+define('ALLOWED_UPLOAD_DIRS', ['news', 'gallery', 'achievements', 'slider', 'staff', 'misc', 'profile']);
 
 if (!is_dir(LOG_DIR)) {
     @mkdir(LOG_DIR, 0755, true);

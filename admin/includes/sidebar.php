@@ -10,6 +10,7 @@ $isActive = static function (array $files) use ($currentPage): string {
 };
 
 $user = current_user();
+$userRoleLabel = function_exists('admin_role_label') ? admin_role_label((string)($user['role'] ?? 'operator')) : strtoupper((string)($user['role'] ?? 'operator'));
 
 $adminIcon = static function (string $name): string {
     $icons = [
@@ -36,7 +37,9 @@ $adminIcon = static function (string $name): string {
 ?>
 <aside class="admin-sidebar" aria-label="Navigasi admin">
     <div class="sidebar-brand">
-        <span class="sidebar-brand__mark" aria-hidden="true"><?= $adminIcon('brand') ?></span>
+        <span class="sidebar-brand__mark" aria-hidden="true">
+            <img src="../assets/img/logo-transparent.png" alt="" loading="lazy">
+        </span>
         <div>
             <strong>SD Cahaya Harapan</strong>
             <small>Admin Panel</small>
@@ -53,6 +56,12 @@ $adminIcon = static function (string $name): string {
             <span class="sidebar-link__icon" aria-hidden="true"><?= $adminIcon('account') ?></span>
             <span>Akun Saya</span>
         </a>
+        <?php if (can('manage_user')): ?>
+            <a class="sidebar-link <?= $isActive(['users.php', 'user-form.php']) ?>" href="users.php" <?= in_array($currentPage, ['users.php', 'user-form.php'], true) ? 'aria-current="page"' : '' ?>>
+                <span class="sidebar-link__icon" aria-hidden="true"><?= $adminIcon('account') ?></span>
+                <span>Kelola Akun</span>
+            </a>
+        <?php endif; ?>
 
         <?php if (can('publish')): ?>
             <span class="sidebar-nav__label">Konten</span>
@@ -118,27 +127,31 @@ $adminIcon = static function (string $name): string {
             <span>Media Manager</span>
         </a>
 
-        <?php if (can('backup')): ?>
+        <?php if (can('backup') || can('maintenance')): ?>
             <span class="sidebar-nav__label">Sistem</span>
-            <a class="sidebar-link <?= $isActive(['activity-log.php']) ?>" href="activity-log.php" <?= $currentPage === 'activity-log.php' ? 'aria-current="page"' : '' ?>>
-                <span class="sidebar-link__icon" aria-hidden="true"><?= $adminIcon('activity') ?></span>
-                <span>Aktivitas</span>
-            </a>
+            <?php if (can('backup')): ?>
+                <a class="sidebar-link <?= $isActive(['activity-log.php']) ?>" href="activity-log.php" <?= $currentPage === 'activity-log.php' ? 'aria-current="page"' : '' ?>>
+                    <span class="sidebar-link__icon" aria-hidden="true"><?= $adminIcon('activity') ?></span>
+                    <span>Aktivitas</span>
+                </a>
+            <?php endif; ?>
             <a class="sidebar-link <?= $isActive(['system.php']) ?>" href="system.php" <?= $currentPage === 'system.php' ? 'aria-current="page"' : '' ?>>
                 <span class="sidebar-link__icon" aria-hidden="true"><?= $adminIcon('system') ?></span>
                 <span>Sistem</span>
             </a>
-            <a class="sidebar-link <?= $isActive(['system-health.php']) ?>" href="system-health.php" <?= $currentPage === 'system-health.php' ? 'aria-current="page"' : '' ?>>
-                <span class="sidebar-link__icon" aria-hidden="true"><?= $adminIcon('health') ?></span>
-                <span>Health Sistem</span>
-            </a>
+            <?php if (can('backup')): ?>
+                <a class="sidebar-link <?= $isActive(['system-health.php']) ?>" href="system-health.php" <?= $currentPage === 'system-health.php' ? 'aria-current="page"' : '' ?>>
+                    <span class="sidebar-link__icon" aria-hidden="true"><?= $adminIcon('health') ?></span>
+                    <span>Health Sistem</span>
+                </a>
+            <?php endif; ?>
         <?php endif; ?>
     </nav>
 
     <div class="sidebar-footer">
         <div class="sidebar-user">
             <span><?= htmlspecialchars($user['name'] ?? 'Administrator') ?></span>
-            <small><?= strtoupper(htmlspecialchars($user['role'] ?? 'operator')) ?></small>
+            <small><?= htmlspecialchars($userRoleLabel) ?></small>
         </div>
         <a class="sidebar-account-link" href="account.php">Kelola akun</a>
     </div>

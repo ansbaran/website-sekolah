@@ -7,7 +7,7 @@ define('ADMIN_CONTEXT', true);
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_login();
-require_role('super_admin', 'admin');
+require_permission('backup');
 
 function check_database_status(): array
 {

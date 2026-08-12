@@ -28,7 +28,7 @@ function restore_remembered(): void
         return;
     }
 
-    $statement = $pdo->prepare('SELECT id, name, email, role, remember_token, is_active FROM users WHERE id = :id LIMIT 1');
+    $statement = $pdo->prepare('SELECT id, name, email, role, profile_photo, remember_token, is_active FROM users WHERE id = :id LIMIT 1');
     $statement->execute(['id' => $userId]);
     $user = $statement->fetch();
 
@@ -42,6 +42,7 @@ function restore_remembered(): void
             'name' => $user['name'],
             'email' => $user['email'],
             'role' => $user['role'],
+            'profile_photo' => $user['profile_photo'] ?? null,
         ];
         $_SESSION['last_activity'] = time();
     }
@@ -67,7 +68,7 @@ function ensure_current_user_is_active(): bool
         return false;
     }
 
-    $statement = $pdo->prepare('SELECT id, name, email, role, is_active FROM users WHERE id = :id LIMIT 1');
+    $statement = $pdo->prepare('SELECT id, name, email, role, profile_photo, is_active FROM users WHERE id = :id LIMIT 1');
     $statement->execute(['id' => $user['id']]);
     $freshUser = $statement->fetch();
 
@@ -80,6 +81,7 @@ function ensure_current_user_is_active(): bool
         'name' => $freshUser['name'],
         'email' => $freshUser['email'],
         'role' => $freshUser['role'],
+        'profile_photo' => $freshUser['profile_photo'] ?? null,
     ];
 
     return true;
@@ -114,8 +116,16 @@ function login_user(array $user, bool $remember = false): void
         'name' => $user['name'],
         'email' => $user['email'],
         'role' => $user['role'],
+        'profile_photo' => $user['profile_photo'] ?? null,
     ];
     $_SESSION['last_activity'] = time();
+
+    try {
+        $statement = $pdo->prepare('UPDATE users SET last_login_at = NOW() WHERE id = :id');
+        $statement->execute(['id' => $user['id']]);
+    } catch (Throwable $exception) {
+        // Older local schemas may not have last_login_at until migration 011 is applied.
+    }
 
     if ($remember) {
         $token = bin2hex(random_bytes(32));

@@ -7,7 +7,17 @@ define('ADMIN_CONTEXT', true);
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_login();
-require_role('super_admin', 'admin');
+
+if (!can('backup') && !can('maintenance')) {
+    if (!headers_sent()) {
+        http_response_code(403);
+    }
+    flash('error', 'Anda tidak memiliki izin untuk mengakses fitur tersebut.');
+    redirect('dashboard.php');
+}
+
+$canBackup = can('backup');
+$canMaintenance = can('maintenance');
 
 $backupFiles = get_backup_files();
 $pageTitle = 'Sistem';
@@ -21,6 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 
     if ($_POST['action'] === 'update_ppdb') {
+        if (!$canMaintenance) {
+            flash('error', 'Anda tidak memiliki izin maintenance sistem.');
+            redirect('system.php');
+        }
+
         $status = normalize_ppdb_status((string)($_POST['ppdb_status'] ?? 'open'));
         $year = (int)($_POST['ppdb_year'] ?? date('Y'));
         $startDate = normalize_ppdb_date((string)($_POST['ppdb_start_date'] ?? ''), '');
@@ -81,6 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 
     if ($_POST['action'] === 'update_public_stats') {
+        if (!$canMaintenance) {
+            flash('error', 'Anda tidak memiliki izin maintenance sistem.');
+            redirect('system.php');
+        }
+
         $counts = [
             'stat_students_count' => (int)($_POST['stat_students_count'] ?? 0),
             'stat_achievements_year_count' => (int)($_POST['stat_achievements_year_count'] ?? 0),
@@ -123,6 +143,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         redirect('system.php');
     }
     if ($_POST['action'] === 'backup_db') {
+        if (!$canBackup) {
+            flash('error', 'Anda tidak memiliki izin backup sistem.');
+            redirect('system.php');
+        }
+
         $sql = export_database_sql();
         if ($sql === null) {
             flash('error', 'Gagal membuat file backup database.');
@@ -145,6 +170,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 
     if ($_POST['action'] === 'backup_uploads') {
+        if (!$canBackup) {
+            flash('error', 'Anda tidak memiliki izin backup sistem.');
+            redirect('system.php');
+        }
+
         $uploadFiles = [];
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(UPLOAD_BASE, RecursiveDirectoryIterator::SKIP_DOTS));
         foreach ($iterator as $file) {
@@ -166,6 +196,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 
     if ($_POST['action'] === 'toggle_maintenance') {
+        if (!$canMaintenance) {
+            flash('error', 'Anda tidak memiliki izin maintenance sistem.');
+            redirect('system.php');
+        }
+
         $enabled = isset($_POST['maintenance']) && $_POST['maintenance'] === '1';
         if ($enabled) {
             file_put_contents(MAINTENANCE_TOGGLE_FILE, 'maintenance');
@@ -185,6 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 $maintenanceEnabled = is_maintenance_mode();
 require_once __DIR__ . '/includes/header.php';
 ?>
+<?php if ($canMaintenance): ?>
 <section class="panel">
     <div class="panel-header">
         <div>
@@ -289,6 +325,9 @@ require_once __DIR__ . '/includes/header.php';
         </form>
     </div>
 </section>
+<?php endif; ?>
+
+<?php if ($canBackup): ?>
 <section class="panel">
     <div class="form-grid">
         <div>
@@ -316,7 +355,9 @@ require_once __DIR__ . '/includes/header.php';
         </form>
     </div>
 </section>
+<?php endif; ?>
 
+<?php if ($canMaintenance): ?>
 <section class="panel">
     <div class="form-grid">
         <div>
@@ -333,7 +374,9 @@ require_once __DIR__ . '/includes/header.php';
         </form>
     </div>
 </section>
+<?php endif; ?>
 
+<?php if ($canBackup): ?>
 <section class="panel table-wrapper">
     <h3>Backup Tersedia</h3>
     <table>
@@ -358,5 +401,6 @@ require_once __DIR__ . '/includes/header.php';
         </tbody>
     </table>
 </section>
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php';

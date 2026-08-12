@@ -33,7 +33,7 @@ if (empty($_FILES['file'])) {
 
 $file = $_FILES['file'];
 
-$uploadName = upload_image($file, $target, $error);
+$uploadName = upload_image($file, $target, $error, image_upload_policy('media'));
 if ($uploadName === null) {
     http_response_code(400);
     echo json_encode(['status' => 'error', 'message' => $error]);

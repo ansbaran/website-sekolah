@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $image = (string)($item['image'] ?? '');
 
         if (!empty($_FILES['image']['name'])) {
-            $uploaded = upload_image($_FILES['image'], 'misc', $uploadError);
+            $uploaded = upload_image($_FILES['image'], 'misc', $uploadError, image_upload_policy('program'));
             if ($uploaded === null) {
                 $error = $uploadError ?: 'Gagal mengunggah gambar.';
             } else {
@@ -157,7 +157,12 @@ require_once __DIR__ . '/includes/header.php';
             <div>
                 <label for="image">Gambar</label>
                 <input type="file" id="image" name="image" accept="image/*" data-max-size="4194304">
-                <small class="footer-note">Format JPG, PNG, WEBP. Maks 4MB. Kosongkan jika tidak ingin mengganti.</small>
+                <div class="image-upload-guide" role="note">
+                    <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-shapes"></i></span><span>Rekomendasi</span></div>
+                    <p class="image-upload-guide__specs"><span>1260 x 828 px</span><span>Rasio daftar compact</span><span>Minimal 840 x 552 px</span><span>JPG/PNG/WebP</span></p>
+                    <p class="image-upload-guide__note">Untuk card umum, 1600 x 1200 px (4:3) juga aman. Target file &lt; 600 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB.</p>
+                    <p class="image-upload-guide__note">Letakkan objek utama di tengah. Kosongkan jika tidak ingin mengganti.</p>
+                </div>
             </div>
             <?php if (!empty($item['image'])): ?>
                 <div class="full-span">

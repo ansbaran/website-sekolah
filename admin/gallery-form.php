@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'size' => $files['size'][0],
                     ];
 
-                    $newFileName = upload_image($file, 'gallery', $uploadError);
+                    $newFileName = upload_image($file, 'gallery', $uploadError, image_upload_policy('gallery'));
                     if ($newFileName === null) {
                         $error = $uploadError;
                     } else {
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'size' => $files['size'][$index],
                     ];
 
-                    $fileName = upload_image($file, 'gallery', $uploadError);
+                    $fileName = upload_image($file, 'gallery', $uploadError, image_upload_policy('gallery'));
                     if ($fileName === null) {
                         $error = $uploadError;
                         break;
@@ -156,7 +156,12 @@ require_once __DIR__ . '/includes/header.php';
             <div class="full-span">
                 <label for="images"><?= $isEdit ? 'Ganti Gambar' : 'Pilih Gambar' ?></label>
                 <input type="file" id="images" name="images[]" accept="image/*" data-max-size="4194304" <?= $isEdit ? '' : 'multiple required' ?>>
-                <small class="footer-note">Format JPG, PNG, WEBP. Maks 4MB per file. <?= $isEdit ? 'Kosongkan jika tidak ingin mengganti foto.' : '' ?></small>
+                <div class="image-upload-guide" role="note">
+                    <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-images"></i></span><span>Fleksibel</span></div>
+                    <p class="image-upload-guide__specs"><span>Aman untuk kartu 1500 x 1000 px</span><span>Rasio 3:2</span><span>Minimal sisi panjang 1200 px</span><span>JPG/PNG/WebP</span></p>
+                    <p class="image-upload-guide__note">Orientasi asli tetap boleh. Target file &lt; 900 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB per file.</p>
+                    <p class="image-upload-guide__note">Letakkan objek utama di tengah untuk tampilan grid. <?= $isEdit ? 'Kosongkan jika tidak ingin mengganti foto.' : '' ?></p>
+                </div>
             </div>
         </div>
         <div class="form-actions">

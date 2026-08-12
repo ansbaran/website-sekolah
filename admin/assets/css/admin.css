@@ -724,6 +724,66 @@ input[type="file"]::file-selector-button {
   cursor: pointer;
 }
 
+.image-upload-guide {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 12px 13px;
+  border: 1px solid var(--admin-border);
+  border-radius: 14px;
+  color: #475569;
+  background: #f8fafc;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.image-upload-guide__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0f172a;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.image-upload-guide__icon {
+  display: inline-grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  border-radius: 8px;
+  color: var(--admin-primary);
+  background: rgba(37, 99, 235, 0.08);
+  font-size: 0.74rem;
+}
+
+.image-upload-guide__specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin: 0;
+  color: #334155;
+  font-weight: 750;
+}
+
+.image-upload-guide__specs span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 8px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.image-upload-guide__note {
+  margin: 0;
+  color: var(--admin-muted);
+}
+
 input[type="checkbox"] {
   width: 18px;
   height: 18px;
@@ -2894,6 +2954,35 @@ body.admin-body textarea:focus {
 body.admin-body input[type="file"]::file-selector-button {
   color: #03131f;
   background: linear-gradient(135deg, #67e8f9, #38bdf8);
+}
+
+body.admin-body .image-upload-guide {
+  border-color: var(--admin-border);
+  color: var(--admin-text-secondary);
+  background: rgba(15, 23, 42, 0.54);
+}
+
+body.admin-body .image-upload-guide__title {
+  color: var(--admin-text-heading);
+}
+
+body.admin-body .image-upload-guide__icon {
+  border-color: rgba(56, 189, 248, 0.18);
+  color: #67e8f9;
+  background: rgba(56, 189, 248, 0.12);
+}
+
+body.admin-body .image-upload-guide__specs {
+  color: var(--admin-text-heading);
+}
+
+body.admin-body .image-upload-guide__specs span {
+  border-color: var(--admin-border);
+  background: rgba(30, 41, 59, 0.76);
+}
+
+body.admin-body .image-upload-guide__note {
+  color: var(--admin-text-secondary);
 }
 
 body.admin-body input[type="checkbox"],

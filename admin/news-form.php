@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filesToDeleteAfterSave = [];
             $featuredImage = $news['featured_image'];
             if (!empty($_FILES['featured_image']['name'])) {
-                $uploaded = upload_image($_FILES['featured_image'], 'news', $uploadError);
+                $uploaded = upload_image($_FILES['featured_image'], 'news', $uploadError, image_upload_policy('news_featured'));
                 if ($uploaded === null) {
                     $error = $uploadError;
                 } else {
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $thumbnail = $news['thumbnail'];
             if (!empty($_FILES['thumbnail']['name'])) {
-                $uploaded = upload_image($_FILES['thumbnail'], 'news', $uploadError);
+                $uploaded = upload_image($_FILES['thumbnail'], 'news', $uploadError, image_upload_policy('news_thumbnail'));
                 if ($uploaded === null) {
                     $error = $uploadError;
                 } else {
@@ -194,15 +194,27 @@ require_once __DIR__ . '/includes/header.php';
             <div>
                 <label for="featured_image">Featured Image (Detail Page)</label>
                 <input type="file" id="featured_image" name="featured_image" accept="image/*" data-max-size="4194304">
+                <div class="image-upload-guide" role="note">
+                    <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-image"></i></span><span>Sangat Disarankan</span></div>
+                    <p class="image-upload-guide__specs"><span>1600 x 900 px</span><span>Rasio 16:9</span><span>Minimal 1200 x 675 px</span><span>JPG/PNG/WebP</span></p>
+                    <p class="image-upload-guide__note">Target file &lt; 500 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB.</p>
+                    <p class="image-upload-guide__note">Letakkan objek utama di tengah karena gambar detail berita dapat tampil dengan crop.</p>
+                </div>
                 <?php if (!empty($news['featured_image'])): ?>
-                    <small>Gambar saat ini: <?= htmlspecialchars($news['featured_image']) ?></small>
+                    <small class="footer-note">Gambar saat ini: <?= htmlspecialchars($news['featured_image']) ?></small>
                 <?php endif; ?>
             </div>
             <div>
                 <label for="thumbnail">Thumbnail (Listing Page)</label>
                 <input type="file" id="thumbnail" name="thumbnail" accept="image/*" data-max-size="4194304">
+                <div class="image-upload-guide" role="note">
+                    <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-image"></i></span><span>Rekomendasi</span></div>
+                    <p class="image-upload-guide__specs"><span>1600 x 1000 px</span><span>Rasio 16:10</span><span>Minimal 960 x 600 px</span><span>JPG/PNG/WebP</span></p>
+                    <p class="image-upload-guide__note">Target file &lt; 400 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB.</p>
+                    <p class="image-upload-guide__note">Posisikan subjek di tengah agar aman saat kartu berita melakukan crop.</p>
+                </div>
                 <?php if (!empty($news['thumbnail'])): ?>
-                    <small>Thumbnail saat ini: <?= htmlspecialchars($news['thumbnail']) ?></small>
+                    <small class="footer-note">Thumbnail saat ini: <?= htmlspecialchars($news['thumbnail']) ?></small>
                 <?php endif; ?>
             </div>
             <div>

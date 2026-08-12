@@ -257,7 +257,6 @@ require_once __DIR__ . '/includes/header.php';
         <span class="account-eyebrow">Foto Profil</span>
         <h2><?= htmlspecialchars($account['name']) ?></h2>
         <p><?= htmlspecialchars($accountRoleLabel) ?></p>
-        <small>Format JPG, PNG, atau WEBP. Maksimal 2 MB.</small>
     </div>
     <div class="account-photo-actions">
         <form method="post" enctype="multipart/form-data" class="avatar-upload-form">
@@ -266,6 +265,12 @@ require_once __DIR__ . '/includes/header.php';
             <input type="hidden" name="MAX_FILE_SIZE" value="<?= (int)PROFILE_AVATAR_MAX_SIZE ?>">
             <label for="profile_photo">Pilih Foto Profil</label>
             <input type="file" id="profile_photo" name="profile_photo" accept="image/jpeg,image/png,image/webp" data-max-size="<?= (int)PROFILE_AVATAR_MAX_SIZE ?>" required>
+            <div class="image-upload-guide" role="note">
+                <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-circle-user"></i></span><span>Sangat Disarankan</span></div>
+                <p class="image-upload-guide__specs"><span>800 x 800 px</span><span>Rasio 1:1</span><span>Minimal 400 x 400 px</span><span>JPG/PNG/WebP</span></p>
+                <p class="image-upload-guide__note">Target file &lt; 200 KB. Maksimal upload <?= (int)(PROFILE_AVATAR_MAX_SIZE / 1024 / 1024) ?>MB.</p>
+                <p class="image-upload-guide__note">Posisikan wajah di tengah karena avatar tampil dalam crop lingkaran.</p>
+            </div>
             <button type="submit" class="btn-primary">Ganti Foto</button>
         </form>
         <?php if (normalize_profile_photo_path($account['profile_photo'] ?? null) !== null): ?>

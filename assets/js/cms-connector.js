@@ -153,7 +153,7 @@ resolveImage(path) {
 
         card.innerHTML = `
             <div class="news-card__image news-image">
-                <img loading="lazy" src="${thumbSrc}" alt="${title}">
+                <img loading="lazy" decoding="async" width="640" height="420" src="${thumbSrc}" alt="${title}">
             </div>
             <div class="news-card__content news-content">
                 <span class="news-card__date news-date">${this.formatDate(item.published_at)}</span>
@@ -611,7 +611,7 @@ slideDiv.style.backgroundImage = `url(${bgImage})`;
         card.href = detailUrl;
         card.innerHTML = `
             <span class="school-info-thumb" aria-hidden="true">
-                <img src="${image}" alt="" loading="lazy" decoding="async">
+                <img src="${image}" alt="" loading="lazy" decoding="async" width="96" height="96">
             </span>
             <span class="school-info-item__body">
                 <h4>${title}</h4>
@@ -817,6 +817,7 @@ slideDiv.style.backgroundImage = `url(${bgImage})`;
             image.src = item.image;
             image.alt = '';
             image.loading = 'lazy';
+            image.decoding = 'async';
             image.addEventListener('error', () => {
                 image.src = `${this.basePath}/assets/img/prestasi/prestasi-utama.png`;
             }, { once: true });
@@ -918,7 +919,7 @@ slideDiv.style.backgroundImage = `url(${bgImage})`;
 
             card.innerHTML = `
                 <div class="card-image">
-                    <img src="${this.resolveImage(item.image)}" alt="${title}" loading="lazy">
+                    <img src="${this.resolveImage(item.image)}" alt="${title}" loading="lazy" decoding="async">
                     <div class="card-overlay">
                         <span class="tag">Kabar Prestasi</span>
                     </div>

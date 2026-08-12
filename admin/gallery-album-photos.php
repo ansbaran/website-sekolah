@@ -125,7 +125,12 @@ require_once __DIR__ . '/includes/header.php';
         <div class="full-span">
             <label for="images">Pilih foto album</label>
             <input type="file" id="images" name="images[]" accept="image/jpeg,image/png,image/webp" data-max-size="<?= (int) MAX_IMAGE_SIZE ?>" multiple required>
-            <small class="footer-note">JPG, PNG, WEBP. Maks <?= (int) (MAX_IMAGE_SIZE / 1024 / 1024) ?>MB per file, maksimal <?= gallery_album_admin_max_upload_files() ?> foto per upload.</small>
+            <div class="image-upload-guide" role="note">
+                <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-images"></i></span><span>Fleksibel</span></div>
+                <p class="image-upload-guide__specs"><span>Cover/kartu 1500 x 1000 px</span><span>Rasio 3:2</span><span>Minimal sisi panjang 1200 px</span><span>JPG/PNG/WebP</span></p>
+                <p class="image-upload-guide__note">Orientasi asli tetap boleh. Target file &lt; 900 KB. Maksimal upload <?= (int) (MAX_IMAGE_SIZE / 1024 / 1024) ?>MB per file, maksimal <?= gallery_album_admin_max_upload_files() ?> foto per upload.</p>
+                <p class="image-upload-guide__note">Grid album dapat melakukan crop; posisikan objek utama di tengah.</p>
+            </div>
         </div>
         <div class="form-actions full-span">
             <button type="submit" class="btn-primary">+ Tambah Foto</button>

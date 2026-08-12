@@ -357,7 +357,7 @@ function gallery_album_admin_validate_upload_batch(array $files, ?string &$error
 
     foreach ($files as $index => $file) {
         $uploadError = null;
-        if (!validate_image_upload($file, $uploadError)) {
+        if (!validate_image_upload($file, $uploadError, null, image_upload_policy('gallery'))) {
             $error = 'Foto #' . ($index + 1) . ': ' . ($uploadError ?? 'File tidak valid.');
             return false;
         }
@@ -402,7 +402,7 @@ function gallery_album_admin_insert_uploaded_photos(array $album, array $files):
 
         foreach ($files as $index => $file) {
             $uploadError = null;
-            $fileName = upload_image($file, 'gallery', $uploadError);
+            $fileName = upload_image($file, 'gallery', $uploadError, image_upload_policy('gallery'));
             if ($fileName === null) {
                 throw new RuntimeException($uploadError ?? 'File foto belum dapat disimpan.');
             }

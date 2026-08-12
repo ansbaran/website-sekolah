@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $fileToDeleteAfterSave = null;
             $imageName = $item['image'];
             if (!empty($_FILES['image']['name'])) {
-                $uploadName = upload_image($_FILES['image'], 'achievements', $uploadError);
+                $uploadName = upload_image($_FILES['image'], 'achievements', $uploadError, image_upload_policy('achievement'));
                 if ($uploadName === null) {
                     $error = $uploadError;
                 } else {
@@ -122,6 +122,12 @@ require_once __DIR__ . '/includes/header.php';
             <div class="full-span">
                 <label for="image">Foto Prestasi</label>
                 <input type="file" id="image" name="image" accept="image/*" data-max-size="4194304">
+                <div class="image-upload-guide" role="note">
+                    <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-medal"></i></span><span>Rekomendasi</span></div>
+                    <p class="image-upload-guide__specs"><span>1600 x 1200 px</span><span>Rasio 4:3</span><span>Minimal 1200 x 900 px</span><span>JPG/PNG/WebP</span></p>
+                    <p class="image-upload-guide__note">Target file &lt; 600 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB.</p>
+                    <p class="image-upload-guide__note">Letakkan objek utama di tengah karena foto prestasi dapat tampil dengan crop berbeda.</p>
+                </div>
                 <?php if (!empty($item['image'])) : ?>
                     <div class="admin-current-media"><img src="<?= escape(build_upload_url('achievements', $item['image'])) ?>" alt="Foto prestasi saat ini" loading="lazy"><span>Foto saat ini</span></div>
                 <?php endif; ?>

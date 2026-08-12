@@ -255,9 +255,83 @@ function get_client_ip(): string
     return $ip;
 }
 
-function validate_image_upload(array $file, ?string &$error = null, ?int $maxSize = null): bool
+function image_upload_policy(string $policy = 'default'): array
 {
-    $maxSize = $maxSize ?? MAX_IMAGE_SIZE;
+    $base = [
+        'max_size' => MAX_IMAGE_SIZE,
+        'min_width' => UPLOAD_DIMENSION_MIN_WIDTH,
+        'min_height' => UPLOAD_DIMENSION_MIN_HEIGHT,
+        'max_width' => MAX_IMAGE_WIDTH,
+        'max_height' => MAX_IMAGE_HEIGHT,
+        'max_pixels' => UPLOAD_MAX_PIXELS,
+        'resize_max_long_edge' => UPLOAD_GENERAL_MAX_LONG_EDGE,
+    ];
+
+    $policies = [
+        'default' => [],
+        'media' => [],
+        'slider' => [
+            'min_width' => 1600,
+            'min_height' => 900,
+            'aspect_ratio' => 16 / 9,
+            'aspect_tolerance' => 0.05,
+            'resize_max_long_edge' => UPLOAD_SLIDER_MAX_LONG_EDGE,
+            'min_error' => 'Gambar terlalu kecil. Gunakan minimal 1600 x 900 px.',
+            'aspect_error' => 'Rasio gambar slider harus mendekati 16:9.',
+        ],
+        'news_featured' => [
+            'min_width' => 1200,
+            'min_height' => 675,
+        ],
+        'news_thumbnail' => [
+            'min_width' => 960,
+            'min_height' => 600,
+        ],
+        'gallery' => [
+            'min_long_edge' => 1200,
+            'resize_max_long_edge' => UPLOAD_GALLERY_MAX_LONG_EDGE,
+            'long_edge_error' => 'Resolusi gambar galeri terlalu kecil. Gunakan sisi panjang minimal 1200 px.',
+        ],
+        'staff_portrait' => [
+            'min_width' => 900,
+            'min_height' => 1125,
+            'orientation' => 'portrait',
+            'resize_max_long_edge' => UPLOAD_GENERAL_MAX_LONG_EDGE,
+            'min_error' => 'Foto terlalu kecil. Gunakan minimal 900 x 1125 px.',
+            'orientation_error' => 'Gunakan foto portrait. Rekomendasi 1200 x 1500 px.',
+        ],
+        'achievement' => [
+            'min_width' => 1200,
+            'min_height' => 900,
+        ],
+        'program' => [
+            'min_width' => 840,
+            'min_height' => 552,
+        ],
+        'profile_portrait' => [
+            'min_width' => 900,
+            'min_height' => 1125,
+            'orientation' => 'portrait',
+            'resize_max_long_edge' => UPLOAD_GENERAL_MAX_LONG_EDGE,
+            'min_error' => 'Foto terlalu kecil. Gunakan minimal 900 x 1125 px.',
+            'orientation_error' => 'Gunakan foto portrait untuk profil sekolah.',
+        ],
+        'avatar' => [
+            'max_size' => PROFILE_AVATAR_MAX_SIZE,
+            'min_width' => 400,
+            'min_height' => 400,
+            'resize_max_long_edge' => 800,
+            'min_error' => 'Foto terlalu kecil. Gunakan minimal 400 x 400 px.',
+        ],
+    ];
+
+    return array_merge($base, $policies[$policy] ?? []);
+}
+
+function validate_image_upload(array $file, ?string &$error = null, ?int $maxSize = null, array $options = []): bool
+{
+    $options = array_merge(image_upload_policy('default'), $options);
+    $maxSize = $maxSize ?? (int)($options['max_size'] ?? MAX_IMAGE_SIZE);
 
     if (!isset($file['error'])) {
         $error = 'Silakan pilih file gambar.';
@@ -314,22 +388,69 @@ function validate_image_upload(array $file, ?string &$error = null, ?int $maxSiz
     }
 
     [$width, $height] = $imageInfo;
-    if ($width < UPLOAD_DIMENSION_MIN_WIDTH || $height < UPLOAD_DIMENSION_MIN_HEIGHT) {
-        $error = 'Resolusi gambar terlalu kecil. Minimal ' . UPLOAD_DIMENSION_MIN_WIDTH . 'x' . UPLOAD_DIMENSION_MIN_HEIGHT . ' piksel.';
+    $minWidth = (int)($options['min_width'] ?? UPLOAD_DIMENSION_MIN_WIDTH);
+    $minHeight = (int)($options['min_height'] ?? UPLOAD_DIMENSION_MIN_HEIGHT);
+    if ($width < $minWidth || $height < $minHeight) {
+        $error = (string)($options['min_error'] ?? ('Resolusi gambar terlalu kecil. Minimal ' . $minWidth . 'x' . $minHeight . ' piksel.'));
         return false;
     }
 
-    if ($width > MAX_IMAGE_WIDTH || $height > MAX_IMAGE_HEIGHT) {
-        $error = 'Resolusi gambar terlalu besar. Maksimal ' . MAX_IMAGE_WIDTH . 'x' . MAX_IMAGE_HEIGHT . ' piksel.';
+    $minLongEdge = (int)($options['min_long_edge'] ?? 0);
+    if ($minLongEdge > 0 && max($width, $height) < $minLongEdge) {
+        $error = (string)($options['long_edge_error'] ?? ('Resolusi gambar terlalu kecil. Gunakan sisi panjang minimal ' . $minLongEdge . ' px.'));
+        return false;
+    }
+
+    $orientation = (string)($options['orientation'] ?? '');
+    if ($orientation === 'portrait' && $height < $width) {
+        $error = (string)($options['orientation_error'] ?? 'Gunakan foto portrait.');
+        return false;
+    }
+
+    $aspectRatio = (float)($options['aspect_ratio'] ?? 0);
+    if ($aspectRatio > 0 && $height > 0) {
+        $actualRatio = $width / $height;
+        $tolerance = (float)($options['aspect_tolerance'] ?? 0.05);
+        if (abs($actualRatio - $aspectRatio) / $aspectRatio > $tolerance) {
+            $error = (string)($options['aspect_error'] ?? 'Rasio gambar tidak sesuai.');
+            return false;
+        }
+    }
+
+    $maxPixels = (int)($options['max_pixels'] ?? UPLOAD_MAX_PIXELS);
+    if ($maxPixels > 0 && ($width * $height) > $maxPixels) {
+        $error = 'Resolusi gambar terlalu besar. Gunakan gambar dengan total piksel lebih kecil.';
+        return false;
+    }
+
+    $maxWidth = (int)($options['max_width'] ?? MAX_IMAGE_WIDTH);
+    $maxHeight = (int)($options['max_height'] ?? MAX_IMAGE_HEIGHT);
+    if ($width > $maxWidth || $height > $maxHeight) {
+        $error = 'Resolusi gambar terlalu besar. Maksimal ' . $maxWidth . 'x' . $maxHeight . ' piksel.';
         return false;
     }
 
     return true;
 }
 
-function optimize_image(string $sourcePath, string $targetPath, string $mimeType): bool
+function optimize_image(string $sourcePath, string $targetPath, string $mimeType, int $maxLongEdge = 0): bool
 {
-    $quality = 82;
+    $quality = $mimeType === 'image/webp' ? 84 : 85;
+    $imageInfo = @getimagesize($sourcePath);
+    $resize = false;
+    $newWidth = 0;
+    $newHeight = 0;
+
+    if ($imageInfo !== false && $maxLongEdge > 0) {
+        [$width, $height] = $imageInfo;
+        $longEdge = max((int)$width, (int)$height);
+        if ($width > 0 && $height > 0 && $longEdge > $maxLongEdge) {
+            $scale = $maxLongEdge / $longEdge;
+            $newWidth = max(1, (int)round($width * $scale));
+            $newHeight = max(1, (int)round($height * $scale));
+            $resize = true;
+        }
+    }
 
     switch ($mimeType) {
         case 'image/jpeg':
@@ -337,25 +458,54 @@ function optimize_image(string $sourcePath, string $targetPath, string $mimeType
             if (!$image) {
                 return false;
             }
-            imagejpeg($image, $targetPath, $quality);
+            if ($resize) {
+                $canvas = imagecreatetruecolor($newWidth, $newHeight);
+                imagecopyresampled($canvas, $image, 0, 0, 0, 0, $newWidth, $newHeight, imagesx($image), imagesy($image));
+                $result = imagejpeg($canvas, $targetPath, $quality);
+                imagedestroy($canvas);
+            } else {
+                $result = imagejpeg($image, $targetPath, $quality);
+            }
             imagedestroy($image);
-            return true;
+            return $result;
         case 'image/png':
             $image = @imagecreatefrompng($sourcePath);
             if (!$image) {
                 return false;
             }
-            imagepng($image, $targetPath, 6);
+            if ($resize) {
+                $canvas = imagecreatetruecolor($newWidth, $newHeight);
+                imagealphablending($canvas, false);
+                imagesavealpha($canvas, true);
+                $transparent = imagecolorallocatealpha($canvas, 0, 0, 0, 127);
+                imagefilledrectangle($canvas, 0, 0, $newWidth, $newHeight, $transparent);
+                imagecopyresampled($canvas, $image, 0, 0, 0, 0, $newWidth, $newHeight, imagesx($image), imagesy($image));
+                $result = imagepng($canvas, $targetPath, 6);
+                imagedestroy($canvas);
+            } else {
+                $result = imagepng($image, $targetPath, 6);
+            }
             imagedestroy($image);
-            return true;
+            return $result;
         case 'image/webp':
             $image = @imagecreatefromwebp($sourcePath);
             if (!$image) {
                 return false;
             }
-            imagewebp($image, $targetPath, $quality);
+            if ($resize) {
+                $canvas = imagecreatetruecolor($newWidth, $newHeight);
+                imagealphablending($canvas, false);
+                imagesavealpha($canvas, true);
+                $transparent = imagecolorallocatealpha($canvas, 0, 0, 0, 127);
+                imagefilledrectangle($canvas, 0, 0, $newWidth, $newHeight, $transparent);
+                imagecopyresampled($canvas, $image, 0, 0, 0, 0, $newWidth, $newHeight, imagesx($image), imagesy($image));
+                $result = imagewebp($canvas, $targetPath, $quality);
+                imagedestroy($canvas);
+            } else {
+                $result = imagewebp($image, $targetPath, $quality);
+            }
             imagedestroy($image);
-            return true;
+            return $result;
     }
 
     return false;
@@ -398,13 +548,15 @@ function create_webp_variant(string $sourcePath, string $targetPath): bool
 
 function strip_image_metadata(string $sourcePath, string $mimeType): bool
 {
+    $quality = $mimeType === 'image/webp' ? 84 : 85;
+
     switch ($mimeType) {
         case 'image/jpeg':
             $image = @imagecreatefromjpeg($sourcePath);
             if (!$image) {
                 return false;
             }
-            imagejpeg($image, $sourcePath, 82);
+            imagejpeg($image, $sourcePath, $quality);
             imagedestroy($image);
             return true;
         case 'image/png':
@@ -420,7 +572,7 @@ function strip_image_metadata(string $sourcePath, string $mimeType): bool
             if (!$image) {
                 return false;
             }
-            imagewebp($image, $sourcePath, 82);
+            imagewebp($image, $sourcePath, $quality);
             imagedestroy($image);
             return true;
         default:
@@ -428,10 +580,11 @@ function strip_image_metadata(string $sourcePath, string $mimeType): bool
     }
 }
 
-function upload_image(array $file, string $subDir, ?string &$error = null): ?string
+function upload_image(array $file, string $subDir, ?string &$error = null, array $options = []): ?string
 {
     $subDir = normalize_upload_subdir($subDir);
-    if (!validate_image_upload($file, $error)) {
+    $options = array_merge(image_upload_policy('default'), $options);
+    if (!validate_image_upload($file, $error, (int)($options['max_size'] ?? MAX_IMAGE_SIZE), $options)) {
         return null;
     }
 
@@ -450,7 +603,7 @@ function upload_image(array $file, string $subDir, ?string &$error = null): ?str
     }
 
     $mimeType = mime_content_type($targetPath) ?: $file['type'];
-    if (!optimize_image($targetPath, $targetPath, $mimeType)) {
+    if (!optimize_image($targetPath, $targetPath, $mimeType, (int)($options['resize_max_long_edge'] ?? 0))) {
         // Fallback to original file when optimization fails.
     }
 
@@ -767,7 +920,7 @@ function upload_profile_photo(array $file, int $userId, ?string &$error = null):
         return null;
     }
 
-    if (!validate_image_upload($file, $error, PROFILE_AVATAR_MAX_SIZE)) {
+    if (!validate_image_upload($file, $error, PROFILE_AVATAR_MAX_SIZE, image_upload_policy('avatar'))) {
         return null;
     }
 

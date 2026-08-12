@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'size' => $files['size'][$index],
                 ];
 
-                $fileName = upload_image($fileData, $targetSubdir, $uploadError);
+                $fileName = upload_image($fileData, $targetSubdir, $uploadError, image_upload_policy('media'));
                 if ($fileName === null) {
                     $uploadFormError = $uploadError;
                     break;
@@ -188,7 +188,11 @@ require_once __DIR__ . '/includes/header.php';
             <label for="images">Pilih gambar</label>
             <div id="media-drop-zone" class="drag-drop">Tarik dan letakkan gambar di sini atau klik untuk memilih.</div>
             <input type="file" id="images" name="images[]" accept="image/*" data-max-size="4194304" multiple required>
-            <small class="footer-note">JPG, PNG, WEBP. Maks 4MB per file. Upload multiple.</small>
+            <div class="image-upload-guide" role="note">
+                <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-photo-film"></i></span><span>Fleksibel</span></div>
+                <p class="image-upload-guide__specs"><span>Ukuran mengikuti modul tujuan</span><span>JPG/PNG/WebP</span><span>Bisa banyak file</span></p>
+                <p class="image-upload-guide__note">Gunakan panduan sesuai kebutuhan Slider, Berita, Galeri, Prestasi, Program, atau Profil. Kompres file sebelum upload; maksimal <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB per file.</p>
+            </div>
         </div>
         <div class="form-actions full-span">
             <button type="submit" class="btn-primary">Unggah Media</button>

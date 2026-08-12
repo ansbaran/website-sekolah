@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $fileToDeleteAfterSave = null;
             $fileName = $foto;
             if (!empty($_FILES['foto']['name'])) {
-                $fileName = upload_image($_FILES['foto'], 'staff', $uploadError);
+                $fileName = upload_image($_FILES['foto'], 'staff', $uploadError, image_upload_policy('staff_portrait'));
                 if ($fileName === null) {
                     $error = $uploadError;
                 } elseif ($isEdit && $foto !== '') {
@@ -202,7 +202,12 @@ require_once __DIR__ . '/includes/header.php';
             <div class="full-span">
                 <label for="foto">Foto</label>
                 <input type="file" id="foto" name="foto" accept="image/*" data-max-size="4194304">
-                <small class="footer-note">JPG, PNG, WEBP. Maks 4MB. Rekomendasi 1200 x 1500 px atau rasio 4:5, foto portrait setengah badan, wajah di area tengah-atas. <?= $isEdit ? 'Kosongkan jika tidak mengganti foto.' : '' ?></small>
+                <div class="image-upload-guide" role="note">
+                    <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span><span>Rekomendasi</span></div>
+                    <p class="image-upload-guide__specs"><span>1200 x 1500 px</span><span>Rasio 4:5</span><span>Minimal 900 x 1125 px</span><span>JPG/PNG/WebP</span></p>
+                    <p class="image-upload-guide__note">Target file &lt; 500 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB.</p>
+                    <p class="image-upload-guide__note">Gunakan foto portrait setengah badan; wajah di tengah-atas dengan ruang di sekitar kepala. <?= $isEdit ? 'Kosongkan jika tidak mengganti foto.' : '' ?></p>
+                </div>
             </div>
             <div class="full-span">
                 <label for="deskripsi">Deskripsi</label>

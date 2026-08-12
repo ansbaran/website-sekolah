@@ -65,6 +65,9 @@ function renderPrincipal(principal) {
   if (image && (principal.image_url || principal.image)) {
     image.src = resolveImage(principal.image_url || principal.image, image.getAttribute("src") || "assets/img/logo.png");
     image.alt = principal.name || "Kepala Sekolah";
+    image.loading = "eager";
+    image.decoding = "async";
+    image.fetchPriority = "high";
   }
 }
 
@@ -129,6 +132,7 @@ function renderLeadership(team) {
     image.src = resolveImage(member.image_url || member.image || member.photo, "assets/img/logo.png");
     image.alt = member.name || member.role || "Tim kepemimpinan sekolah";
     image.loading = "lazy";
+    image.decoding = "async";
     imageWrap.appendChild(image);
 
     const content = document.createElement("div");

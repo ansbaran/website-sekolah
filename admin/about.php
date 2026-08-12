@@ -23,7 +23,7 @@ function about_upload_optional(string $fieldName, string $currentImage, ?string 
         return $currentImage;
     }
 
-    $uploaded = upload_image($_FILES[$fieldName], 'misc', $error);
+    $uploaded = upload_image($_FILES[$fieldName], 'misc', $error, image_upload_policy('profile_portrait'));
     return $uploaded !== null ? $uploaded : $currentImage;
 }
 
@@ -160,7 +160,12 @@ require_once __DIR__ . '/includes/header.php';
             <div>
                 <label for="principal_image">Foto Kepala Sekolah</label>
                 <input type="file" id="principal_image" name="principal_image" accept="image/*">
-                <small class="footer-note">Kosongkan jika tidak mengganti foto.</small>
+                <div class="image-upload-guide" role="note">
+                    <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span><span>Rekomendasi</span></div>
+                    <p class="image-upload-guide__specs"><span>1200 x 1500 px</span><span>Rasio 4:5</span><span>Minimal 900 x 1125 px</span><span>JPG/PNG/WebP</span></p>
+                    <p class="image-upload-guide__note">Target file &lt; 500 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB.</p>
+                    <p class="image-upload-guide__note">Posisikan wajah di tengah-atas dengan ruang di sekitar kepala. Kosongkan jika tidak mengganti foto.</p>
+                </div>
             </div>
             <div class="full-span admin-about-preview">
                 <img src="<?= escape(about_image_preview($principal['image'])) ?>" alt="Preview kepala sekolah" loading="lazy">
@@ -246,7 +251,12 @@ require_once __DIR__ . '/includes/header.php';
                         <div>
                             <label for="leader_image_<?= $slot ?>">Foto</label>
                             <input type="file" id="leader_image_<?= $slot ?>" name="leader_image_<?= $slot ?>" accept="image/*">
-                            <small class="footer-note">Kosongkan jika tidak mengganti foto.</small>
+                            <div class="image-upload-guide" role="note">
+                                <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span><span>Rekomendasi</span></div>
+                                <p class="image-upload-guide__specs"><span>1200 x 1500 px</span><span>Rasio 4:5</span><span>Minimal 900 x 1125 px</span><span>JPG/PNG/WebP</span></p>
+                                <p class="image-upload-guide__note">Target file &lt; 500 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB.</p>
+                                <p class="image-upload-guide__note">Posisikan wajah di tengah-atas dengan ruang di sekitar kepala. Kosongkan jika tidak mengganti foto.</p>
+                            </div>
                         </div>
                         <div class="admin-about-preview">
                             <img src="<?= escape(about_image_preview($leader['image'])) ?>" alt="Preview <?= escape($leader['name'] ?: 'slot ' . $slot) ?>" loading="lazy">

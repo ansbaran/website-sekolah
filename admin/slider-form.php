@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $fileToDeleteAfterSave = null;
             $background = $slide['background'];
             if (!empty($_FILES['background']['name'])) {
-                $uploadName = upload_image($_FILES['background'], 'slider', $uploadError);
+                $uploadName = upload_image($_FILES['background'], 'slider', $uploadError, image_upload_policy('slider'));
                 if ($uploadName === null) {
                     $error = $uploadError;
                 } else {
@@ -118,6 +118,12 @@ require_once __DIR__ . '/includes/header.php';
             <div>
                 <label for="background">Gambar Latar</label>
                 <input type="file" id="background" name="background" accept="image/*" data-max-size="4194304" <?= $editing ? '' : 'required' ?>>
+                <div class="image-upload-guide" role="note">
+                    <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-image"></i></span><span>Sangat Disarankan</span></div>
+                    <p class="image-upload-guide__specs"><span>1920 x 1080 px</span><span>Rasio 16:9</span><span>Minimal 1600 x 900 px</span><span>JPG/PNG/WebP</span></p>
+                    <p class="image-upload-guide__note">Target file &lt; 700 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB.</p>
+                    <p class="image-upload-guide__note">Area aman: simpan teks, wajah, atau logo penting di 70% bagian tengah karena hero dapat terpotong.</p>
+                </div>
                 <?php if (!empty($slide['background'])) : ?>
                     <p class="footer-note">Gambar saat ini: <?= htmlspecialchars($slide['background']) ?></p>
                 <?php endif; ?>

@@ -10,6 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     exit;
 }
 
+define('SKIP_SESSION_BOOTSTRAP', true);
+
 require_once __DIR__ . '/../includes/functions.php';
 header('Cache-Control: no-store, no-cache, must-revalidate');
 

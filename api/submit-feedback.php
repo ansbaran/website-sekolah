@@ -11,6 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+define('SKIP_SESSION_BOOTSTRAP', true);
+
 require_once __DIR__ . '/../includes/functions.php';
 
 if (!enforce_rate_limit('feedback-submit', 5, 600)) {

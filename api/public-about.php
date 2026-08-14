@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+define('SKIP_SESSION_BOOTSTRAP', true);
+
 require_once __DIR__ . '/../includes/functions.php';
 
 header('Content-Type: application/json; charset=utf-8');

@@ -12,6 +12,8 @@ if (!in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', ['GET', 'HEAD'], true)) {
     exit;
 }
 
+define('SKIP_SESSION_BOOTSTRAP', true);
+
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/gallery-album-functions.php';
 

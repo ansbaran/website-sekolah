@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 header('Content-Type: application/json; charset=utf-8');
+define('SKIP_SESSION_BOOTSTRAP', true);
 require_once __DIR__ . '/../includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {

@@ -165,9 +165,6 @@ ini_set('display_errors', APP_DEBUG ? '1' : '0');
 ini_set('display_startup_errors', APP_DEBUG ? '1' : '0');
 ini_set('log_errors', '1');
 ini_set('error_log', ERROR_LOG_FILE);
-ini_set('session.use_only_cookies', '1');
-ini_set('session.use_trans_sid', '0');
-ini_set('session.cookie_lifetime', '0');
 error_reporting(APP_DEBUG ? E_ALL : E_ALL & ~E_DEPRECATED & ~E_STRICT);
 
 // Database connection settings
@@ -187,24 +184,45 @@ if ($dbConnectTimeout < 1 || $dbConnectTimeout > 10) {
 define('DB_CONNECT_TIMEOUT', $dbConnectTimeout);
 
 // Session and auth configuration
-ini_set('session.cookie_httponly', '1');
-ini_set('session.use_strict_mode', '1');
-ini_set('session.cookie_samesite', 'Lax');
-$isHttps = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
-    || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
-if ($isHttps) {
-    ini_set('session.cookie_secure', '1');
-}
-$sessionPath = CACHE_DIR . '/sessions';
-if (!is_dir($sessionPath)) {
-    @mkdir($sessionPath, 0755, true);
-}
-if (is_dir($sessionPath) && is_writable($sessionPath)) {
-    session_save_path($sessionPath);
-}
-session_name('shb_admin_session');
-if (!defined('SKIP_DB_BOOTSTRAP') && session_status() === PHP_SESSION_NONE) {
-    session_start();
+$skipSessionBootstrap = (defined('SKIP_SESSION_BOOTSTRAP') && SKIP_SESSION_BOOTSTRAP)
+    || defined('SKIP_DB_BOOTSTRAP');
+if (!$skipSessionBootstrap) {
+    ini_set('session.use_only_cookies', '1');
+    ini_set('session.use_trans_sid', '0');
+    ini_set('session.cookie_lifetime', '0');
+    ini_set('session.cookie_httponly', '1');
+    ini_set('session.use_strict_mode', '1');
+    ini_set('session.cookie_samesite', 'Lax');
+    $isHttps = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+        || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+    if ($isHttps) {
+        ini_set('session.cookie_secure', '1');
+    }
+    $sessionPath = CACHE_DIR . '/sessions';
+    if (!is_dir($sessionPath)) {
+        @mkdir($sessionPath, 0755, true);
+    }
+    if (is_dir($sessionPath) && is_writable($sessionPath)) {
+        session_save_path($sessionPath);
+    }
+    $sessionCookiePath = APP_ENV === 'production'
+        ? '/'
+        : (BASE_URL === '' ? '/' : rtrim(BASE_URL, '/') . '/');
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => $sessionCookiePath,
+        'secure' => $isHttps,
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
+    $sessionName = 'shb_admin_session';
+    if (APP_ENV !== 'production') {
+        $sessionName .= '_' . substr(hash('sha256', APP_URL), 0, 12);
+    }
+    session_name($sessionName);
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 }
 
 if (!defined('SKIP_DB_BOOTSTRAP')) {

@@ -12,19 +12,23 @@ $id = (int)($_GET['id'] ?? 0);
 $isEdit = $id > 0;
 $error = '';
 $staff = null;
+$staffCategoryOptions = [
+    'pimpinan' => 'Tim Kepemimpinan',
+    'guru' => 'Guru Pengajar',
+    'staf' => 'Staff dan Karyawan',
+];
+$normalizeStaffCategory = static function ($value) use ($staffCategoryOptions): ?string {
+    $value = (string)$value;
+    return array_key_exists($value, $staffCategoryOptions) ? $value : null;
+};
 $nama = '';
+$kategori = 'guru';
 $jabatan = '';
 $deskripsi = '';
 $urutan = 0;
 $aktif = 1;
 $foto = '';
 $email = '';
-$whatsapp = '';
-$instagram = '';
-$facebook = '';
-$tiktok = '';
-$youtube = '';
-$website = '';
 
 if ($isEdit) {
     $statement = $pdo->prepare('SELECT * FROM staff WHERE id = :id LIMIT 1');
@@ -37,18 +41,13 @@ if ($isEdit) {
     }
 
     $nama = html_entity_decode((string)$staff['nama'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $kategori = $normalizeStaffCategory($staff['kategori'] ?? 'guru') ?? 'guru';
     $jabatan = html_entity_decode((string)$staff['jabatan'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
     $deskripsi = html_entity_decode((string)($staff['deskripsi'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     $urutan = (int)$staff['urutan'];
     $aktif = (int)$staff['aktif'];
     $foto = (string)($staff['foto'] ?? '');
     $email = (string)($staff['email'] ?? '');
-    $whatsapp = (string)($staff['whatsapp'] ?? '');
-    $instagram = (string)($staff['instagram'] ?? '');
-    $facebook = (string)($staff['facebook'] ?? '');
-    $tiktok = (string)($staff['tiktok'] ?? '');
-    $youtube = (string)($staff['youtube'] ?? '');
-    $website = (string)($staff['website'] ?? '');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -56,48 +55,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Token keamanan tidak valid. Silakan muat ulang halaman.';
     } else {
         $nama = trim(strip_tags((string)($_POST['nama'] ?? '')));
+        $kategori = $normalizeStaffCategory($_POST['kategori'] ?? null);
         $jabatan = trim(strip_tags((string)($_POST['jabatan'] ?? '')));
         $deskripsi = trim(strip_tags((string)($_POST['deskripsi'] ?? '')));
         $urutan = max(0, (int)($_POST['urutan'] ?? 0));
         $aktif = normalize_staff_status($_POST['aktif'] ?? null);
         $email = trim((string)($_POST['email'] ?? ''));
-        $whatsapp = trim((string)($_POST['whatsapp'] ?? ''));
-        $instagram = trim((string)($_POST['instagram'] ?? ''));
-        $facebook = trim((string)($_POST['facebook'] ?? ''));
-        $tiktok = trim((string)($_POST['tiktok'] ?? ''));
-        $youtube = trim((string)($_POST['youtube'] ?? ''));
-        $website = trim((string)($_POST['website'] ?? ''));
 
         $normalizedEmail = normalize_optional_email($email);
-        $normalizedWhatsapp = normalize_whatsapp_number($whatsapp);
-        $normalizedInstagram = normalize_social_link($instagram, 'instagram');
-        $normalizedFacebook = normalize_social_link($facebook, 'facebook');
-        $normalizedTiktok = normalize_social_link($tiktok, 'tiktok');
-        $normalizedYoutube = normalize_social_link($youtube, 'youtube');
-        $normalizedWebsite = normalize_public_url($website);
 
         if ($nama === '' || $jabatan === '') {
             $error = 'Nama dan jabatan wajib diisi.';
+        } elseif ($kategori === null) {
+            $error = 'Kategori wajib dipilih.';
         } elseif ($normalizedEmail === false) {
             $error = 'Format email tidak valid.';
-        } elseif ($normalizedWhatsapp === false) {
-            $error = 'Nomor WhatsApp hanya boleh berisi angka, spasi, tanda hubung, atau awalan + internasional.';
-        } elseif (
-            $normalizedInstagram === false ||
-            $normalizedFacebook === false ||
-            $normalizedTiktok === false ||
-            $normalizedYoutube === false ||
-            $normalizedWebsite === false
-        ) {
-            $error = 'Link sosial media harus berupa URL valid atau username yang aman.';
         } else {
             $email = $normalizedEmail ?? '';
-            $whatsapp = $normalizedWhatsapp ?? '';
-            $instagram = $normalizedInstagram ?? '';
-            $facebook = $normalizedFacebook ?? '';
-            $tiktok = $normalizedTiktok ?? '';
-            $youtube = $normalizedYoutube ?? '';
-            $website = $normalizedWebsite ?? '';
 
             $fileToDeleteAfterSave = null;
             $fileName = $foto;
@@ -112,19 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($error === '') {
                 if ($isEdit) {
-                    $stmt = $pdo->prepare('UPDATE staff SET nama = :nama, jabatan = :jabatan, foto = :foto, deskripsi = :deskripsi, email = :email, whatsapp = :whatsapp, instagram = :instagram, facebook = :facebook, tiktok = :tiktok, youtube = :youtube, website = :website, urutan = :urutan, aktif = :aktif WHERE id = :id');
+                    $stmt = $pdo->prepare('UPDATE staff SET nama = :nama, kategori = :kategori, jabatan = :jabatan, foto = :foto, deskripsi = :deskripsi, email = :email, urutan = :urutan, aktif = :aktif WHERE id = :id');
                     $stmt->execute([
                         'nama' => $nama,
+                        'kategori' => $kategori,
                         'jabatan' => $jabatan,
                         'foto' => $fileName,
                         'deskripsi' => $deskripsi,
                         'email' => $email,
-                        'whatsapp' => $whatsapp,
-                        'instagram' => $instagram,
-                        'facebook' => $facebook,
-                        'tiktok' => $tiktok,
-                        'youtube' => $youtube,
-                        'website' => $website,
                         'urutan' => $urutan,
                         'aktif' => $aktif,
                         'id' => $id,
@@ -132,19 +101,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     log_activity('Edit staff', 'Data staff diperbarui: ' . $nama, 'staff:' . $id);
                     flash('success', 'Data Guru & Staff berhasil diperbarui.');
                 } else {
-                    $stmt = $pdo->prepare('INSERT INTO staff (nama, jabatan, foto, deskripsi, email, whatsapp, instagram, facebook, tiktok, youtube, website, urutan, aktif, created_at) VALUES (:nama, :jabatan, :foto, :deskripsi, :email, :whatsapp, :instagram, :facebook, :tiktok, :youtube, :website, :urutan, :aktif, NOW())');
+                    $stmt = $pdo->prepare('INSERT INTO staff (nama, kategori, jabatan, foto, deskripsi, email, urutan, aktif, created_at) VALUES (:nama, :kategori, :jabatan, :foto, :deskripsi, :email, :urutan, :aktif, NOW())');
                     $stmt->execute([
                         'nama' => $nama,
+                        'kategori' => $kategori,
                         'jabatan' => $jabatan,
                         'foto' => $fileName,
                         'deskripsi' => $deskripsi,
                         'email' => $email,
-                        'whatsapp' => $whatsapp,
-                        'instagram' => $instagram,
-                        'facebook' => $facebook,
-                        'tiktok' => $tiktok,
-                        'youtube' => $youtube,
-                        'website' => $website,
                         'urutan' => $urutan,
                         'aktif' => $aktif,
                     ]);
@@ -185,6 +149,16 @@ require_once __DIR__ . '/includes/header.php';
                 <input type="text" id="nama" name="nama" value="<?= escape($nama) ?>" maxlength="100" required>
             </div>
             <div>
+                <label for="kategori">Kategori</label>
+                <select id="kategori" name="kategori" required>
+                    <?php foreach ($staffCategoryOptions as $categoryValue => $categoryLabel): ?>
+                        <option value="<?= escape($categoryValue) ?>" <?= $kategori === $categoryValue ? 'selected' : '' ?>>
+                            <?= escape($categoryLabel) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div>
                 <label for="jabatan">Jabatan</label>
                 <input type="text" id="jabatan" name="jabatan" value="<?= escape($jabatan) ?>" maxlength="100" required>
             </div>
@@ -216,31 +190,6 @@ require_once __DIR__ . '/includes/header.php';
             <div>
                 <label for="email">Email Publik</label>
                 <input type="email" id="email" name="email" value="<?= escape($email) ?>" maxlength="160" placeholder="nama@sekolah.sch.id">
-            </div>
-            <div>
-                <label for="whatsapp">WhatsApp Publik</label>
-                <input type="text" id="whatsapp" name="whatsapp" value="<?= escape($whatsapp) ?>" maxlength="32" placeholder="6281234567890">
-            </div>
-            <div>
-                <label for="instagram">Instagram</label>
-                <input type="text" id="instagram" name="instagram" value="<?= escape($instagram) ?>" maxlength="255" placeholder="@username atau URL">
-            </div>
-            <div>
-                <label for="facebook">Facebook</label>
-                <input type="text" id="facebook" name="facebook" value="<?= escape($facebook) ?>" maxlength="255" placeholder="username atau URL">
-            </div>
-            <div>
-                <label for="tiktok">TikTok</label>
-                <input type="text" id="tiktok" name="tiktok" value="<?= escape($tiktok) ?>" maxlength="255" placeholder="@username atau URL">
-            </div>
-            <div>
-                <label for="youtube">YouTube</label>
-                <input type="text" id="youtube" name="youtube" value="<?= escape($youtube) ?>" maxlength="255" placeholder="@channel atau URL">
-            </div>
-            <div class="full-span">
-                <label for="website">Website</label>
-                <input type="text" id="website" name="website" value="<?= escape($website) ?>" maxlength="255" placeholder="https://contoh.sch.id">
-                <small class="footer-note">Semua kontak bersifat opsional. Field kosong tidak akan tampil di website publik.</small>
             </div>
         </div>
         <div class="form-actions">

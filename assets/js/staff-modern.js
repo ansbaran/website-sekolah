@@ -14,6 +14,8 @@ const CATEGORY_LABELS = {
   staf: "Staff dan Karyawan"
 };
 
+const STAFF_CATEGORY_KEYS = new Set(["pimpinan", "guru", "staf"]);
+
 const POSITION_CATEGORY_MAP = new Map([
   ["kepala sekolah", "pimpinan"],
   ["wakil kepala sekolah", "pimpinan"],
@@ -71,6 +73,11 @@ function cleanText(value) {
 
 function normalizePosition(value) {
   return cleanText(value).toLocaleLowerCase("id-ID");
+}
+
+function normalizeCategory(value) {
+  const category = cleanText(value).toLocaleLowerCase("id-ID");
+  return STAFF_CATEGORY_KEYS.has(category) ? category : "";
 }
 
 function mapPositionToCategory(position) {
@@ -187,6 +194,8 @@ function handleImageError(event) {
 function normalizeStaffItem(item, index) {
   const role = cleanText(item?.jabatan) || "Tenaga Pendidik dan Kependidikan";
   const email = cleanText(item?.email);
+  const hasDatabaseCategory = Object.prototype.hasOwnProperty.call(item ?? {}, "kategori");
+  const databaseCategory = normalizeCategory(item?.kategori);
 
   return {
     id: item?.id ?? `staff-${index + 1}`,
@@ -196,7 +205,7 @@ function normalizeStaffItem(item, index) {
     email: isValidEmail(email) ? email : "",
     photo: resolvePhoto(item?.foto),
     order: Number.isFinite(Number(item?.urutan)) ? Number(item.urutan) : index,
-    category: mapPositionToCategory(role)
+    category: hasDatabaseCategory ? databaseCategory : mapPositionToCategory(role)
   };
 }
 

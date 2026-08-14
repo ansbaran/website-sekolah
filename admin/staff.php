@@ -34,6 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 $statement = $pdo->query('SELECT * FROM staff ORDER BY urutan ASC, nama ASC');
 $staffItems = $statement->fetchAll();
 $pageTitle = 'Guru & Staff';
+$staffCategoryOptions = [
+    'pimpinan' => 'Tim Kepemimpinan',
+    'guru' => 'Guru Pengajar',
+    'staf' => 'Staff dan Karyawan',
+];
+$normalizeStaffCategory = static function ($value) use ($staffCategoryOptions): string {
+    $value = (string)$value;
+    return array_key_exists($value, $staffCategoryOptions) ? $value : 'guru';
+};
 
 $staffAdminIcon = static function (string $name): string {
     $icons = [
@@ -63,11 +72,15 @@ require_once __DIR__ . '/includes/header.php';
             <div class="empty-state">Belum ada data Guru & Staff.</div>
         <?php endif; ?>
         <?php foreach ($staffItems as $item): ?>
+            <?php $category = $normalizeStaffCategory($item['kategori'] ?? 'guru'); ?>
             <article class="admin-staff-card">
                 <img src="<?= escape($item['foto'] ? build_upload_url('staff', $item['foto']) : '../assets/img/logo.png') ?>" alt="<?= escape(html_entity_decode((string)$item['nama'], ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?>" loading="lazy">
                 <div>
                     <span class="status-pill <?= (int)$item['aktif'] === 1 ? 'status-pill--active' : 'status-pill--muted' ?>">
                         <?= (int)$item['aktif'] === 1 ? 'Aktif' : 'Nonaktif' ?>
+                    </span>
+                    <span class="status-pill status-pill--muted">
+                        <?= escape($staffCategoryOptions[$category]) ?>
                     </span>
                     <h3><?= escape(html_entity_decode((string)$item['nama'], ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?></h3>
                     <p><?= escape(html_entity_decode((string)$item['jabatan'], ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?></p>

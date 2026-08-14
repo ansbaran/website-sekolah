@@ -22,8 +22,14 @@ if ($limit < 1 || $limit > 100) {
     $limit = 24;
 }
 
+function normalize_public_staff_category($value): string
+{
+    $category = (string)$value;
+    return in_array($category, ['pimpinan', 'guru', 'staf'], true) ? $category : '';
+}
+
 try {
-    $statement = $pdo->prepare('SELECT id, nama, jabatan, foto, deskripsi, email, whatsapp, instagram, facebook, tiktok, youtube, website, urutan FROM staff WHERE aktif = 1 ORDER BY urutan ASC, nama ASC LIMIT :limit');
+    $statement = $pdo->prepare('SELECT id, nama, kategori, jabatan, foto, deskripsi, email, whatsapp, instagram, facebook, tiktok, youtube, website, urutan FROM staff WHERE aktif = 1 ORDER BY urutan ASC, nama ASC LIMIT :limit');
     $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
     $statement->execute();
     $staff = $statement->fetchAll();
@@ -40,6 +46,7 @@ try {
         return [
             'id' => (int)$item['id'],
             'nama' => html_entity_decode((string)$item['nama'], ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+            'kategori' => normalize_public_staff_category($item['kategori'] ?? ''),
             'jabatan' => html_entity_decode((string)$item['jabatan'], ENT_QUOTES | ENT_HTML5, 'UTF-8'),
             'foto' => $item['foto'] ? build_upload_url('staff', (string)$item['foto']) : '',
             'deskripsi' => html_entity_decode((string)($item['deskripsi'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'),

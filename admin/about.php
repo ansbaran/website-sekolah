@@ -68,53 +68,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 
     if ($_POST['action'] === 'update_leadership') {
-        $team = [];
-        for ($i = 1; $i <= 6; $i++) {
-            $uploadError = null;
-            $currentImage = (string)($_POST['leader_image_current'][$i] ?? '');
-            $image = about_upload_optional('leader_image_' . $i, $currentImage, $uploadError);
-            if ($uploadError !== null) {
-                flash('error', 'Foto tim kepemimpinan slot ' . $i . ': ' . $uploadError);
-                redirect('about.php');
-            }
-
-            $name = normalize_public_text($_POST['leader_name'][$i] ?? '', '', 120);
-            $role = normalize_public_text($_POST['leader_role'][$i] ?? '', '', 140);
-            $description = normalize_public_text($_POST['leader_description'][$i] ?? '', '', 500);
-            $email = normalize_public_text($_POST['leader_email'][$i] ?? '', '', 160);
-            $phone = normalize_public_text($_POST['leader_phone'][$i] ?? '', '', 60);
-            $active = isset($_POST['leader_active'][$i]) && $_POST['leader_active'][$i] === '1';
-
-            if ($name === '' && $role === '' && $description === '' && $image === '') {
-                continue;
-            }
-
-            $team[] = [
-                'active' => $active,
-                'name' => $name,
-                'role' => $role,
-                'description' => $description,
-                'email' => $email,
-                'phone' => $phone,
-                'image' => normalize_public_image_value($image, 'assets/img/logo.png'),
-            ];
-        }
-
-        set_setting('about_leadership_team', json_encode($team, JSON_UNESCAPED_UNICODE));
-        log_activity('Update tentang sekolah', 'Tim kepemimpinan sekolah diperbarui', 'about_leadership');
-        flash('success', 'Tim kepemimpinan berhasil disimpan.');
+        flash('error', 'Tim kepemimpinan sekarang dikelola melalui menu Guru & Staf.');
         redirect('about.php');
     }
+
+    flash('error', 'Aksi tidak valid.');
+    redirect('about.php');
 }
 
 $profileSettings = get_school_profile_settings();
 $principal = $profileSettings['principal'];
 $missionText = implode("\n", $profileSettings['missions']);
-$leaderSlots = $profileSettings['leadership_team'];
-while (count($leaderSlots) < 6) {
-    $leaderSlots[] = ['active' => false, 'name' => '', 'role' => '', 'description' => '', 'email' => '', 'phone' => '', 'image' => ''];
-}
-$leaderSlots = array_slice($leaderSlots, 0, 6);
 
 require_once __DIR__ . '/includes/header.php';
 ?>
@@ -123,6 +87,7 @@ require_once __DIR__ . '/includes/header.php';
         <div>
             <h2>Tentang Sekolah</h2>
             <p class="footer-note">Atur konten dinamis yang tampil di halaman Tentang tanpa mengubah kode website.</p>
+            <p class="footer-note">Tim kepemimpinan publik sekarang ditampilkan dari data Guru & Staf modern.</p>
         </div>
         <a class="btn-secondary" href="../tentang.html" target="_blank" rel="noopener noreferrer">Lihat Halaman</a>
     </div>
@@ -206,72 +171,6 @@ require_once __DIR__ . '/includes/header.php';
         </div>
         <div class="form-actions">
             <button type="submit" class="btn-primary">Simpan Visi & Misi</button>
-        </div>
-    </form>
-</section>
-
-<section class="panel">
-    <div class="panel-header">
-        <div>
-            <h3>Tim Kepemimpinan</h3>
-            <p class="footer-note">Aktifkan slot yang ingin ditampilkan. Slot kosong tidak akan muncul di website.</p>
-        </div>
-    </div>
-    <form method="post" enctype="multipart/form-data" class="form-card">
-        <?= csrf_field() ?>
-        <input type="hidden" name="action" value="update_leadership">
-        <input type="hidden" name="MAX_FILE_SIZE" value="<?= MAX_IMAGE_SIZE ?>">
-        <div class="admin-leader-slots">
-            <?php foreach ($leaderSlots as $index => $leader): $slot = $index + 1; ?>
-                <article class="admin-leader-slot">
-                    <div class="admin-leader-slot__top">
-                        <strong>Slot <?= $slot ?></strong>
-                        <label class="field-inline">
-                            <input type="checkbox" name="leader_active[<?= $slot ?>]" value="1" <?= !empty($leader['active']) ? 'checked' : '' ?>> Tampilkan
-                        </label>
-                    </div>
-                    <input type="hidden" name="leader_image_current[<?= $slot ?>]" value="<?= escape($leader['image']) ?>">
-                    <div class="form-grid">
-                        <div>
-                            <label for="leader_name_<?= $slot ?>">Nama</label>
-                            <input type="text" id="leader_name_<?= $slot ?>" name="leader_name[<?= $slot ?>]" value="<?= escape($leader['name']) ?>" maxlength="120">
-                        </div>
-                        <div>
-                            <label for="leader_role_<?= $slot ?>">Jabatan</label>
-                            <input type="text" id="leader_role_<?= $slot ?>" name="leader_role[<?= $slot ?>]" value="<?= escape($leader['role']) ?>" maxlength="140">
-                        </div>
-                        <div>
-                            <label for="leader_email_<?= $slot ?>">Email</label>
-                            <input type="email" id="leader_email_<?= $slot ?>" name="leader_email[<?= $slot ?>]" value="<?= escape($leader['email']) ?>" maxlength="160">
-                        </div>
-                        <div>
-                            <label for="leader_phone_<?= $slot ?>">Telepon</label>
-                            <input type="text" id="leader_phone_<?= $slot ?>" name="leader_phone[<?= $slot ?>]" value="<?= escape($leader['phone']) ?>" maxlength="60">
-                        </div>
-                        <div>
-                            <label for="leader_image_<?= $slot ?>">Foto</label>
-                            <input type="file" id="leader_image_<?= $slot ?>" name="leader_image_<?= $slot ?>" accept="image/*">
-                            <div class="image-upload-guide" role="note">
-                                <div class="image-upload-guide__title"><span class="image-upload-guide__icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span><span>Rekomendasi</span></div>
-                                <p class="image-upload-guide__specs"><span>1200 x 1500 px</span><span>Rasio 4:5</span><span>Minimal 900 x 1125 px</span><span>JPG/PNG/WebP</span></p>
-                                <p class="image-upload-guide__note">Target file &lt; 500 KB. Maksimal upload <?= (int)(MAX_IMAGE_SIZE / 1024 / 1024) ?>MB.</p>
-                                <p class="image-upload-guide__note">Posisikan wajah di tengah-atas dengan ruang di sekitar kepala. Kosongkan jika tidak mengganti foto.</p>
-                            </div>
-                        </div>
-                        <div class="admin-about-preview">
-                            <img src="<?= escape(about_image_preview($leader['image'])) ?>" alt="Preview <?= escape($leader['name'] ?: 'slot ' . $slot) ?>" loading="lazy">
-                            <span>Foto saat ini</span>
-                        </div>
-                        <div class="full-span">
-                            <label for="leader_description_<?= $slot ?>">Deskripsi Peran</label>
-                            <textarea id="leader_description_<?= $slot ?>" name="leader_description[<?= $slot ?>]" rows="3" maxlength="500"><?= escape($leader['description']) ?></textarea>
-                        </div>
-                    </div>
-                </article>
-            <?php endforeach; ?>
-        </div>
-        <div class="form-actions">
-            <button type="submit" class="btn-primary">Simpan Tim Kepemimpinan</button>
         </div>
     </form>
 </section>

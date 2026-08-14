@@ -87,9 +87,15 @@ export function initHashSectionNavigation() {
   window.__HASH_NAV_BOUND__ = true;
 
   const OFFSET = 110;
+  const LEGACY_HASH_ALIASES = {
+    "#struktur": "#guru-staff"
+  };
+
+  const normalizeHash = (hash) => LEGACY_HASH_ALIASES[hash] || hash;
 
   const scrollToTarget = (hash) => {
-    const target = document.querySelector(hash);
+    const targetHash = normalizeHash(hash);
+    const target = document.querySelector(targetHash);
     if (!target) return;
 
     const y = target.getBoundingClientRect().top + window.scrollY - OFFSET;
@@ -110,8 +116,9 @@ export function initHashSectionNavigation() {
 
     if (window.location.pathname === url.pathname && hash) {
       event.preventDefault();
-      history.pushState(null, "", hash);
-      scrollToTarget(hash);
+      const targetHash = normalizeHash(hash);
+      history.pushState(null, "", targetHash);
+      scrollToTarget(targetHash);
     }
   });
 
@@ -123,8 +130,9 @@ export function initHashSectionNavigation() {
       // hanya jika di halaman yang sama
       if (window.location.pathname === url.pathname && hash) {
         e.preventDefault();
-        history.pushState(null, "", hash);
-        scrollToTarget(hash);
+        const targetHash = normalizeHash(hash);
+        history.pushState(null, "", targetHash);
+        scrollToTarget(targetHash);
       }
     });
   });
@@ -132,13 +140,21 @@ export function initHashSectionNavigation() {
   // saat load
   window.addEventListener("load", () => {
     if (window.location.hash) {
-      scrollToTarget(window.location.hash);
+      const targetHash = normalizeHash(window.location.hash);
+      if (targetHash !== window.location.hash) {
+        history.replaceState(null, "", targetHash);
+      }
+      scrollToTarget(targetHash);
     }
   });
 
   // saat hash berubah
   window.addEventListener("hashchange", () => {
-    scrollToTarget(window.location.hash);
+    const targetHash = normalizeHash(window.location.hash);
+    if (targetHash !== window.location.hash) {
+      history.replaceState(null, "", targetHash);
+    }
+    scrollToTarget(targetHash);
   });
 }
 export function initReveal() {
@@ -284,8 +300,7 @@ export function initActiveMenu() {
     ];
 
     const aboutPages = [
-        "tentang.html",
-        "guru-staff.html"
+        "tentang.html"
     ];
 
     // hanya menu utama navbar

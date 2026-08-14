@@ -1,8 +1,26 @@
 const ABOUT_ENDPOINT = `${getBasePath()}/api/public-about.php`;
 
 function getBasePath() {
-  const marker = "/website-sekolah";
-  return window.location.pathname.includes(marker) ? marker : "";
+  const base = document.querySelector("base")?.getAttribute("href");
+  if (base) {
+    return new URL(base, window.location.href).pathname.replace(/\/$/, "");
+  }
+
+  try {
+    const modulePath = new URL(import.meta.url).pathname.replace(/\\/g, "/");
+    const assetMarker = "/assets/js/";
+    const markerIndex = modulePath.lastIndexOf(assetMarker);
+    if (markerIndex >= 0) {
+      const basePath = modulePath.slice(0, markerIndex);
+      return basePath === "/" ? "" : basePath;
+    }
+  } catch {
+    return "";
+  }
+
+  const path = window.location.pathname.replace(/\\/g, "/");
+  const lastSlash = path.lastIndexOf("/");
+  return lastSlash > 0 ? path.slice(0, lastSlash) : "";
 }
 
 function splitParagraphs(value) {
@@ -94,75 +112,6 @@ function renderVisionMission(data) {
   });
 }
 
-function createContactItem(iconClass, value) {
-  const item = document.createElement("div");
-  item.className = "contact-item";
-
-  const icon = document.createElement("i");
-  icon.className = iconClass;
-  icon.setAttribute("aria-hidden", "true");
-
-  const text = document.createElement("span");
-  text.textContent = value;
-
-  item.append(icon, text);
-  return item;
-}
-
-function normalizeLeadershipTeam(data) {
-  return parseJsonArray(data.leadership_team || data.leadershipTeam || data.team || data.leaders)
-    .filter((member) => member && typeof member === "object")
-    .filter((member) => member.active !== false && member.name && member.role);
-}
-
-function renderLeadership(team) {
-  const grid = document.querySelector("[data-about-leadership-grid]");
-  if (!grid || !Array.isArray(team) || !team.length) return;
-
-  const variants = ["leader-blue", "leader-pink", "leader-green"];
-  grid.replaceChildren();
-
-  team.forEach((member, index) => {
-    const card = document.createElement("article");
-    card.className = `leader-card ${variants[index % variants.length]}`;
-
-    const imageWrap = document.createElement("div");
-    imageWrap.className = "leader-image";
-    const image = document.createElement("img");
-    image.src = resolveImage(member.image_url || member.image || member.photo, "assets/img/logo.png");
-    image.alt = member.name || member.role || "Tim kepemimpinan sekolah";
-    image.loading = "lazy";
-    image.decoding = "async";
-    imageWrap.appendChild(image);
-
-    const content = document.createElement("div");
-    content.className = "leader-content";
-
-    const name = document.createElement("h3");
-    name.textContent = member.name || "Tim Kepemimpinan";
-
-    const role = document.createElement("span");
-    role.textContent = member.role || "Pimpinan Sekolah";
-
-    const description = document.createElement("p");
-    description.textContent = member.description || "Mendukung pengembangan sekolah dan pendampingan peserta didik.";
-
-    const contact = document.createElement("div");
-    contact.className = "leader-contact";
-    if (member.email) contact.appendChild(createContactItem("fas fa-envelope", member.email));
-    if (member.phone) contact.appendChild(createContactItem("fas fa-phone", member.phone));
-
-    const line = document.createElement("div");
-    line.className = "leader-line";
-
-    content.append(name, role, description);
-    if (contact.children.length) content.appendChild(contact);
-    content.appendChild(line);
-    card.append(imageWrap, content);
-    grid.appendChild(card);
-  });
-}
-
 async function fetchSchoolProfile() {
   const response = await fetch(ABOUT_ENDPOINT, {
     headers: { Accept: "application/json" },
@@ -182,7 +131,6 @@ export function initSchoolProfileContent() {
       if (!data) return;
       renderPrincipal(data.principal);
       renderVisionMission(data);
-      renderLeadership(normalizeLeadershipTeam(data));
     })
     .catch(() => {});
 }

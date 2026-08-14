@@ -62,8 +62,7 @@ function setActiveMenu() {
     ];
 
     const aboutPages = [
-        "tentang.html",
-        "guru-staff.html"
+        "tentang.html"
     ];
 
     // ambil menu utama navbar

@@ -15,6 +15,7 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
     ];
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
 } catch (PDOException $exception) {
@@ -97,7 +98,13 @@ function applied_versions(PDO $pdo): array
 {
     try {
         $stmt = $pdo->query('SELECT version FROM schema_migrations ORDER BY version');
-        return $stmt ? $stmt->fetchAll(PDO::FETCH_COLUMN, 0) : [];
+        if (!$stmt) {
+            return [];
+        }
+
+        $versions = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        $stmt->closeCursor();
+        return $versions;
     } catch (PDOException $exception) {
         return [];
     }
@@ -144,6 +151,7 @@ function run_migration(PDO $pdo, string $filePath): bool
         $version = basename($filePath);
         $stmt = $pdo->prepare('INSERT INTO schema_migrations (version) VALUES (:version)');
         $stmt->execute(['version' => $version]);
+        $stmt->closeCursor();
         echo "Migrasi diterapkan: $version\n";
         return true;
     } catch (PDOException $exception) {

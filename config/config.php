@@ -4,6 +4,51 @@ declare(strict_types=1);
 // General application config
 define('APP_NAME', 'SD Cahaya Harapan Admin');
 
+if (!function_exists('load_application_env_file')) {
+    function load_application_env_file(string $path): void
+    {
+        if (!is_file($path) || !is_readable($path)) {
+            return;
+        }
+
+        $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        if ($lines === false) {
+            return;
+        }
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '' || str_starts_with($line, '#')) {
+                continue;
+            }
+
+            $separator = strpos($line, '=');
+            if ($separator === false) {
+                continue;
+            }
+
+            $key = trim(substr($line, 0, $separator));
+            $value = trim(substr($line, $separator + 1));
+            if ($key === '' || preg_match('/^[A-Z0-9_]+$/', $key) !== 1 || getenv($key) !== false) {
+                continue;
+            }
+
+            if (
+                strlen($value) >= 2
+                && (($value[0] === '"' && substr($value, -1) === '"') || ($value[0] === "'" && substr($value, -1) === "'"))
+            ) {
+                $value = substr($value, 1, -1);
+            }
+
+            putenv($key . '=' . $value);
+            $_ENV[$key] = $value;
+            $_SERVER[$key] = $value;
+        }
+    }
+}
+
+load_application_env_file(dirname(__DIR__) . '/.env');
+
 $serverHost = $_SERVER['HTTP_HOST'] ?? '';
 $isLocalhost = preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/', $serverHost) === 1;
 $isCli = PHP_SAPI === 'cli';
@@ -158,7 +203,7 @@ if (is_dir($sessionPath) && is_writable($sessionPath)) {
     session_save_path($sessionPath);
 }
 session_name('shb_admin_session');
-if (session_status() === PHP_SESSION_NONE) {
+if (!defined('SKIP_DB_BOOTSTRAP') && session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 

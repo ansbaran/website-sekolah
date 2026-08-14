@@ -1,0 +1,847 @@
+.school-staff-section {
+  --school-staff-blue: #2563eb;
+  --school-staff-blue-dark: #1d4ed8;
+  --school-staff-green: #22c55e;
+  --school-staff-navy: #0f172a;
+  --school-staff-muted: #64748b;
+  --school-staff-soft: #f8fafc;
+  --school-staff-white: #ffffff;
+  --school-staff-border: rgba(148, 163, 184, 0.24);
+  --school-staff-ring: rgba(37, 99, 235, 0.28);
+  --school-staff-shadow: 0 18px 46px rgba(15, 23, 42, 0.1);
+  --school-staff-shadow-hover: 0 26px 62px rgba(15, 23, 42, 0.16);
+  --school-staff-ease: 220ms ease;
+  overflow: hidden;
+  scroll-margin-top: 112px;
+  padding: 5rem 0 5.5rem;
+  background:
+    linear-gradient(180deg, rgba(248, 250, 252, 0.96), rgba(255, 255, 255, 0.98) 46%, rgba(240, 253, 250, 0.7));
+  color: var(--school-staff-navy);
+  font-family: "Plus Jakarta Sans", Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.school-staff-section *,
+.school-staff-section *::before,
+.school-staff-section *::after {
+  box-sizing: border-box;
+}
+
+.school-staff-section .school-staff-container {
+  width: min(73.75rem, calc(100% - 2.5rem));
+  margin: 0 auto;
+}
+
+.school-staff-section .school-staff-header {
+  max-width: 45rem;
+  margin: 0 auto 1.875rem;
+  text-align: center;
+}
+
+.school-staff-section .school-staff-header__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: var(--school-staff-blue);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.school-staff-section .school-staff-header__eyebrow::before {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--school-staff-blue);
+  box-shadow: 0 0 0 0.3125rem rgba(37, 99, 235, 0.1);
+  content: "";
+}
+
+.school-staff-section .school-staff-header__title {
+  margin: 0;
+  color: var(--school-staff-navy);
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.school-staff-section .school-staff-header__description {
+  max-width: 39rem;
+  margin: 1rem auto 0;
+  color: var(--school-staff-muted);
+  font-size: 1.02rem;
+  line-height: 1.8;
+}
+
+.school-staff-section .school-staff-filter {
+  display: flex;
+  justify-content: center;
+  gap: 0.625rem;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.school-staff-section .school-staff-filter__button {
+  min-height: 2.625rem;
+  padding: 0.5625rem 1.125rem;
+  border: 1px solid var(--school-staff-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--school-staff-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.2;
+  transition:
+    color var(--school-staff-ease),
+    background-color var(--school-staff-ease),
+    border-color var(--school-staff-ease),
+    box-shadow var(--school-staff-ease),
+    transform var(--school-staff-ease);
+}
+
+.school-staff-section .school-staff-filter__button:hover {
+  border-color: #bfdbfe;
+  color: var(--school-staff-navy);
+  transform: translateY(-1px);
+}
+
+.school-staff-section .school-staff-filter__button.is-active {
+  border-color: var(--school-staff-navy);
+  background: var(--school-staff-navy);
+  color: var(--school-staff-white);
+  box-shadow: 0 0.5625rem 1.375rem rgba(15, 23, 42, 0.18);
+}
+
+.school-staff-section .school-staff-filter__button:focus-visible,
+.school-staff-section .school-staff-carousel__button:focus-visible,
+.school-staff-section .school-staff-card__photo-button:focus-visible,
+.school-staff-section .school-staff-card__email:focus-visible,
+.school-staff-modal .school-staff-modal__close:focus-visible,
+.school-staff-modal .school-staff-modal__preview:focus-visible,
+.school-staff-section .school-staff-empty-state__button:focus-visible {
+  outline: 3px solid var(--school-staff-ring);
+  outline-offset: 3px;
+}
+
+.school-staff-section .school-staff-carousel {
+  position: relative;
+}
+
+.school-staff-section .school-staff-slider {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0.875rem 0.25rem 1.75rem;
+  scroll-behavior: smooth;
+  scroll-padding-inline: 0.25rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.school-staff-section .school-staff-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.school-staff-section .school-staff-track {
+  display: flex;
+  align-items: stretch;
+  gap: 1.375rem;
+  min-width: 100%;
+}
+
+.school-staff-section .school-staff-card {
+  --school-staff-card-accent: var(--school-staff-blue);
+  --school-staff-card-tint: #eff6ff;
+  position: relative;
+  display: flex;
+  flex: 0 0 17.5rem;
+  min-height: 24.375rem;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--school-staff-border);
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--school-staff-shadow);
+  isolation: isolate;
+  scroll-snap-align: start;
+  transition:
+    transform var(--school-staff-ease),
+    border-color var(--school-staff-ease),
+    box-shadow var(--school-staff-ease);
+}
+
+.school-staff-section .school-staff-card:nth-child(even) {
+  --school-staff-card-accent: var(--school-staff-green);
+  --school-staff-card-tint: #ecfdf5;
+}
+
+.school-staff-section .school-staff-card::before {
+  position: absolute;
+  z-index: 3;
+  inset: 0 0 auto;
+  height: 0.25rem;
+  background: linear-gradient(90deg, var(--school-staff-card-accent), rgba(37, 99, 235, 0.44));
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--school-staff-ease);
+}
+
+.school-staff-section .school-staff-card::after {
+  position: absolute;
+  z-index: 0;
+  top: -1.25rem;
+  left: -9%;
+  width: 118%;
+  height: 11rem;
+  border-radius: 0 0 48% 52% / 0 0 35% 42%;
+  background:
+    linear-gradient(135deg, var(--school-staff-card-tint) 0%, rgba(255, 255, 255, 0.9) 100%);
+  content: "";
+  pointer-events: none;
+  transform: rotate(-3deg);
+  transform-origin: left bottom;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.school-staff-section .school-staff-card:hover {
+  border-color: rgba(37, 99, 235, 0.28);
+  box-shadow: var(--school-staff-shadow-hover);
+  transform: translateY(-0.4375rem);
+}
+
+.school-staff-section .school-staff-card:hover::before {
+  transform: scaleX(1);
+}
+
+.school-staff-section .school-staff-card:hover::after {
+  transform: rotate(-1.5deg) translateY(0.1875rem) scale(1.02);
+}
+
+.school-staff-section .school-staff-card__photo-shell,
+.school-staff-section .school-staff-card__body {
+  position: relative;
+  z-index: 1;
+}
+
+.school-staff-section .school-staff-card__photo-shell {
+  display: grid;
+  justify-content: center;
+  padding: 1.875rem 1.375rem 0;
+}
+
+.school-staff-section .school-staff-card__photo-button {
+  display: grid;
+  width: 7rem;
+  height: 7rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--school-staff-white);
+  cursor: pointer;
+  font: inherit;
+  place-items: center;
+}
+
+.school-staff-section .school-staff-card__photo-frame {
+  position: relative;
+  display: block;
+  width: 7rem;
+  height: 7rem;
+  overflow: hidden;
+  border: 4px solid var(--school-staff-white);
+  border-radius: inherit;
+  background: var(--school-staff-card-tint);
+  box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.14);
+  isolation: isolate;
+}
+
+.school-staff-section .school-staff-card__photo-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 360ms ease;
+}
+
+.school-staff-section .school-staff-card__photo-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  background: rgba(15, 23, 42, 0.48);
+  opacity: 0;
+  place-items: center;
+  transition: opacity var(--school-staff-ease);
+}
+
+.school-staff-section .school-staff-card__photo-overlay svg,
+.school-staff-section .school-staff-card__email svg,
+.school-staff-section .school-staff-carousel__button svg,
+.school-staff-modal .school-staff-modal__close svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.school-staff-section .school-staff-card:hover .school-staff-card__photo-frame img,
+.school-staff-section .school-staff-card__photo-button:focus-visible .school-staff-card__photo-frame img {
+  transform: scale(1.08);
+}
+
+.school-staff-section .school-staff-card:hover .school-staff-card__photo-overlay,
+.school-staff-section .school-staff-card__photo-button:focus-visible .school-staff-card__photo-overlay {
+  opacity: 1;
+}
+
+.school-staff-section .school-staff-card__body {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.1875rem 1.375rem 1.375rem;
+  text-align: center;
+}
+
+.school-staff-section .school-staff-card__name {
+  width: 100%;
+  margin: 0 0 0.5625rem;
+  overflow-wrap: anywhere;
+  color: var(--school-staff-navy);
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.42;
+}
+
+.school-staff-section .school-staff-card__role {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.9375rem;
+  padding: 0.3125rem 0.6875rem;
+  border: 1px solid color-mix(in srgb, var(--school-staff-card-accent) 20%, #ffffff);
+  border-radius: 999px;
+  background: var(--school-staff-card-tint);
+  color: var(--school-staff-blue-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.school-staff-section .school-staff-card__motto {
+  width: 100%;
+  margin: 0 0 1.25rem;
+  color: var(--school-staff-muted);
+  font-size: 0.84rem;
+  font-style: italic;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.school-staff-section .school-staff-card__email {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4375rem;
+  margin-top: auto;
+  overflow-wrap: anywhere;
+  padding-top: 0.9375rem;
+  border-top: 1px solid var(--school-staff-border);
+  color: var(--school-staff-muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color var(--school-staff-ease);
+}
+
+.school-staff-section .school-staff-card__email:hover {
+  color: var(--school-staff-blue);
+}
+
+.school-staff-section .school-staff-card__email svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  stroke-width: 1.8;
+}
+
+.school-staff-section .school-staff-carousel__button {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 1px solid var(--school-staff-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 0.625rem 1.625rem rgba(15, 23, 42, 0.12);
+  color: var(--school-staff-navy);
+  cursor: pointer;
+  font: inherit;
+  place-items: center;
+  transform: translateY(-55%);
+  transition:
+    color var(--school-staff-ease),
+    background-color var(--school-staff-ease),
+    border-color var(--school-staff-ease),
+    opacity var(--school-staff-ease),
+    transform var(--school-staff-ease);
+}
+
+.school-staff-section .school-staff-carousel__button:hover:not(:disabled) {
+  border-color: var(--school-staff-navy);
+  background: var(--school-staff-navy);
+  color: var(--school-staff-white);
+  transform: translateY(-55%) scale(1.07);
+}
+
+.school-staff-section .school-staff-carousel__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+.school-staff-section .school-staff-carousel__button--previous {
+  left: -1.5rem;
+}
+
+.school-staff-section .school-staff-carousel__button--next {
+  right: -1.5rem;
+}
+
+.school-staff-section .school-staff-status {
+  min-height: 1.375rem;
+  margin: -0.5rem 0 0;
+  color: var(--school-staff-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.school-staff-section .school-staff-empty-state {
+  display: grid;
+  flex: 1 0 100%;
+  min-height: 16.25rem;
+  align-content: center;
+  justify-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px dashed #cbd5e1;
+  border-radius: 1.5rem;
+  background: var(--school-staff-white);
+  color: var(--school-staff-muted);
+  text-align: center;
+}
+
+.school-staff-section .school-staff-empty-state p {
+  max-width: 32rem;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.school-staff-section .school-staff-empty-state__button {
+  min-height: 2.5rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(37, 99, 235, 0.24);
+  border-radius: 999px;
+  background: var(--school-staff-blue);
+  color: var(--school-staff-white);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.school-staff-modal[hidden] {
+  display: none;
+}
+
+.school-staff-modal {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  overflow: hidden;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  place-items: center;
+  transition: opacity var(--school-staff-ease);
+}
+
+.school-staff-modal.is-open {
+  opacity: 1;
+}
+
+.school-staff-modal .school-staff-modal__deck {
+  position: relative;
+  display: grid;
+  width: min(49.375rem, calc(100vw - 1.5rem));
+  min-height: 0;
+  place-items: center;
+  perspective: 87.5rem;
+}
+
+.school-staff-modal .school-staff-modal__preview {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  width: min(17.5rem, 36vw);
+  height: min(32.5rem, calc(100vh - 4.5rem));
+  height: min(32.5rem, calc(100dvh - 4.5rem));
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 1.5rem;
+  background: var(--school-staff-navy);
+  box-shadow: 0 1.5rem 3.625rem rgba(2, 6, 23, 0.36);
+  color: var(--school-staff-white);
+  cursor: pointer;
+  font: inherit;
+  opacity: 0.66;
+  transform-style: preserve-3d;
+  transition:
+    opacity 300ms ease,
+    filter 300ms ease,
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.school-staff-modal .school-staff-modal__preview:hover {
+  z-index: 2;
+  filter: saturate(1.08);
+  opacity: 0.92;
+}
+
+.school-staff-modal .school-staff-modal__preview[hidden] {
+  display: none;
+}
+
+.school-staff-modal .school-staff-modal__preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: saturate(0.82) brightness(0.78);
+  transition: filter var(--school-staff-ease), transform 500ms ease;
+}
+
+.school-staff-modal .school-staff-modal__preview:hover img {
+  filter: saturate(1) brightness(0.88);
+  transform: scale(1.035);
+}
+
+.school-staff-modal .school-staff-modal__preview--previous {
+  left: 0;
+  transform: translateY(-50%) rotateY(8deg) rotateZ(-2.2deg) scale(0.88);
+  transform-origin: right center;
+}
+
+.school-staff-modal .school-staff-modal__preview--previous:hover {
+  transform: translateY(-50%) translateX(-0.5rem) rotateY(5deg) rotateZ(-1deg) scale(0.92);
+}
+
+.school-staff-modal .school-staff-modal__preview--next {
+  right: 0;
+  transform: translateY(-50%) rotateY(-8deg) rotateZ(2.2deg) scale(0.88);
+  transform-origin: left center;
+}
+
+.school-staff-modal .school-staff-modal__preview--next:hover {
+  transform: translateY(-50%) translateX(0.5rem) rotateY(-5deg) rotateZ(1deg) scale(0.92);
+}
+
+.school-staff-modal .school-staff-modal__card {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  width: min(26.875rem, calc(100vw - 4.5rem), calc((100vh - 1.5rem) * 0.8));
+  width: min(26.875rem, calc(100vw - 4.5rem), calc((100dvh - 1.5rem) * 0.8));
+  max-height: calc(100vh - 1.5rem);
+  max-height: calc(100dvh - 1.5rem);
+  aspect-ratio: 4 / 5;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 1.375rem;
+  background: var(--school-staff-navy);
+  box-shadow: 0 1.875rem 5rem rgba(2, 6, 23, 0.42);
+  text-align: center;
+  transform: translateY(0.875rem) scale(0.96);
+  transition: transform var(--school-staff-ease);
+}
+
+.school-staff-modal.is-open .school-staff-modal__card {
+  transform: translateY(0) scale(1);
+}
+
+.school-staff-modal .school-staff-modal__slide {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  cursor: grab;
+  touch-action: pan-y;
+  will-change: transform, opacity, filter;
+}
+
+.school-staff-modal .school-staff-modal__slide:active {
+  cursor: grabbing;
+}
+
+.school-staff-modal .school-staff-modal__photo-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  border-radius: 1.3125rem;
+  background: var(--school-staff-navy);
+}
+
+.school-staff-modal .school-staff-modal__photo-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.school-staff-modal .school-staff-modal__close {
+  position: absolute;
+  z-index: 4;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  width: 2.375rem;
+  height: 2.375rem;
+  padding: 0;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0.5rem 1.125rem rgba(15, 23, 42, 0.16);
+  color: var(--school-staff-navy);
+  cursor: pointer;
+  font: inherit;
+  place-items: center;
+  transition:
+    color var(--school-staff-ease),
+    background-color var(--school-staff-ease),
+    transform var(--school-staff-ease);
+}
+
+.school-staff-modal .school-staff-modal__close:hover {
+  background: var(--school-staff-navy);
+  color: var(--school-staff-white);
+  transform: rotate(5deg) scale(1.05);
+}
+
+.school-staff-modal .school-staff-modal__ghost {
+  overflow: hidden;
+}
+
+.school-staff-section .school-staff-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.school-staff-modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 77.5rem) {
+  .school-staff-section .school-staff-container {
+    width: min(73.75rem, calc(100% - 2rem));
+  }
+
+  .school-staff-section .school-staff-carousel__button--previous {
+    left: 0.5rem;
+  }
+
+  .school-staff-section .school-staff-carousel__button--next {
+    right: 0.5rem;
+  }
+}
+
+@media (max-width: 48rem) {
+  .school-staff-section {
+    padding: 3rem 0 4.25rem;
+  }
+
+  .school-staff-section .school-staff-container {
+    width: min(73.75rem, calc(100% - 1.5rem));
+  }
+
+  .school-staff-section .school-staff-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .school-staff-section .school-staff-header__title {
+    font-size: 2.125rem;
+  }
+
+  .school-staff-section .school-staff-header__description {
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .school-staff-section .school-staff-filter {
+    justify-content: flex-start;
+    overflow-x: auto;
+    margin-inline: -0.75rem;
+    padding: 0 0.75rem 0.5rem;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .school-staff-section .school-staff-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .school-staff-section .school-staff-filter__button {
+    flex: 0 0 auto;
+  }
+
+  .school-staff-section .school-staff-slider {
+    margin-inline: -0.75rem;
+    padding-inline: 0.75rem;
+    scroll-padding-inline: 0.75rem;
+  }
+
+  .school-staff-section .school-staff-track {
+    gap: 1rem;
+  }
+
+  .school-staff-section .school-staff-card {
+    flex-basis: min(82vw, 17.5rem);
+  }
+
+  .school-staff-section .school-staff-carousel__button {
+    top: auto;
+    bottom: -2.375rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    transform: none;
+  }
+
+  .school-staff-section .school-staff-carousel__button:hover:not(:disabled) {
+    transform: scale(1.05);
+  }
+
+  .school-staff-section .school-staff-carousel__button--previous {
+    left: calc(50% - 3.25rem);
+  }
+
+  .school-staff-section .school-staff-carousel__button--next {
+    right: calc(50% - 3.25rem);
+  }
+
+  .school-staff-section .school-staff-status {
+    margin-top: 2.625rem;
+  }
+
+  .school-staff-modal {
+    padding: 0.75rem 0.25rem;
+  }
+
+  .school-staff-modal .school-staff-modal__deck {
+    width: calc(100vw - 0.5rem);
+  }
+
+  .school-staff-modal .school-staff-modal__card {
+    width: min(24.375rem, calc(100vw - 3.5rem), calc((100vh - 1.25rem) * 0.8));
+    width: min(24.375rem, calc(100vw - 3.5rem), calc((100dvh - 1.25rem) * 0.8));
+  }
+
+  .school-staff-modal .school-staff-modal__preview {
+    width: min(14.375rem, 64vw);
+    opacity: 0.54;
+  }
+
+  .school-staff-modal .school-staff-modal__preview--previous {
+    left: -1.125rem;
+  }
+
+  .school-staff-modal .school-staff-modal__preview--next {
+    right: -1.125rem;
+  }
+}
+
+@media (max-width: 25rem) {
+  .school-staff-section .school-staff-header__title {
+    font-size: 1.875rem;
+  }
+
+  .school-staff-section .school-staff-card {
+    flex-basis: min(84vw, 16.75rem);
+  }
+
+  .school-staff-modal .school-staff-modal__card {
+    width: calc(100vw - 2.5rem);
+  }
+}
+
+@media (max-height: 40.625rem) {
+  .school-staff-modal {
+    align-items: center;
+    padding: 0.625rem;
+  }
+
+  .school-staff-modal .school-staff-modal__card {
+    max-height: calc(100vh - 1.25rem);
+    max-height: calc(100dvh - 1.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .school-staff-section,
+  .school-staff-section *,
+  .school-staff-section *::before,
+  .school-staff-section *::after,
+  .school-staff-modal,
+  .school-staff-modal *,
+  .school-staff-modal *::before,
+  .school-staff-modal *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

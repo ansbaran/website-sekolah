@@ -15,6 +15,7 @@
     </script>
     <link rel="stylesheet" href="assets/css/style.css?v=20260709-public-fixes">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
@@ -516,55 +517,57 @@
 
 </section>    
 
-<section class="staff-section" data-staff-section data-staff-limit="24" aria-labelledby="staff-section-title">
-  <div class="staff-section__inner">
-    <div class="staff-section__top">
-      <div class="staff-section__header">
-        <span class="staff-section__eyebrow">Guru dan Staff</span>
-        <h2 id="staff-section-title">Guru dan Staff SD Cahaya Harapan Bekasi</h2>
-        <p>Tenaga pendidik dan kependidikan yang mendampingi peserta didik berkembang secara akademik, karakter, dan keterampilan abad 21.</p>
-      </div>
+<section id="guru-staff" class="school-staff-section" data-school-staff-section data-school-staff-limit="100" aria-labelledby="school-staff-title">
+  <div class="school-staff-container">
+    <header class="school-staff-header">
+      <span class="school-staff-header__eyebrow">Akademis &amp; Tata Kelola</span>
+      <h2 id="school-staff-title" class="school-staff-header__title">Guru dan Staf Kami</h2>
+      <p class="school-staff-header__description">
+        Mengenal para pendidik dan tenaga kependidikan yang mendampingi setiap siswa untuk tumbuh, belajar, dan meraih potensi terbaiknya.
+      </p>
+    </header>
 
-      <div class="staff-slider__controls" aria-label="Navigasi Guru dan Staff">
-        <button class="staff-slider__control" type="button" data-staff-prev aria-label="Staff sebelumnya">&lsaquo;</button>
-        <button class="staff-slider__control" type="button" data-staff-next aria-label="Staff berikutnya">&rsaquo;</button>
+    <ul class="school-staff-filter" aria-label="Filter kategori guru dan staf">
+      <li><button class="school-staff-filter__button is-active" type="button" data-school-staff-filter="all" aria-pressed="true">Semua</button></li>
+      <li><button class="school-staff-filter__button" type="button" data-school-staff-filter="pimpinan" aria-pressed="false">Tim Kepemimpinan</button></li>
+      <li><button class="school-staff-filter__button" type="button" data-school-staff-filter="guru" aria-pressed="false">Guru Pengajar</button></li>
+      <li><button class="school-staff-filter__button" type="button" data-school-staff-filter="staf" aria-pressed="false">Staff dan Karyawan</button></li>
+    </ul>
+
+    <div class="school-staff-carousel" aria-label="Daftar Guru dan Staf">
+      <button class="school-staff-carousel__button school-staff-carousel__button--previous" type="button" data-school-staff-slider-prev aria-label="Geser daftar ke kiri"></button>
+      <div class="school-staff-slider" data-school-staff-slider tabindex="0" aria-label="Daftar guru dan staf">
+        <div class="school-staff-track" data-school-staff-track></div>
       </div>
+      <button class="school-staff-carousel__button school-staff-carousel__button--next" type="button" data-school-staff-slider-next aria-label="Geser daftar ke kanan"></button>
     </div>
 
-    <div class="staff-stats" aria-label="Statistik Guru dan Staff">
-      <article class="staff-stat-card">
-        <span class="staff-stat-card__icon" aria-hidden="true" data-public-stat-text="teachers_count">25</span>
-        <strong>Guru</strong>
-        <small>Tenaga pendidik aktif</small>
-      </article>
-      <article class="staff-stat-card">
-        <span class="staff-stat-card__icon" aria-hidden="true" data-public-stat-text="staff_count">6</span>
-        <strong>Staff</strong>
-        <small>Dukungan operasional sekolah</small>
-      </article>
-      <article class="staff-stat-card">
-        <span class="staff-stat-card__icon" aria-hidden="true" data-public-stat-text="professional_label">A+</span>
-        <strong>Profesional</strong>
-        <small>Berpengalaman dan human friendly</small>
-      </article>
-    </div>
+    <p class="school-staff-status" data-school-staff-status aria-live="polite"></p>
 
-    <div class="staff-slider" aria-label="Daftar Guru dan Staff">
-      <div class="staff-status" data-staff-status></div>
-      <div class="staff-slider__viewport">
-        <div class="staff-slider__track" data-staff-track></div>
-      </div>
-    </div>
+    <noscript>
+      <p class="school-staff-empty-state">Aktifkan JavaScript untuk menampilkan dan memfilter daftar guru serta staf.</p>
+    </noscript>
+  </div>
 
-    <div class="staff-modal" data-staff-modal hidden role="dialog" aria-modal="true" aria-labelledby="staff-modal-name-about">
-      <div class="staff-modal__card">
-        <button class="staff-modal__close" type="button" data-staff-modal-close aria-label="Tutup detail staff">&times;</button>
-        <img class="staff-modal__image" data-staff-modal-image src="assets/img/logo.png" alt="" loading="lazy" decoding="async">
-        <h3 id="staff-modal-name-about" data-staff-modal-name></h3>
-        <p class="staff-modal__role" data-staff-modal-role></p>
-        <p class="staff-modal__description" data-staff-modal-description></p>
-        <div class="staff-modal__links" data-staff-modal-links aria-label="Kontak publik staff"></div>
-      </div>
+  <div class="school-staff-modal" data-school-staff-modal hidden role="dialog" aria-modal="true" aria-label="Pratinjau foto guru dan staf">
+    <div class="school-staff-modal__deck" data-school-staff-modal-deck>
+      <button class="school-staff-modal__preview school-staff-modal__preview--previous" type="button" data-school-staff-preview="previous" aria-label="Tampilkan foto sebelumnya">
+        <img data-school-staff-preview-image="previous" src="assets/img/logo.png" alt="">
+      </button>
+
+      <article class="school-staff-modal__card" data-school-staff-modal-card>
+        <button class="school-staff-modal__close" type="button" data-school-staff-modal-close aria-label="Tutup pratinjau foto"></button>
+        <div class="school-staff-modal__slide" data-school-staff-modal-slide>
+          <div class="school-staff-modal__photo-frame">
+            <img data-school-staff-modal-photo src="assets/img/logo.png" alt="">
+          </div>
+        </div>
+        <span class="school-staff-sr-only" data-school-staff-modal-announcement aria-live="polite"></span>
+      </article>
+
+      <button class="school-staff-modal__preview school-staff-modal__preview--next" type="button" data-school-staff-preview="next" aria-label="Tampilkan foto berikutnya">
+        <img data-school-staff-preview-image="next" src="assets/img/logo.png" alt="">
+      </button>
     </div>
   </div>
 </section>

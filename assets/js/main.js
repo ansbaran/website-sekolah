@@ -1,7 +1,7 @@
 import { initHeroSlider } from "./slider.js";
 import { initTypingAnimation } from "./typing.js";
 import { initGalleryFilters } from "./gallery.js";
-import { initStaffSection } from "./staff.js?v=20260628-staff-rail";
+import { initModernStaffSection } from "./staff-modern.js?v=20260814-modern-staff";
 import { initSchoolProfileContent } from "./school-profile.js?v=20260709-public-fixes";
 import { initAosAnimations } from "./aos-config.js";
 import { initPageTransitions } from "./page-transition.js";
@@ -35,7 +35,7 @@ function initApp() {
 
   initInstagramLatestPosts();
 
-  initStaffSection();
+  initModernStaffSection();
 
   initSchoolProfileContent();
 

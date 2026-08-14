@@ -487,8 +487,13 @@
 }
 
 .school-staff-modal {
+  --school-staff-blue: #2563eb;
+  --school-staff-navy: #0f172a;
+  --school-staff-white: #ffffff;
+  --school-staff-ring: rgba(37, 99, 235, 0.28);
+  --school-staff-ease: 220ms ease;
   position: fixed;
-  z-index: 1000;
+  z-index: 100000;
   inset: 0;
   display: grid;
   overflow: hidden;
@@ -670,7 +675,8 @@
   overflow: hidden;
 }
 
-.school-staff-section .school-staff-sr-only {
+.school-staff-section .school-staff-sr-only,
+.school-staff-modal .school-staff-sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -684,6 +690,16 @@
 
 body.school-staff-modal-open {
   overflow: hidden;
+}
+
+body.school-staff-modal-open .school-staff-section {
+  overflow: visible;
+}
+
+body.school-staff-modal-open #scrollTopBtn.scroll-top-button[data-scroll-top-btn="1"] {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 @media (max-width: 77.5rem) {

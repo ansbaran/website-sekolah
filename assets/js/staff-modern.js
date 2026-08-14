@@ -904,6 +904,9 @@ function initSection(section) {
   }
 
   section.dataset.schoolStaffInitialized = "true";
+  if (state.modal.parentElement !== document.body) {
+    document.body.append(state.modal);
+  }
 
   [state.modalPhoto, state.previousPreviewImage, state.nextPreviewImage].forEach(configureModalImage);
   state.previousButton.append(createSvgIcon("chevronLeft"));

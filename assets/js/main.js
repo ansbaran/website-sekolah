@@ -9,6 +9,7 @@ import { initInstagramLatestPosts } from "./instagram.js?v=20260714-instagram-fe
 
 import "./navbar.js?v=20260712-dropdown-stability";
 import "./footer.js";
+import "./floating-whatsapp.js?v=20260815-whatsapp-hotfix1";
 
 import {
   initHashSectionNavigation,

@@ -2,22 +2,21 @@ async function loadNavbar() {
     const navbarContainer = document.getElementById("navbar");
     if (!navbarContainer) return;
 
-    const pageDirectory = window.location.pathname.replace(/\/[^\/]*$/, '/');
-    const rootPath = pageDirectory.includes('/website-sekolah/')
-        ? '/website-sekolah/'
-        : '/';
+    const pageDirectory = window.location.pathname.replace(/\/[^\/]*$/, "/");
+    const rootPath = pageDirectory.includes("/website-sekolah/")
+        ? "/website-sekolah/"
+        : "/";
 
     const candidatePaths = [
-        new URL('../../components/navbar.html', import.meta.url).href,
+        new URL("../../components/navbar.html", import.meta.url).href,
         `${window.location.origin}${pageDirectory}components/navbar.html`,
         `${window.location.origin}${rootPath}components/navbar.html`,
         `${window.location.origin}/components/navbar.html`
     ];
 
-
     for (const componentUrl of candidatePaths) {
         try {
-            const response = await fetch(componentUrl, { cache: 'no-cache' });
+            const response = await fetch(componentUrl, { cache: "no-cache" });
 
             if (!response.ok) {
                 continue;
@@ -26,13 +25,18 @@ async function loadNavbar() {
             const html = await response.text();
             navbarContainer.innerHTML = html;
             initNavbar();
-            document.dispatchEvent(new CustomEvent('navbar:loaded'));
+            document.dispatchEvent(new CustomEvent("navbar:loaded"));
             return;
         } catch (error) {
             continue;
         }
     }
+}
 
+let navbarInitialized = false;
+
+function getDropdownToggleLabel(toggle) {
+    return (toggle?.textContent || "").replace(/\s+/g, " ").trim();
 }
 
 /* =========================
@@ -40,10 +44,7 @@ async function loadNavbar() {
 ========================= */
 
 function setActiveMenu() {
-
-    // halaman aktif
-    const currentPage =
-        window.location.pathname.split("/").pop() || "index.html";
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
     const activityPages = [
         "prestasi.php",
@@ -61,38 +62,24 @@ function setActiveMenu() {
         "berita-detail.php"
     ];
 
-    const aboutPages = [
-        "tentang.html"
-    ];
+    const aboutPages = ["tentang.html"];
 
-    // ambil menu utama navbar
-    const navLinks =
-        document.querySelectorAll(".nav-menu > li > a");
+    const navItems = document.querySelectorAll(".nav-menu > li > a, .nav-menu > li > .dropdown-toggle");
 
-    navLinks.forEach((link) => {
+    navItems.forEach((item) => {
+        item.classList.remove("active");
 
-        // reset semua
-        link.classList.remove("active");
+        const href = item.getAttribute("href");
+        const cleanHref = href?.split("#")[0] || "";
+        const label = getDropdownToggleLabel(item);
 
-        const href =
-            link.getAttribute("href");
-
-        if (!href) return;
-
-        // ambil nama file saja
-        const cleanHref =
-            href.split("#")[0];
-
-        // cocokkan halaman
-        if (
+        const isActive =
             cleanHref === currentPage ||
-            (aboutPages.includes(currentPage) && cleanHref === "tentang.html") ||
+            (aboutPages.includes(currentPage) && (cleanHref === "tentang.html" || label.startsWith("Tentang"))) ||
             (newsPages.includes(currentPage) && cleanHref === "berita.html") ||
-            (activityPages.includes(currentPage) && link.textContent.trim() === "Aktivitas")
-        ) {
+            (activityPages.includes(currentPage) && label.startsWith("Aktivitas"));
 
-            link.classList.add("active");
-        }
+        item.classList.toggle("active", isActive);
     });
 }
 
@@ -101,23 +88,38 @@ function setActiveMenu() {
 ========================= */
 
 function initStickyHeader() {
-
-    const header =
-        document.querySelector(".header");
-
+    const header = document.querySelector(".header");
     if (!header) return;
 
-    window.addEventListener("scroll", () => {
+    const syncHeaderState = () => {
+        header.classList.toggle("scrolled", window.scrollY > 20);
+    };
 
-        if (window.scrollY > 20) {
+    syncHeaderState();
+    window.addEventListener("scroll", syncHeaderState, { passive: true });
+}
 
-            header.classList.add("scrolled");
+function getFocusableElements(scope) {
+    return Array.from(scope.querySelectorAll("a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"))
+        .filter((element) => element instanceof HTMLElement && element.getClientRects().length > 0);
+}
 
-        } else {
+function setDropdownState(dropdown, isOpen) {
+    const toggle = dropdown.querySelector(".dropdown-toggle");
+    dropdown.classList.toggle("open", isOpen);
+    toggle?.setAttribute("aria-expanded", String(isOpen));
+}
 
-            header.classList.remove("scrolled");
-        }
+function closeAllDropdowns({ returnFocus = false } = {}) {
+    const openToggle = document.querySelector(".dropdown.open > .dropdown-toggle");
+
+    document.querySelectorAll(".dropdown.open").forEach((dropdown) => {
+        setDropdownState(dropdown, false);
     });
+
+    if (returnFocus && openToggle instanceof HTMLElement) {
+        openToggle.focus({ preventScroll: true });
+    }
 }
 
 /* =========================
@@ -125,39 +127,62 @@ function initStickyHeader() {
 ========================= */
 
 function initMobileMenu() {
-
-    const toggle =
-        document.querySelector("[data-nav-toggle]");
-
-    const menu =
-        document.querySelector("[data-nav-menu]");
+    const toggle = document.querySelector("[data-nav-toggle]");
+    const menu = document.querySelector("[data-nav-menu]");
 
     if (!toggle || !menu) return;
 
-    const closeMenu = () => {
+    let previousFocus = null;
+
+    const isMenuOpen = () => menu.classList.contains("navbar__menu--open");
+
+    const closeMenu = ({ restoreFocus = true } = {}) => {
+        if (!isMenuOpen()) return;
+
         menu.classList.remove("navbar__menu--open");
         menu.classList.remove("active");
         toggle.classList.remove("active");
         toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Buka menu navigasi");
+        document.body.classList.remove("nav-menu-open");
+        closeAllDropdowns();
+
+        if (restoreFocus && previousFocus instanceof HTMLElement) {
+            previousFocus.focus({ preventScroll: true });
+        }
+
+        previousFocus = null;
+    };
+
+    const openMenu = () => {
+        if (isMenuOpen()) return;
+
+        previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : toggle;
+        menu.classList.add("navbar__menu--open");
+        menu.classList.add("active");
+        toggle.classList.add("active");
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-label", "Tutup menu navigasi");
+        document.body.classList.add("nav-menu-open");
+
+        const firstFocusable = getFocusableElements(menu)[0];
+        firstFocusable?.focus({ preventScroll: true });
     };
 
     toggle.addEventListener("click", () => {
+        if (isMenuOpen()) {
+            closeMenu();
+            return;
+        }
 
-        const isOpen =
-            menu.classList.toggle("navbar__menu--open");
-
-        menu.classList.toggle("active", isOpen);
-
-        toggle.classList.toggle("active", isOpen);
-
-        toggle.setAttribute("aria-expanded", String(isOpen));
+        openMenu();
     });
 
     menu.addEventListener("click", (event) => {
-        const link = event.target.closest("a");
-        if (!link || link.classList.contains("dropdown-toggle")) return;
+        const link = event.target.closest("a[href]");
+        if (!link) return;
 
-        closeMenu();
+        closeMenu({ restoreFocus: false });
     });
 
     document.addEventListener("click", (event) => {
@@ -165,12 +190,32 @@ function initMobileMenu() {
             return;
         }
 
-        closeMenu();
+        closeMenu({ restoreFocus: false });
     });
 
     document.addEventListener("keydown", (event) => {
+        if (!isMenuOpen()) return;
+
         if (event.key === "Escape") {
+            event.preventDefault();
             closeMenu();
+            return;
+        }
+
+        if (event.key !== "Tab") return;
+
+        const focusable = getFocusableElements(menu);
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus({ preventScroll: true });
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus({ preventScroll: true });
         }
     });
 }
@@ -180,137 +225,98 @@ function initMobileMenu() {
 ========================= */
 
 function initDropdownMenus() {
-    const dropdowns = document.querySelectorAll(".dropdown");
+    const dropdowns = Array.from(document.querySelectorAll(".dropdown"));
     const desktopQuery = window.matchMedia("(min-width: 1024px)");
-    const header = document.querySelector("[data-header]");
 
-    const closeDropdowns = (lockDesktopHover = false) => {
-        dropdowns.forEach((dropdown) => {
-            dropdown.classList.remove("open");
-            dropdown.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
-        });
-
-        if (lockDesktopHover && desktopQuery.matches) {
-            header?.classList.add("navbar--dropdowns-locked");
-        }
-    };
-
-    const unlockDesktopHover = () => {
-        header?.classList.remove("navbar--dropdowns-locked");
-    };
+    if (dropdowns.length === 0) return;
 
     const closeSiblingDropdowns = (activeDropdown) => {
         dropdowns.forEach((dropdown) => {
             if (dropdown === activeDropdown) return;
-
-            dropdown.classList.remove("open");
-            dropdown.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
+            setDropdownState(dropdown, false);
         });
+    };
+
+    const openDropdown = (dropdown) => {
+        closeSiblingDropdowns(dropdown);
+        setDropdownState(dropdown, true);
+    };
+
+    const toggleDropdown = (dropdown) => {
+        const willOpen = !dropdown.classList.contains("open");
+        closeSiblingDropdowns(dropdown);
+        setDropdownState(dropdown, willOpen);
     };
 
     dropdowns.forEach((dropdown) => {
         const toggle = dropdown.querySelector(".dropdown-toggle");
         const menu = dropdown.querySelector(".dropdown-menu");
-        let closeTimer = null;
 
         if (!toggle || !menu) return;
-
-        const cancelClose = () => {
-            if (!closeTimer) return;
-            window.clearTimeout(closeTimer);
-            closeTimer = null;
-        };
-
-        const openDropdown = () => {
-            cancelClose();
-            if (header?.classList.contains("navbar--dropdowns-locked")) return;
-            closeSiblingDropdowns(dropdown);
-            dropdown.classList.add("open");
-            toggle.setAttribute("aria-expanded", "true");
-        };
-
-        const closeDropdown = (delay = 0) => {
-            cancelClose();
-
-            const close = () => {
-                dropdown.classList.remove("open");
-                toggle.setAttribute("aria-expanded", "false");
-                closeTimer = null;
-            };
-
-            if (delay > 0) {
-                closeTimer = window.setTimeout(close, delay);
-                return;
-            }
-
-            close();
-        };
 
         toggle.setAttribute("aria-haspopup", "true");
         toggle.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
 
         toggle.addEventListener("click", (event) => {
-            if (desktopQuery.matches) return;
-
             event.preventDefault();
-            unlockDesktopHover();
+            event.stopPropagation();
+            toggleDropdown(dropdown);
+        });
 
-            const isOpen = dropdown.classList.toggle("open");
-            toggle.setAttribute("aria-expanded", String(isOpen));
+        toggle.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                toggleDropdown(dropdown);
+                return;
+            }
 
-            dropdowns.forEach((otherDropdown) => {
-                if (otherDropdown === dropdown) return;
-                otherDropdown.classList.remove("open");
-                otherDropdown.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
-            });
+            if (event.key === "ArrowDown") {
+                event.preventDefault();
+                openDropdown(dropdown);
+                const firstLink = menu.querySelector("a[href]");
+                firstLink?.focus({ preventScroll: true });
+                return;
+            }
+
+            if (event.key === "Escape") {
+                event.preventDefault();
+                closeAllDropdowns({ returnFocus: true });
+            }
         });
 
         dropdown.addEventListener("mouseenter", () => {
             if (!desktopQuery.matches) return;
-            openDropdown();
+            openDropdown(dropdown);
         });
 
         dropdown.addEventListener("mouseleave", () => {
             if (!desktopQuery.matches) return;
-            closeDropdown(260);
-        });
-
-        menu.addEventListener("mouseenter", () => {
-            if (!desktopQuery.matches) return;
-            cancelClose();
-        });
-
-        menu.addEventListener("mouseleave", () => {
-            if (!desktopQuery.matches) return;
-            closeDropdown(180);
+            setDropdownState(dropdown, false);
         });
 
         dropdown.addEventListener("focusin", () => {
-            unlockDesktopHover();
-            openDropdown();
+            if (!desktopQuery.matches) return;
+            openDropdown(dropdown);
         });
     });
 
-    header?.addEventListener("mouseleave", unlockDesktopHover);
-
     document.addEventListener("click", (event) => {
         if (event.target.closest(".dropdown")) return;
-
-        closeDropdowns(desktopQuery.matches);
+        closeAllDropdowns();
     });
 
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
-            closeDropdowns(desktopQuery.matches);
+            closeAllDropdowns({ returnFocus: true });
         }
     });
 
     window.addEventListener("scroll", () => {
-        closeDropdowns(true);
+        closeAllDropdowns();
     }, { passive: true });
 
     window.addEventListener("resize", () => {
-        closeDropdowns(true);
+        closeAllDropdowns();
     });
 }
 
@@ -319,13 +325,12 @@ function initDropdownMenus() {
 ========================= */
 
 function initNavbar() {
+    if (navbarInitialized) return;
+    navbarInitialized = true;
 
     setActiveMenu();
-
     initStickyHeader();
-
     initMobileMenu();
-
     initDropdownMenus();
 }
 

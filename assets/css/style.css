@@ -5455,6 +5455,104 @@ html body #scrollTopBtn .scroll-top-button__label {
   }
 }
 
+/* Public navigation polish 2026-08-21: button dropdown triggers and mobile menu containment. */
+.nav-menu > li > .dropdown-toggle {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  border: 0 !important;
+  background: transparent !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+
+.nav-menu > li > .dropdown-toggle.active,
+.dropdown.open > .dropdown-toggle {
+  background: rgba(37, 99, 235, 0.08) !important;
+  color: #0d0b61 !important;
+}
+
+.vm-icon .vm-icon__svg {
+  display: block;
+  width: 1.45rem;
+  height: 1.45rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+@media (min-width: 1024px) {
+  .nav-menu .dropdown-menu {
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .dropdown.open > .dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) scale(1) !important;
+  }
+
+  ul[data-nav-menu] > li[class~="lg:!hidden"] {
+    display: none !important;
+  }
+
+  .nav-menu .dropdown:not(.open) > .dropdown-menu {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .nav-menu .dropdown.open > .dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  html body.nav-menu-open {
+    overflow: hidden !important;
+  }
+
+  html body [data-nav-menu].navbar__menu--open {
+    max-height: calc(100dvh - 104px) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html body [data-nav-menu] .dropdown:not(.open) > .dropdown-menu,
+  html body [data-nav-menu] .dropdown:not(.open):hover > .dropdown-menu {
+    max-height: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-0.25rem) scale(0.98) !important;
+  }
+
+  html body [data-nav-menu] .dropdown.open > .dropdown-menu {
+    max-height: min(60vh, 26rem) !important;
+    overflow-y: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) scale(1) !important;
+  }
+
+  .nav-menu > li > .btn-ppdb,
+  .nav-menu > li > .btn-contact {
+    text-decoration: none !important;
+  }
+}
 /* Dropdown stability: give pointer a forgiving bridge between trigger and menu. */
 @media (min-width: 1024px) {
   .dropdown::after {

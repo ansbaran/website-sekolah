@@ -47,14 +47,18 @@
             <!-- TENTANG -->
             <li class="dropdown !relative">
 
-                <a
-                    href="tentang.html"
-                    class="dropdown-toggle !flex !items-center !justify-between !gap-2 !rounded-2xl !px-4 !py-3 !text-sm !font-bold !text-[#294669] !transition hover:!bg-[#478B8D]/10 hover:!text-[#0D0B61] lg:!py-2"
+                <button
+                    type="button"
+                    id="nav-dropdown-tentang"
+                    class="dropdown-toggle !flex !w-full !appearance-none !items-center !justify-between !gap-2 !rounded-2xl !border-0 !bg-transparent !px-4 !py-3 !text-left !text-sm !font-bold !text-[#294669] !transition hover:!bg-[#478B8D]/10 hover:!text-[#0D0B61] lg:!w-auto lg:!py-2"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    aria-controls="nav-dropdown-menu-tentang"
                 >
                     Tentang <span class="dropdown-chevron !text-[10px] !text-[#478B8D]">&#9662;</span>
-                </a>
+                </button>
 
-                <ul class="dropdown-menu !pointer-events-none !invisible !static !z-[10020] !mt-1 !min-w-64 !list-none !rounded-3xl !border !border-[#478B8D]/15 !bg-white/88 !p-2.5 !opacity-0 !shadow-none !backdrop-blur-xl !transition-all !duration-300 lg:!absolute lg:!left-0 lg:!top-full lg:!mt-4 lg:!origin-top-left lg:!shadow-[0_28px_80px_rgba(13,11,97,0.18)]">
+                <ul id="nav-dropdown-menu-tentang" class="dropdown-menu !pointer-events-none !invisible !static !z-[10020] !mt-1 !min-w-64 !list-none !rounded-3xl !border !border-[#478B8D]/15 !bg-white/88 !p-2.5 !opacity-0 !shadow-none !backdrop-blur-xl !transition-all !duration-300 lg:!absolute lg:!left-0 lg:!top-full lg:!mt-4 lg:!origin-top-left lg:!shadow-[0_28px_80px_rgba(13,11,97,0.18)]" aria-labelledby="nav-dropdown-tentang">
 
                     <li>
                         <a href="tentang.html#profil" class="!block !rounded-2xl !px-4 !py-3 !text-sm !font-semibold !text-[#294669] !transition hover:!bg-[#478B8D]/10 hover:!text-[#0D0B61]">
@@ -94,14 +98,18 @@
             <!-- AKTIVITAS -->
             <li class="dropdown !relative">
 
-                <a
-                    href="galeri.html#galeri"
-                    class="dropdown-toggle !flex !items-center !justify-between !gap-2 !rounded-2xl !px-4 !py-3 !text-sm !font-bold !text-[#294669] !transition hover:!bg-[#478B8D]/10 hover:!text-[#0D0B61] lg:!py-2"
+                <button
+                    type="button"
+                    id="nav-dropdown-aktivitas"
+                    class="dropdown-toggle !flex !w-full !appearance-none !items-center !justify-between !gap-2 !rounded-2xl !border-0 !bg-transparent !px-4 !py-3 !text-left !text-sm !font-bold !text-[#294669] !transition hover:!bg-[#478B8D]/10 hover:!text-[#0D0B61] lg:!w-auto lg:!py-2"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    aria-controls="nav-dropdown-menu-aktivitas"
                 >
                     Aktivitas <span class="dropdown-chevron !text-[10px] !text-[#478B8D]">&#9662;</span>
-                </a>
+                </button>
 
-                <ul class="dropdown-menu !pointer-events-none !invisible !static !z-[10020] !mt-1 !min-w-64 !list-none !rounded-3xl !border !border-[#478B8D]/15 !bg-white/88 !p-2.5 !opacity-0 !shadow-none !backdrop-blur-xl !transition-all !duration-300 lg:!absolute lg:!left-0 lg:!top-full lg:!mt-4 lg:!origin-top-left lg:!shadow-[0_28px_80px_rgba(13,11,97,0.18)]">
+                <ul id="nav-dropdown-menu-aktivitas" class="dropdown-menu !pointer-events-none !invisible !static !z-[10020] !mt-1 !min-w-64 !list-none !rounded-3xl !border !border-[#478B8D]/15 !bg-white/88 !p-2.5 !opacity-0 !shadow-none !backdrop-blur-xl !transition-all !duration-300 lg:!absolute lg:!left-0 lg:!top-full lg:!mt-4 lg:!origin-top-left lg:!shadow-[0_28px_80px_rgba(13,11,97,0.18)]" aria-labelledby="nav-dropdown-aktivitas">
 
                     <li>
                         <a href="prestasi.php" class="!block !rounded-2xl !px-4 !py-3 !text-sm !font-semibold !text-[#294669] !transition hover:!bg-[#478B8D]/10 hover:!text-[#0D0B61]">
@@ -135,6 +143,23 @@
                 </ul>
 
             </li>
+            <!-- MOBILE ACTIONS -->
+            <li class="lg:!hidden">
+                <a
+                    href="index.html#ppdb"
+                    class="btn-ppdb !flex !w-full !items-center !justify-center !rounded-2xl !bg-gradient-to-r !from-[#0D0B61] !via-[#294669] !to-[#478B8D] !px-5 !py-3 !text-sm !font-extrabold !text-white !shadow-lg !shadow-[#0D0B61]/20 !transition hover:!-translate-y-0.5 hover:!shadow-xl"
+                >
+                    PPDB
+                </a>
+            </li>
+            <li class="lg:!hidden">
+                <a
+                    href="index.html#kontak"
+                    class="btn-contact !flex !w-full !items-center !justify-center !rounded-2xl !border !border-[#294669]/15 !px-5 !py-3 !text-sm !font-bold !text-[#294669] !transition hover:!border-[#478B8D]/30 hover:!bg-[#478B8D]/10 hover:!text-[#0D0B61]"
+                >
+                    Kontak
+                </a>
+            </li>
 
         </ul>
 
@@ -147,7 +172,7 @@
                 href="index.html#ppdb"
                 class="btn-ppdb !inline-flex !items-center !justify-center !rounded-2xl !bg-gradient-to-r !from-[#0D0B61] !via-[#294669] !to-[#478B8D] !px-5 !py-3 !text-sm !font-extrabold !text-white !shadow-lg !shadow-[#0D0B61]/20 !transition hover:!-translate-y-0.5 hover:!shadow-xl"
             >
-                PPDB 2026
+                PPDB
             </a>
 
             <a

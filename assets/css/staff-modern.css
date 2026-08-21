@@ -111,17 +111,26 @@
     transform var(--school-staff-ease);
 }
 
-.school-staff-section .school-staff-filter__button:hover {
-  border-color: #bfdbfe;
-  color: var(--school-staff-navy);
-  transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+  .school-staff-section .school-staff-filter__button:hover:not(:disabled):not(.is-active):not([aria-pressed="true"]) {
+    border-color: rgba(71, 139, 141, 0.4);
+    color: var(--school-staff-navy);
+    box-shadow: 0 0.75rem 1.75rem rgba(15, 23, 42, 0.08);
+    transform: translateY(-0.125rem);
+  }
 }
 
-.school-staff-section .school-staff-filter__button.is-active {
-  border-color: var(--school-staff-navy);
-  background: var(--school-staff-navy);
+.school-staff-section .school-staff-filter__button.is-active,
+.school-staff-section .school-staff-filter__button[aria-pressed="true"] {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--school-staff-blue), #478b8d);
   color: var(--school-staff-white);
-  box-shadow: 0 0.5625rem 1.375rem rgba(15, 23, 42, 0.18);
+  box-shadow: 0 0.625rem 1.625rem rgba(37, 99, 235, 0.18);
+}
+
+.school-staff-section .school-staff-filter__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .school-staff-section .school-staff-filter__button:focus-visible,

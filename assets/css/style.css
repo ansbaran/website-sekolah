@@ -7,7 +7,7 @@
 @import './frontend-stage3.css';
 @import './frontend-final-polish.css';
 @import './frontend-2026-audit.css';
-@import './staff-modern.css';
+@import './staff-modern.css?v=20260822-public-navigation-hotfix1';
 
 [data-typing],
 .hero__typing,

@@ -7,7 +7,7 @@ import { initAosAnimations } from "./aos-config.js";
 import { initPageTransitions } from "./page-transition.js";
 import { initInstagramLatestPosts } from "./instagram.js?v=20260714-instagram-feed";
 
-import "./navbar.js?v=20260712-dropdown-stability";
+import "./navbar.js?v=20260822-public-navigation-hotfix1";
 import "./footer.js";
 import "./floating-whatsapp.js?v=20260815-whatsapp-hotfix1";
 

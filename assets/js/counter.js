@@ -158,14 +158,16 @@ async function fetchPublicStats() {
   }
 }
 
+const ppdbFallbackYear = new Date().getFullYear();
+
 const ppdbFallback = {
   status: "open",
-  year: "2026",
-  start_date: "2026-03-01",
-  end_date: "2026-07-31",
+  year: String(ppdbFallbackYear),
+  start_date: `${ppdbFallbackYear}-01-01`,
+  end_date: `${ppdbFallbackYear}-12-31`,
   whatsapp_number: "6285692890015",
-  whatsapp_message: "Halo, saya ingin mendaftar PPDB SD Cahaya Harapan Bekasi 2026.",
-  whatsapp_url: "https://wa.me/6285692890015?text=Halo%2C%20saya%20ingin%20mendaftar%20PPDB%20SD%20Cahaya%20Harapan%20Bekasi%202026.",
+  whatsapp_message: "Halo, saya ingin mendaftar PPDB SD Cahaya Harapan Bekasi.",
+  whatsapp_url: "https://wa.me/6285692890015?text=Halo%2C%20saya%20ingin%20mendaftar%20PPDB%20SD%20Cahaya%20Harapan%20Bekasi.",
   description: ""
 };
 

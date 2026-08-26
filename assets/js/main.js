@@ -16,7 +16,7 @@ import {
   initReveal
 } from "./ui.js";
 
-import { initCounter } from "./counter.js?v=20260628-staff-rail";
+import { initCounter } from "./counter.js?v=20260824-ppdb-evergreen1";
 
 function initApp() {
 

@@ -166,8 +166,8 @@ const ppdbFallback = {
   start_date: `${ppdbFallbackYear}-01-01`,
   end_date: `${ppdbFallbackYear}-12-31`,
   whatsapp_number: "6285692890015",
-  whatsapp_message: "Halo, saya ingin mendaftar PPDB SD Cahaya Harapan Bekasi.",
-  whatsapp_url: "https://wa.me/6285692890015?text=Halo%2C%20saya%20ingin%20mendaftar%20PPDB%20SD%20Cahaya%20Harapan%20Bekasi.",
+  whatsapp_message: "Halo SD Cahaya Harapan Bekasi, saya ingin bertanya tentang PPDB.",
+  whatsapp_url: "https://wa.me/6285692890015?text=Halo%20SD%20Cahaya%20Harapan%20Bekasi%2C%20saya%20ingin%20bertanya%20tentang%20PPDB.",
   description: ""
 };
 
@@ -203,7 +203,10 @@ function formatDateRange(startDate, endDate) {
 
 function safeWhatsappUrl(settings) {
   const number = String(settings.whatsapp_number || ppdbFallback.whatsapp_number).replace(/\D/g, "");
-  const message = String(settings.whatsapp_message || ppdbFallback.whatsapp_message);
+  const rawMessage = String(settings.whatsapp_message || ppdbFallback.whatsapp_message);
+  const message = /PPDB[\s\S]*2026|2026[\s\S]*PPDB/i.test(rawMessage)
+    ? ppdbFallback.whatsapp_message
+    : rawMessage.replace(/\s*2026\b/g, "").trim();
 
   if (!number) {
     return ppdbFallback.whatsapp_url;
@@ -255,7 +258,6 @@ function setCountdownValues(elements, days, hours, minutes, seconds) {
 }
 
 function updatePpdbText(settings, phase, startDate, endDate) {
-  const year = String(settings.year || ppdbFallback.year);
   const titleEl = document.querySelector("[data-ppdb-title]");
   const eyebrowEl = document.querySelector("[data-ppdb-eyebrow]");
   const periodEl = document.querySelector("[data-ppdb-period]");
@@ -263,7 +265,7 @@ function updatePpdbText(settings, phase, startDate, endDate) {
   const whatsappLink = document.querySelector("[data-ppdb-whatsapp]");
 
   if (eyebrowEl) {
-    eyebrowEl.textContent = `PPDB ${year}`;
+    eyebrowEl.textContent = "PPDB";
   }
 
   if (titleEl) {

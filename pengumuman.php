@@ -39,6 +39,8 @@ function announcement_excerpt(string $value, int $limit = 150): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daftar pengumuman resmi SD Cahaya Harapan Bekasi untuk orang tua dan siswa.">
+    <link rel="canonical" href="https://sdcahayaharapanbekasi.sch.id/announcements">
+    <meta property="og:url" content="https://sdcahayaharapanbekasi.sch.id/announcements">
     <title>Pengumuman - SD Cahaya Harapan Bekasi</title>
     <script src="assets/js/tailwind-config.js"></script>
     <link rel="stylesheet" href="assets/css/style.css?v=20260709-announcement-flow">
@@ -53,7 +55,7 @@ function announcement_excerpt(string $value, int $limit = 150): string
       <section class="announcement-board" aria-labelledby="announcement-board-title">
         <div class="announcement-board__inner">
           <header class="announcement-board__head">
-            <a class="announcement-board__back" href="index.html#info-sekolah">
+            <a class="announcement-board__back" href="./#info-sekolah">
               <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
               <span>Kembali</span>
             </a>
@@ -70,7 +72,7 @@ function announcement_excerpt(string $value, int $limit = 150): string
             <?php foreach ($announcements as $item): ?>
               <?php $dateParts = announcement_date_parts((string)($item['published_at'] ?? '')); ?>
               <article class="announcement-card">
-                <a class="announcement-card__link" href="pengumuman-detail.php?id=<?= urlencode((string)($item['id'] ?? '')) ?>">
+                <a class="announcement-card__link" href="announcements/<?= urlencode((string)($item['id'] ?? '')) ?>">
                   <time class="announcement-card__date" datetime="<?= escape((string)($item['published_at'] ?? '')) ?>">
                     <strong><?= escape($dateParts['day']) ?></strong>
                     <span><?= escape($dateParts['month']) ?></span>
@@ -91,8 +93,8 @@ function announcement_excerpt(string $value, int $limit = 150): string
     </main>
 
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js?v=20260709-announcement-flow"></script>
+    <script type="module" src="assets/js/main.js?v=20260826-clean-url1"></script>
     <script src="assets/js/seo.js"></script>
-    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/maintenance.js?v=20260827-maintenance-api-root-1"></script>
   </body>
 </html>

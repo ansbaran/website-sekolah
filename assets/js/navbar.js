@@ -1,17 +1,43 @@
+const siteRootUrl = new URL("../../", import.meta.url);
+
+function getRouteFromUrl(value = window.location.href) {
+    const url = new URL(value, siteRootUrl);
+    const basePath = siteRootUrl.pathname.replace(/\/$/, "");
+    let pathname = url.pathname;
+
+    if (basePath && pathname === basePath) {
+        pathname = "";
+    } else if (basePath && pathname.startsWith(`${basePath}/`)) {
+        pathname = pathname.slice(basePath.length + 1);
+    } else {
+        pathname = pathname.replace(/^\/+/, "");
+    }
+
+    return pathname.split("/").filter(Boolean)[0] || "";
+}
+
+function normalizeNavbarLinks(container) {
+    container.querySelectorAll("a[href]").forEach((link) => {
+        const href = link.getAttribute("href");
+
+        if (
+            !href ||
+            /^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(href)
+        ) {
+            return;
+        }
+
+        link.href = new URL(href, siteRootUrl).href;
+    });
+}
+
 async function loadNavbar() {
     const navbarContainer = document.getElementById("navbar");
     if (!navbarContainer) return;
 
-    const pageDirectory = window.location.pathname.replace(/\/[^\/]*$/, "/");
-    const rootPath = pageDirectory.includes("/website-sekolah/")
-        ? "/website-sekolah/"
-        : "/";
-
     const candidatePaths = [
-        new URL("../../components/navbar.html", import.meta.url).href,
-        `${window.location.origin}${pageDirectory}components/navbar.html`,
-        `${window.location.origin}${rootPath}components/navbar.html`,
-        `${window.location.origin}/components/navbar.html`
+        new URL("components/navbar.html", siteRootUrl).href,
+        new URL("components/navbar.html", window.location.origin + "/").href
     ];
 
     for (const componentUrl of candidatePaths) {
@@ -24,6 +50,7 @@ async function loadNavbar() {
 
             const html = await response.text();
             navbarContainer.innerHTML = html;
+            normalizeNavbarLinks(navbarContainer);
             initNavbar();
             document.dispatchEvent(new CustomEvent("navbar:loaded"));
             return;
@@ -44,40 +71,33 @@ function getDropdownToggleLabel(toggle) {
 ========================= */
 
 function setActiveMenu() {
-    const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    const currentRoute = getRouteFromUrl();
+    const activityRoutes = new Set([
+        "achievements",
+        "gallery",
+        "activity",
+        "agenda",
+        "extracurricular"
+    ]);
 
-    const activityPages = [
-        "prestasi.php",
-        "galeri.html",
-        "kegiatan.html",
-        "kegiatan.php",
-        "ekstrakurikuler.html",
-        "ekstrakurikuler.php",
-        "agenda.html",
-        "agenda.php"
-    ];
-
-    const newsPages = [
-        "berita.html",
-        "berita-detail.php"
-    ];
-
-    const aboutPages = ["tentang.html"];
-
-    const navItems = document.querySelectorAll(".nav-menu > li > a, .nav-menu > li > .dropdown-toggle");
+    const navItems = document.querySelectorAll(
+        ".nav-menu > li > a, .nav-menu > li > .dropdown-toggle"
+    );
 
     navItems.forEach((item) => {
-        item.classList.remove("active");
-
         const href = item.getAttribute("href");
-        const cleanHref = href?.split("#")[0] || "";
+        const linkRoute = href ? getRouteFromUrl(href) : null;
         const label = getDropdownToggleLabel(item);
 
         const isActive =
-            cleanHref === currentPage ||
-            (aboutPages.includes(currentPage) && (cleanHref === "tentang.html" || label.startsWith("Tentang"))) ||
-            (newsPages.includes(currentPage) && cleanHref === "berita.html") ||
-            (activityPages.includes(currentPage) && label.startsWith("Aktivitas"));
+            (label.startsWith("Tentang") && currentRoute === "about") ||
+            (label.startsWith("Aktivitas") && activityRoutes.has(currentRoute)) ||
+            (
+                linkRoute !== null &&
+                linkRoute === currentRoute &&
+                !label.startsWith("Tentang") &&
+                !label.startsWith("Aktivitas")
+            );
 
         item.classList.toggle("active", isActive);
     });

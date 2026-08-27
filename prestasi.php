@@ -27,6 +27,8 @@ function achievement_page_excerpt(string $value, int $limit = 220): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daftar prestasi siswa SD Cahaya Harapan Bekasi yang dikelola dari admin sekolah.">
+    <link rel="canonical" href="https://sdcahayaharapanbekasi.sch.id/achievements">
+    <meta property="og:url" content="https://sdcahayaharapanbekasi.sch.id/achievements">
     <title>Prestasi - SD Cahaya Harapan Bekasi</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=20260711-prestasi-program-layout">
@@ -85,8 +87,8 @@ function achievement_page_excerpt(string $value, int $limit = 220): string
     </main>
 
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js?v=20260711-prestasi-program-layout"></script>
+    <script type="module" src="assets/js/main.js?v=20260826-clean-url1"></script>
     <script src="assets/js/seo.js"></script>
-    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/maintenance.js?v=20260827-maintenance-api-root-1"></script>
 </body>
 </html>

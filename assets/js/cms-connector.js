@@ -31,6 +31,30 @@ getBasePath() {
     return markerIndex > 0 ? scriptUrl.pathname.slice(0, markerIndex) : '';
 }
 
+getCurrentRoute() {
+    let pathname = window.location.pathname;
+
+    if (this.basePath && pathname === this.basePath) {
+        return '';
+    }
+
+    if (
+        this.basePath &&
+        pathname.startsWith(`${this.basePath}/`)
+    ) {
+        pathname = pathname.slice(this.basePath.length + 1);
+    } else {
+        pathname = pathname.replace(/^\/+/, '');
+    }
+
+    return pathname.split('/').filter(Boolean)[0] || '';
+}
+
+resolvePublicUrl(path = '') {
+    const cleanPath = String(path || '').replace(/^\/+/, '');
+    return `${this.basePath}/${cleanPath}`;
+}
+
 normalizeLegacyImagePath(path) {
     const legacyMap = {
         'assets/img/berita1.jpeg': 'assets/img/berita/berita1.jpeg',
@@ -128,9 +152,9 @@ resolveImage(path) {
 
         let detailUrl;
         if (item.slug && item.slug.trim()) {
-            detailUrl = `berita-detail.php?slug=${encodeURIComponent(item.slug)}`;
+            detailUrl = this.resolvePublicUrl(`news/${encodeURIComponent(item.slug)}`);
         } else {
-            detailUrl = `berita-detail.php?id=${encodeURIComponent(item.id)}`;
+            detailUrl = this.resolvePublicUrl(`news/id/${encodeURIComponent(item.id)}`);
         }
 
         const thumbSrc = this.resolveImage(
@@ -184,8 +208,8 @@ resolveImage(path) {
     createAgendaListCard(item) {
         const date = this.formatShortDateParts(item.event_date);
         const detailUrl = item.slug
-            ? `agenda-detail.php?slug=${encodeURIComponent(item.slug)}`
-            : 'index.html#info-sekolah';
+            ? this.resolvePublicUrl(`agenda/${encodeURIComponent(item.slug)}`)
+            : this.resolvePublicUrl('#info-sekolah');
         const card = document.createElement('article');
         card.className = 'agenda-list-card';
         card.innerHTML = `
@@ -298,12 +322,12 @@ resolveImage(path) {
             }
 
             if (slug) {
-                link.href = `berita-detail.php?slug=${encodeURIComponent(slug)}`;
+                link.href = this.resolvePublicUrl(`news/${encodeURIComponent(slug)}`);
                 return;
             }
 
             if (id) {
-                link.href = `berita-detail.php?id=${encodeURIComponent(id)}`;
+                link.href = this.resolvePublicUrl(`news/id/${encodeURIComponent(id)}`);
                 return;
             }
 
@@ -563,8 +587,8 @@ slideDiv.style.backgroundImage = `url(${bgImage})`;
     createSchoolInfoAgenda(item) {
         const date = this.formatShortDateParts(item.event_date);
         const detailUrl = item.slug
-            ? `agenda-detail.php?slug=${encodeURIComponent(item.slug)}`
-            : 'index.html#info-sekolah';
+            ? this.resolvePublicUrl(`agenda/${encodeURIComponent(item.slug)}`)
+            : this.resolvePublicUrl('#info-sekolah');
         const card = document.createElement('a');
         card.className = 'school-info-item school-info-item--agenda';
         card.href = detailUrl;
@@ -582,7 +606,7 @@ slideDiv.style.backgroundImage = `url(${bgImage})`;
     }
     createSchoolInfoAnnouncement(item, index = 0) {
         const date = this.formatShortDateParts(item.published_at);
-        const link = `pengumuman-detail.php?id=${encodeURIComponent(item.id || index + 1)}`;
+        const link = this.resolvePublicUrl(`announcements/${encodeURIComponent(item.id || index + 1)}`);
         const card = document.createElement('a');
         card.className = 'school-info-item school-info-item--announcement';
         card.href = link;
@@ -604,8 +628,8 @@ slideDiv.style.backgroundImage = `url(${bgImage})`;
         const title = this.escapeHtml(item.title || 'Artikel Sekolah');
         const image = this.resolveImage(item.thumbnail || item.featured_image || item.image || 'assets/img/sekolah.jpg');
         const detailUrl = item.slug
-            ? `berita-detail.php?slug=${encodeURIComponent(item.slug)}`
-            : `berita-detail.php?id=${encodeURIComponent(item.id || '')}`;
+            ? this.resolvePublicUrl(`news/${encodeURIComponent(item.slug)}`)
+            : this.resolvePublicUrl(`news/id/${encodeURIComponent(item.id || '')}`);
         const card = document.createElement('a');
         card.className = 'school-info-item school-info-item--article';
         card.href = detailUrl;
@@ -969,6 +993,8 @@ document.addEventListener('DOMContentLoaded', function () {
         cms.renderSchoolInfoSection('[data-school-info]');
     }
 
+    const currentRoute = cms.getCurrentRoute();
+
     // Homepage integrations
     if (document.querySelector('.news-grid-home')) {
 
@@ -990,19 +1016,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Berita page
-    if (window.location.pathname.includes('berita.html')) {
+    if (currentRoute === 'news') {
 
         cms.renderNewsPage('.news-modern', 4, 8);
 
     }
 
     // Gallery page
-    if (window.location.pathname.includes('galeri.html')) {
+    if (currentRoute === 'gallery') {
         cms.renderGallery('.gallery-section', 20);
     }
 
     // Prestasi page
-    if (window.location.pathname.includes('prestasi.html') || window.location.pathname.includes('prestasi.php')) {
+    if (currentRoute === 'achievements') {
         cms.renderAchievements('.achievements-section', 12);
     }
 

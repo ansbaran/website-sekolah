@@ -108,7 +108,7 @@ require_once __DIR__ . '/includes/header.php';
                         </span>
                     </td>
                     <td>
-                        <a class="btn-tertiary" href="../agenda-detail.php?slug=<?= urlencode($item['slug']) ?>" target="_blank" rel="noopener noreferrer">Lihat</a>
+                        <a class="btn-tertiary" href="../agenda/<?= urlencode($item['slug']) ?>" target="_blank" rel="noopener noreferrer">Lihat</a>
                         <a class="btn-tertiary" href="agenda-form.php?id=<?= $item['id'] ?>">Edit</a>
                         <?php if (can('delete')): ?>
                             <form method="post" class="inline-form">

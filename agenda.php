@@ -56,6 +56,8 @@ function agenda_page_excerpt(string $value, int $limit = 220): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daftar agenda dan jadwal kegiatan SD Cahaya Harapan Bekasi untuk orang tua dan siswa.">
+    <link rel="canonical" href="https://sdcahayaharapanbekasi.sch.id/agenda">
+    <meta property="og:url" content="https://sdcahayaharapanbekasi.sch.id/agenda">
     <title>Agenda - SD Cahaya Harapan Bekasi</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=20260711-agenda-program-layout">
@@ -91,7 +93,7 @@ function agenda_page_excerpt(string $value, int $limit = 220): string
                     <?php foreach ($agendas as $agenda): ?>
                         <?php $dateParts = agenda_page_date_parts((string)($agenda['event_date'] ?? '')); ?>
                         <article class="extracurricular-card agenda-zigzag-card group">
-                            <a class="agenda-zigzag-card__link" href="agenda-detail.php?slug=<?= urlencode((string)($agenda['slug'] ?? '')) ?>">
+                            <a class="agenda-zigzag-card__link" href="agenda/<?= urlencode((string)($agenda['slug'] ?? '')) ?>">
                                 <time class="extracurricular-card__image agenda-zigzag-card__date" datetime="<?= escape((string)($agenda['event_date'] ?? '')) ?>">
                                     <span><?= escape(strtoupper($dateParts['month'])) ?></span>
                                     <strong><?= escape($dateParts['day']) ?></strong>
@@ -119,8 +121,8 @@ function agenda_page_excerpt(string $value, int $limit = 220): string
     </main>
 
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js?v=20260711-agenda-program-layout"></script>
+    <script type="module" src="assets/js/main.js?v=20260826-clean-url1"></script>
     <script src="assets/js/seo.js"></script>
-    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/maintenance.js?v=20260827-maintenance-api-root-1"></script>
 </body>
 </html>

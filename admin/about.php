@@ -89,7 +89,7 @@ require_once __DIR__ . '/includes/header.php';
             <p class="footer-note">Atur konten dinamis yang tampil di halaman Tentang tanpa mengubah kode website.</p>
             <p class="footer-note">Tim kepemimpinan publik sekarang ditampilkan dari data Guru & Staf modern.</p>
         </div>
-        <a class="btn-secondary" href="../tentang.html" target="_blank" rel="noopener noreferrer">Lihat Halaman</a>
+        <a class="btn-secondary" href="../about" target="_blank" rel="noopener noreferrer">Lihat Halaman</a>
     </div>
 </section>
 

@@ -42,17 +42,25 @@ if ($announcement !== null) {
 
 $pageTitle = $announcement ? (string) $announcement['title'] : 'Pengumuman Tidak Ditemukan';
 $pageDescription = $announcement ? announcement_detail_excerpt((string) $announcement['content'], 155) : 'Pengumuman yang Anda cari tidak tersedia.';
-$currentUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$currentUrl = $announcement
+    ? public_canonical_url(
+        'announcements/' . rawurlencode(
+            (string) $announcement['id']
+        )
+    )
+    : public_canonical_url('announcements');
 ?>
 <!doctype html>
 <html lang="id">
   <head>
+    <base href="<?= escape(public_site_path()) ?>">
   <script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= escape($pageTitle) ?> - SD Cahaya Harapan Bekasi</title>
     <meta name="description" content="<?= escape($pageDescription) ?>">
     <link rel="canonical" href="<?= escape($currentUrl) ?>">
+    <meta property="og:url" content="<?= escape($currentUrl) ?>">
     <script src="assets/js/tailwind-config.js"></script>
     <link rel="stylesheet" href="assets/css/style.css?v=20260709-announcement-flow">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -65,7 +73,7 @@ $currentUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'http
     <main class="announcement-detail-main">
       <article class="announcement-detail">
         <div class="announcement-detail__shell">
-          <a class="announcement-detail__back" href="pengumuman.php">
+          <a class="announcement-detail__back" href="announcements">
             <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
             <span>Kembali ke Pengumuman</span>
           </a>
@@ -75,7 +83,7 @@ $currentUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'http
               <span class="announcement-detail__badge"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> Pengumuman</span>
               <h1>Pengumuman Tidak Ditemukan</h1>
               <p>Maaf, pengumuman yang Anda cari tidak tersedia atau sudah tidak aktif.</p>
-              <a class="announcement-detail__button" href="pengumuman.php">Lihat Pengumuman Lain</a>
+              <a class="announcement-detail__button" href="announcements">Lihat Pengumuman Lain</a>
             </section>
           <?php else: ?>
             <header class="announcement-detail__hero">
@@ -101,8 +109,8 @@ $currentUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'http
     </main>
 
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js?v=20260709-announcement-flow"></script>
+    <script type="module" src="assets/js/main.js?v=20260826-clean-url1"></script>
     <script src="assets/js/seo.js"></script>
-    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/maintenance.js?v=20260827-maintenance-api-root-1"></script>
   </body>
 </html>

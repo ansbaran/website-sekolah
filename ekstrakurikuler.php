@@ -25,6 +25,8 @@ function school_program_excerpt(string $value, int $limit = 170): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daftar ekstrakurikuler SD Cahaya Harapan Bekasi yang diperbarui dari admin.">
+    <link rel="canonical" href="https://sdcahayaharapanbekasi.sch.id/extracurricular">
+    <meta property="og:url" content="https://sdcahayaharapanbekasi.sch.id/extracurricular">
     <title>Ekstrakurikuler - SD Cahaya Harapan</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=20260711-extracurricular-zigzag">
@@ -80,8 +82,8 @@ function school_program_excerpt(string $value, int $limit = 170): string
     </main>
 
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js?v=20260711-extracurricular-zigzag"></script>
+    <script type="module" src="assets/js/main.js?v=20260826-clean-url1"></script>
     <script src="assets/js/seo.js"></script>
-    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/maintenance.js?v=20260827-maintenance-api-root-1"></script>
 </body>
 </html>

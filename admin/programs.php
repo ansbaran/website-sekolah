@@ -89,7 +89,7 @@ require_once __DIR__ . '/includes/header.php';
                         </span>
                     </td>
                     <td>
-                        <a class="btn-tertiary" href="../<?= $type === 'ekstrakurikuler' ? 'ekstrakurikuler.php' : 'kegiatan.php' ?>" target="_blank" rel="noopener noreferrer">Lihat</a>
+                        <a class="btn-tertiary" href="../<?= $type === 'ekstrakurikuler' ? 'extracurricular' : 'activity' ?>" target="_blank" rel="noopener noreferrer">Lihat</a>
                         <a class="btn-tertiary" href="program-form.php?type=<?= urlencode($type) ?>&id=<?= (int)$item['id'] ?>">Edit</a>
                         <?php if (can('delete')): ?>
                             <form method="post" class="inline-form">

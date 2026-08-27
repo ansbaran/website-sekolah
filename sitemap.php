@@ -177,7 +177,7 @@ function sitemap_fetch_news_urls(PDO $pdo, array &$urls): int
         foreach ($statement->fetchAll() as $news) {
             sitemap_add_url(
                 $urls,
-                '/berita-detail.php?slug=' . rawurlencode((string) $news['slug']),
+                '/news/' . rawurlencode((string) $news['slug']),
                 sitemap_valid_lastmod($news['updated_at'] ?: $news['published_at'] ?: $news['created_at'] ?: null),
                 'monthly',
                 '0.6'
@@ -214,7 +214,7 @@ function sitemap_fetch_agenda_urls(PDO $pdo, array &$urls): int
         foreach ($statement->fetchAll() as $agenda) {
             sitemap_add_url(
                 $urls,
-                '/agenda-detail.php?slug=' . rawurlencode((string) $agenda['slug']),
+                '/agenda/' . rawurlencode((string) $agenda['slug']),
                 sitemap_valid_lastmod($agenda['updated_at'] ?: $agenda['created_at'] ?: null),
                 'weekly',
                 '0.6'
@@ -258,7 +258,7 @@ function sitemap_fetch_announcement_urls(PDO $pdo, array &$urls): int
 
             sitemap_add_url(
                 $urls,
-                '/pengumuman-detail.php?id=' . rawurlencode((string) $announcement['id']),
+                '/announcements/' . rawurlencode((string) $announcement['id']),
                 sitemap_valid_lastmod($lastmodSource),
                 'monthly',
                 '0.5'
@@ -277,15 +277,15 @@ $urls = [];
 $staticCount = 0;
 $publicPages = [
     ['path' => '/', 'file' => 'index.html', 'changefreq' => 'weekly', 'priority' => '1.0'],
-    ['path' => '/tentang.html', 'file' => 'tentang.html', 'changefreq' => 'monthly', 'priority' => '0.8'],
-    ['path' => '/program.html', 'file' => 'program.html', 'changefreq' => 'monthly', 'priority' => '0.8'],
-    ['path' => '/berita.html', 'file' => 'berita.html', 'changefreq' => 'weekly', 'priority' => '0.8'],
-    ['path' => '/galeri.html', 'file' => 'galeri.html', 'changefreq' => 'weekly', 'priority' => '0.7'],
-    ['path' => '/pengumuman.php', 'file' => 'pengumuman.php', 'changefreq' => 'weekly', 'priority' => '0.7'],
-    ['path' => '/agenda.php', 'file' => 'agenda.php', 'changefreq' => 'weekly', 'priority' => '0.7'],
-    ['path' => '/kegiatan.php', 'file' => 'kegiatan.php', 'changefreq' => 'monthly', 'priority' => '0.7'],
-    ['path' => '/ekstrakurikuler.php', 'file' => 'ekstrakurikuler.php', 'changefreq' => 'monthly', 'priority' => '0.7'],
-    ['path' => '/prestasi.php', 'file' => 'prestasi.php', 'changefreq' => 'monthly', 'priority' => '0.7'],
+    ['path' => '/about', 'file' => 'tentang.html', 'changefreq' => 'monthly', 'priority' => '0.8'],
+    ['path' => '/program', 'file' => 'program.html', 'changefreq' => 'monthly', 'priority' => '0.8'],
+    ['path' => '/news', 'file' => 'berita.html', 'changefreq' => 'weekly', 'priority' => '0.8'],
+    ['path' => '/gallery', 'file' => 'galeri.html', 'changefreq' => 'weekly', 'priority' => '0.7'],
+    ['path' => '/announcements', 'file' => 'pengumuman.php', 'changefreq' => 'weekly', 'priority' => '0.7'],
+    ['path' => '/agenda', 'file' => 'agenda.php', 'changefreq' => 'weekly', 'priority' => '0.7'],
+    ['path' => '/activity', 'file' => 'kegiatan.php', 'changefreq' => 'monthly', 'priority' => '0.7'],
+    ['path' => '/extracurricular', 'file' => 'ekstrakurikuler.php', 'changefreq' => 'monthly', 'priority' => '0.7'],
+    ['path' => '/achievements', 'file' => 'prestasi.php', 'changefreq' => 'monthly', 'priority' => '0.7'],
 ];
 
 foreach ($publicPages as $page) {

@@ -2013,3 +2013,160 @@ function get_related_news_payload(int $newsId, int $limit = 3): array
         return ['items' => [], 'is_fallback' => true];
     }
 }
+
+function public_site_base_path(): string
+{
+    static $basePath = null;
+
+    if ($basePath !== null) {
+        return $basePath;
+    }
+
+    $applicationRoot = realpath(__DIR__ . '/..');
+    $documentRoot = isset($_SERVER['DOCUMENT_ROOT'])
+        ? realpath((string) $_SERVER['DOCUMENT_ROOT'])
+        : false;
+
+    if (
+        $applicationRoot !== false
+        && $documentRoot !== false
+    ) {
+        $applicationRoot = str_replace(
+            '\\',
+            '/',
+            rtrim($applicationRoot, '/\\')
+        );
+
+        $documentRoot = str_replace(
+            '\\',
+            '/',
+            rtrim($documentRoot, '/\\')
+        );
+
+        $applicationCompare = PHP_OS_FAMILY === 'Windows'
+            ? strtolower($applicationRoot)
+            : $applicationRoot;
+
+        $documentCompare = PHP_OS_FAMILY === 'Windows'
+            ? strtolower($documentRoot)
+            : $documentRoot;
+
+        if ($applicationCompare === $documentCompare) {
+            $basePath = '';
+            return $basePath;
+        }
+
+        if (
+            strpos(
+                $applicationCompare,
+                $documentCompare . '/'
+            ) === 0
+        ) {
+            $relative = substr(
+                $applicationRoot,
+                strlen($documentRoot)
+            );
+
+            $basePath = '/' . trim($relative, '/');
+
+            if ($basePath === '/') {
+                $basePath = '';
+            }
+
+            return $basePath;
+        }
+    }
+
+    $scriptName = str_replace(
+        '\\',
+        '/',
+        (string) ($_SERVER['SCRIPT_NAME'] ?? '')
+    );
+
+    $directory = str_replace(
+        '\\',
+        '/',
+        dirname($scriptName)
+    );
+
+    if (
+        $directory === '.'
+        || $directory === '/'
+        || $directory === '\\'
+    ) {
+        $basePath = '';
+        return $basePath;
+    }
+
+    $basePath = '/' . trim($directory, '/');
+
+    return $basePath;
+}
+
+function public_site_path(string $path = ''): string
+{
+    $basePath = public_site_base_path();
+    $cleanPath = ltrim(trim($path), '/');
+
+    if ($cleanPath === '') {
+        return $basePath === ''
+            ? '/'
+            : $basePath . '/';
+    }
+
+    return (
+        $basePath === ''
+            ? ''
+            : $basePath
+    ) . '/' . $cleanPath;
+}
+
+function public_site_url(string $path = ''): string
+{
+    $forwardedProtocol = strtolower(
+        trim(
+            explode(
+                ',',
+                (string) (
+                    $_SERVER['HTTP_X_FORWARDED_PROTO']
+                    ?? ''
+                )
+            )[0]
+        )
+    );
+
+    $httpsEnabled = (
+        isset($_SERVER['HTTPS'])
+        && $_SERVER['HTTPS'] !== ''
+        && strtolower((string) $_SERVER['HTTPS']) !== 'off'
+    ) || $forwardedProtocol === 'https';
+
+    $host = preg_replace(
+        '/[^A-Za-z0-9.:\-\[\]]/',
+        '',
+        (string) (
+            $_SERVER['HTTP_HOST']
+            ?? 'sdcahayaharapanbekasi.sch.id'
+        )
+    );
+
+    if ($host === '') {
+        $host = 'sdcahayaharapanbekasi.sch.id';
+    }
+
+    return (
+        $httpsEnabled
+            ? 'https://'
+            : 'http://'
+    ) . $host . public_site_path($path);
+}
+
+function public_canonical_url(string $path = ''): string
+{
+    $baseUrl = 'https://sdcahayaharapanbekasi.sch.id';
+    $cleanPath = ltrim(trim($path), '/');
+
+    return $cleanPath === ''
+        ? $baseUrl . '/'
+        : $baseUrl . '/' . $cleanPath;
+}

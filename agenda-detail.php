@@ -59,16 +59,23 @@ if ($agenda !== null) {
 $dateParts = $agenda ? agenda_date_parts((string) $agenda['event_date']) : ['day' => '404', 'month' => 'Agenda', 'year' => ''];
 $pageTitle = $agenda ? (string) $agenda['title'] : 'Agenda Tidak Ditemukan';
 $pageDescription = $agenda ? (string) $agenda['summary'] : 'Agenda yang Anda cari tidak tersedia.';
-$currentUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];?>
+$currentUrl = $agenda
+    ? public_canonical_url(
+        'agenda/' . rawurlencode((string) $agenda['slug'])
+    )
+    : public_canonical_url('agenda');
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <base href="<?= escape(public_site_path()) ?>">
 <script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= escape($pageTitle) ?> - SD Cahaya Harapan Bekasi</title>
     <meta name="description" content="<?= escape($pageDescription) ?>">
     <link rel="canonical" href="<?= escape($currentUrl) ?>">
+    <meta property="og:url" content="<?= escape($currentUrl) ?>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css?v=20260709-agenda-detail-compact">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -81,7 +88,7 @@ $currentUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'http
     <main class="agenda-detail-main">
         <article class="agenda-detail" data-agenda-detail data-share-title="<?= escape($pageTitle) ?>">
             <div class="agenda-detail__shell">
-                <a class="agenda-detail__back" href="index.html#info-sekolah">
+                <a class="agenda-detail__back" href="agenda">
                     <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                     <span>Kembali</span>
                 </a>
@@ -91,7 +98,7 @@ $currentUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'http
                         <span class="agenda-detail__badge"><i class="fa-regular fa-calendar-xmark" aria-hidden="true"></i> Agenda</span>
                         <h1 id="agenda-not-found-title">Agenda Tidak Ditemukan</h1>
                         <p>Maaf, agenda yang Anda cari belum tersedia atau alamatnya tidak sesuai.</p>
-                        <a class="agenda-detail__primary-link" href="index.html#info-sekolah">Lihat Agenda Lainnya</a>
+                        <a class="agenda-detail__primary-link" href="agenda">Lihat Agenda Lainnya</a>
                     </section>
                 <?php else: ?>
                     <header class="agenda-detail__hero">
@@ -161,9 +168,9 @@ $currentUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'http
     </main>
 
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js?v=20260709-agenda-detail-compact"></script>
+    <script type="module" src="assets/js/main.js?v=20260826-clean-url1"></script>
     <script src="assets/js/agenda-detail.js?v=20260709-agenda-detail-compact"></script>
     <script src="assets/js/seo.js"></script>
-    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/maintenance.js?v=20260827-maintenance-api-root-1"></script>
 </body>
 </html>

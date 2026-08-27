@@ -58,7 +58,9 @@ function album_detail_date(?string $value): ?string
 
 function album_detail_page_url(string $slug): string
 {
-    return '/galeri-detail.php?slug=' . rawurlencode($slug);
+    return public_canonical_url(
+        'gallery/' . rawurlencode($slug)
+    );
 }
 
 function album_detail_render_error(int $statusCode, string $title, string $message): void
@@ -73,6 +75,7 @@ function album_detail_render_error(int $statusCode, string $title, string $messa
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <base href="<?= escape(public_site_path()) ?>">
     <script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,8 +96,8 @@ function album_detail_render_error(int $statusCode, string $title, string $messa
             <div class="album-detail-shell">
                 <nav class="album-breadcrumb" aria-label="Breadcrumb">
                     <ol>
-                        <li><a href="index.html">Beranda</a></li>
-                        <li><a href="galeri.html">Galeri</a></li>
+                        <li><a href="./">Beranda</a></li>
+                        <li><a href="gallery">Galeri</a></li>
                         <li aria-current="page"><?= escape($title) ?></li>
                     </ol>
                 </nav>
@@ -102,7 +105,7 @@ function album_detail_render_error(int $statusCode, string $title, string $messa
                     <p class="album-error-code"><?= (int) $statusCode ?></p>
                     <h1 id="album-error-title"><?= escape($title) ?></h1>
                     <p><?= escape($message) ?></p>
-                    <a class="album-detail-back" href="galeri.html">
+                    <a class="album-detail-back" href="gallery">
                         <span aria-hidden="true">&larr;</span>
                         Kembali ke Galeri
                     </a>
@@ -111,9 +114,9 @@ function album_detail_render_error(int $statusCode, string $title, string $messa
         </section>
     </main>
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/main.js?v=20260826-clean-url1"></script>
     <script src="assets/js/seo.js"></script>
-    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/maintenance.js?v=20260827-maintenance-api-root-1"></script>
 </body>
 </html>
     <?php
@@ -149,7 +152,7 @@ $seoDescription = album_detail_excerpt(
         : 'Dokumentasi ' . $albumTitle . ' di SD Cahaya Harapan Bekasi.'
 );
 $canonicalUrl = album_detail_page_url((string) $album['slug']);
-$coverImage = $album['cover_image'] ? '/' . ltrim((string) $album['cover_image'], '/') : '';
+$coverImage = $album['cover_image'] ? public_site_url((string) $album['cover_image']) : '';
 $formattedDate = album_detail_date($album['event_date'] ?? null);
 $photoCount = count($photos);
 $photoCountLabel = $photoCount . ' foto';
@@ -167,7 +170,7 @@ $jsonLd = [
             '@type' => 'ListItem',
             'position' => 2,
             'name' => 'Galeri',
-            'item' => '/galeri.html',
+            'item' => public_canonical_url('gallery'),
         ],
         [
             '@type' => 'ListItem',
@@ -182,6 +185,7 @@ $jsonLd = [
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <base href="<?= escape(public_site_path()) ?>">
     <script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -220,8 +224,8 @@ $jsonLd = [
             <div class="album-detail-shell">
                 <nav class="album-breadcrumb" aria-label="Breadcrumb">
                     <ol>
-                        <li><a href="index.html">Beranda</a></li>
-                        <li><a href="galeri.html">Galeri</a></li>
+                        <li><a href="./">Beranda</a></li>
+                        <li><a href="gallery">Galeri</a></li>
                         <li aria-current="page"><?= escape($albumTitle) ?></li>
                     </ol>
                 </nav>
@@ -257,7 +261,7 @@ $jsonLd = [
                         <span class="album-section-kicker">Foto Album</span>
                         <h2 id="album-photo-title">Dokumentasi <?= escape($albumTitle) ?></h2>
                     </div>
-                    <a class="album-detail-back" href="galeri.html">
+                    <a class="album-detail-back" href="gallery">
                         <span aria-hidden="true">&larr;</span>
                         Kembali ke Galeri
                     </a>
@@ -311,9 +315,9 @@ $jsonLd = [
     </main>
 
     <div id="footer"></div>
-    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/main.js?v=20260826-clean-url1"></script>
     <script src="assets/js/seo.js"></script>
-    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/maintenance.js?v=20260827-maintenance-api-root-1"></script>
     <script type="module" src="assets/js/gallery-album-detail.js"></script>
 </body>
 </html>

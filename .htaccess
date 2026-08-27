@@ -1,10 +1,88 @@
-Options -Indexes
+Options -Indexes -MultiViews
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
     # Serve dynamic XML sitemap from PHP generator.
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+    # BEGIN CLEAN PUBLIC URL ROUTING
+    # Redirect direct requests for legacy public filenames.
+    # THE_REQUEST prevents redirect loops after internal rewrites.
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.(?:html|php)(?:[?\s]) [NC]
+    RewriteRule ^index\.(?:html|php)$ /%1 [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?tentang\.html(?:[?\s]) [NC]
+    RewriteRule ^tentang\.html$ /%1about [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?guru-staff\.html(?:[?\s]) [NC]
+    RewriteRule ^guru-staff\.html$ /%1about#guru-staff [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?berita\.html(?:[?\s]) [NC]
+    RewriteRule ^berita\.html$ /%1news [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?berita-detail\.php\?(?:[^\s&]+&)*slug=([a-z0-9-]+)(?:&[^\s]*)?\s [NC]
+    RewriteRule ^berita-detail\.php$ /%1news/%2 [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?berita-detail\.php\?(?:[^\s&]+&)*id=([0-9]+)(?:&[^\s]*)?\s [NC]
+    RewriteRule ^berita-detail\.php$ /%1news/id/%2 [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?program\.html(?:[?\s]) [NC]
+    RewriteRule ^program\.html$ /%1program [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?prestasi\.(?:html|php)(?:[?\s]) [NC]
+    RewriteRule ^prestasi\.(?:html|php)$ /%1achievements [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?galeri\.html(?:[?\s]) [NC]
+    RewriteRule ^galeri\.html$ /%1gallery [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?galeri-detail\.php\?(?:[^\s&]+&)*slug=([a-z0-9-]+)(?:&[^\s]*)?\s [NC]
+    RewriteRule ^galeri-detail\.php$ /%1gallery/%2 [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?kegiatan\.(?:html|php)(?:[?\s]) [NC]
+    RewriteRule ^kegiatan\.(?:html|php)$ /%1activity [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?agenda\.(?:html|php)(?:[?\s]) [NC]
+    RewriteRule ^agenda\.(?:html|php)$ /%1agenda [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?agenda-detail\.php\?(?:[^\s&]+&)*slug=([a-z0-9-]+)(?:&[^\s]*)?\s [NC]
+    RewriteRule ^agenda-detail\.php$ /%1agenda/%2 [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?ekstrakurikuler\.(?:html|php)(?:[?\s]) [NC]
+    RewriteRule ^ekstrakurikuler\.(?:html|php)$ /%1extracurricular [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?pengumuman\.php(?:[?\s]) [NC]
+    RewriteRule ^pengumuman\.php$ /%1announcements [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?pengumuman-detail\.php\?(?:[^\s&]+&)*id=([0-9]+)(?:&[^\s]*)?\s [NC]
+    RewriteRule ^pengumuman-detail\.php$ /%1announcements/%2 [R=301,L,NE,QSD]
+
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?maintenance\.html(?:[?\s]) [NC]
+    RewriteRule ^maintenance\.html$ /%1maintenance [R=301,L,NE,QSD]
+
+    # Remove trailing slash from non-directory clean URLs.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{THE_REQUEST} \s/+(.+?)/+[?\s] [NC]
+    RewriteRule ^(.+?)/+$ /%1 [R=301,L,NE]
+
+    # Internally serve the existing application files.
+    RewriteRule ^about/?$ tentang.html [END,QSA,NC]
+    RewriteRule ^news/?$ berita.html [END,QSA,NC]
+    RewriteRule ^news/id/([0-9]+)/?$ berita-detail.php?id=$1 [END,QSA,NC]
+    RewriteRule ^news/([a-z0-9-]+)/?$ berita-detail.php?slug=$1 [END,QSA,NC]
+    RewriteRule ^program/?$ program.html [END,QSA,NC]
+    RewriteRule ^achievements/?$ prestasi.php [END,QSA,NC]
+    RewriteRule ^gallery/?$ galeri.html [END,QSA,NC]
+    RewriteRule ^gallery/([a-z0-9-]+)/?$ galeri-detail.php?slug=$1 [END,QSA,NC]
+    RewriteRule ^activity/?$ kegiatan.php [END,QSA,NC]
+    RewriteRule ^agenda/?$ agenda.php [END,QSA,NC]
+    RewriteRule ^agenda/([a-z0-9-]+)/?$ agenda-detail.php?slug=$1 [END,QSA,NC]
+    RewriteRule ^extracurricular/?$ ekstrakurikuler.php [END,QSA,NC]
+    RewriteRule ^announcements/?$ pengumuman.php [END,QSA,NC]
+    RewriteRule ^announcements/([0-9]+)/?$ pengumuman-detail.php?id=$1 [END,QSA,NC]
+    RewriteRule ^maintenance/?$ maintenance.html [END,QSA,NC]
+    # END CLEAN PUBLIC URL ROUTING
 
 
     # Block direct access to dotfiles except ACME/.well-known challenges.

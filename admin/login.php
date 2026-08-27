@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h1>Kelola Website Sekolah dengan Aman</h1>
             <p>Panel administrasi untuk memperbarui berita, agenda, prestasi, dan informasi sekolah secara rapi.</p>
             <div class="login-split__line" aria-hidden="true"></div>
-            <a class="login-split__cta" href="../index.html">Lihat Website</a>
+            <a class="login-split__cta" href="../">Lihat Website</a>
         </section>
 
         <section class="login-card login-card--glass login-card--split" aria-labelledby="login-title">

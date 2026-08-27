@@ -284,52 +284,64 @@ export function initReveal() {
 ========================= */
 
 export function initActiveMenu() {
+    const siteRootUrl = new URL("../../", import.meta.url);
+    const basePath = siteRootUrl.pathname.replace(/\/$/, "");
+    let pathname = window.location.pathname;
 
-    // halaman aktif
-    const currentPage =
-        window.location.pathname.split("/").pop() || "index.html";
+    if (basePath && pathname === basePath) {
+        pathname = "";
+    } else if (basePath && pathname.startsWith(`${basePath}/`)) {
+        pathname = pathname.slice(basePath.length + 1);
+    } else {
+        pathname = pathname.replace(/^\/+/, "");
+    }
 
-    const activityPages = [
-        "prestasi.php",
-        "galeri.html",
-        "kegiatan.html",
-        "kegiatan.php",
-        "agenda.php",
-        "ekstrakurikuler.html",
-        "ekstrakurikuler.php"
-    ];
+    const currentRoute = pathname.split("/").filter(Boolean)[0] || "";
+    const activityRoutes = new Set([
+        "achievements",
+        "gallery",
+        "activity",
+        "agenda",
+        "extracurricular"
+    ]);
 
-    const aboutPages = [
-        "tentang.html"
-    ];
-
-    // hanya menu utama navbar
-    const navLinks =
-        document.querySelectorAll(".nav-menu > li > a");
+    const navLinks = document.querySelectorAll(
+        ".nav-menu > li > a, .nav-menu > li > .dropdown-toggle"
+    );
 
     navLinks.forEach((link) => {
+        const label = (link.textContent || "").replace(/\s+/g, " ").trim();
+        const href = link.getAttribute("href");
+        let linkRoute = null;
 
-        // reset semua
-        link.classList.remove("active");
+        if (href) {
+            const url = new URL(href, siteRootUrl);
+            let linkPath = url.pathname;
 
-        const href =
-            link.getAttribute("href");
+            if (basePath && linkPath === basePath) {
+                linkPath = "";
+            } else if (
+                basePath &&
+                linkPath.startsWith(`${basePath}/`)
+            ) {
+                linkPath = linkPath.slice(basePath.length + 1);
+            } else {
+                linkPath = linkPath.replace(/^\/+/, "");
+            }
 
-        if (!href) return;
-
-        // ambil nama file tanpa hash
-        const cleanHref =
-            href.split("#")[0];
-
-        // cocokkan halaman
-        if (
-            cleanHref === currentPage ||
-            (aboutPages.includes(currentPage) && cleanHref === "tentang.html") ||
-            (activityPages.includes(currentPage) && link.textContent.trim() === "Aktivitas")
-        ) {
-
-            link.classList.add("active");
-
+            linkRoute = linkPath.split("/").filter(Boolean)[0] || "";
         }
+
+        const isActive =
+            (label.startsWith("Tentang") && currentRoute === "about") ||
+            (label.startsWith("Aktivitas") && activityRoutes.has(currentRoute)) ||
+            (
+                linkRoute !== null &&
+                linkRoute === currentRoute &&
+                !label.startsWith("Tentang") &&
+                !label.startsWith("Aktivitas")
+            );
+
+        link.classList.toggle("active", isActive);
     });
 }

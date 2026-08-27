@@ -45,6 +45,7 @@ if (empty($news)) {
     <!DOCTYPE html>
     <html lang="id">
     <head>
+    <base href="<?= escape(public_site_path()) ?>">
 
         <meta charset="UTF-8">
 
@@ -133,7 +134,7 @@ if (empty($news)) {
 
                 <a
                     class="news-detail-404__link"
-                    href="berita.html"
+                    href="news"
                 >
                     Kembali ke Berita
                 </a>
@@ -159,7 +160,7 @@ if ((int) $news['is_active'] !== 1) {
 
     http_response_code(403);
 
-    header('Location: berita.html');
+    header('Location: ' . public_site_path('news'));
 
     exit;
 }
@@ -211,14 +212,13 @@ $protocol =
     ? 'https://'
     : 'http://';
 
-$baseUrl = $protocol . $_SERVER['HTTP_HOST'];
+$baseUrl = rtrim(public_site_url(), '/');
 
-$currentUrl = $baseUrl . $_SERVER['REQUEST_URI'];
+$canonicalUrl = public_canonical_url(
+    'news/' . rawurlencode((string) $news['slug'])
+);
 
-$canonicalUrl =
-    $baseUrl
-    . '/berita-detail.php?slug='
-    . urlencode($news['slug']);
+$currentUrl = $canonicalUrl;
 
 /*
 |--------------------------------------------------------------------------
@@ -245,6 +245,7 @@ $readingTime = max(1, ceil($wordCount / 200));
 <html lang="id">
 
 <head>
+    <base href="<?= escape(public_site_path()) ?>">
 <script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
 
     <meta charset="UTF-8">
@@ -457,13 +458,13 @@ $readingTime = max(1, ceil($wordCount / 200));
 
             <nav class="news-breadcrumb">
 
-                <a href="index.php">
+                <a href="./">
                     Beranda
                 </a>
 
                 <span>/</span>
 
-                <a href="berita.html">
+                <a href="news">
                     Berita
                 </a>
 
@@ -665,7 +666,7 @@ $readingTime = max(1, ceil($wordCount / 200));
 
                 <a
                     class="news-detail-navigation__back"
-                    href="berita.html"
+                    href="news"
                 >
                     ← Kembali ke Berita
                 </a>
@@ -696,7 +697,7 @@ $readingTime = max(1, ceil($wordCount / 200));
                             <a
                                 class="news-detail-sidebar__item"
 
-                                href="berita-detail.php?slug=<?= urlencode(
+                                href="news/<?= rawurlencode(
                                     $related['slug']
                                 ) ?>"
                             >
@@ -800,12 +801,12 @@ $readingTime = max(1, ceil($wordCount / 200));
 
     <script
         type="module"
-        src="assets/js/main.js?v=20260709-scroll-icon-only"
+        src="assets/js/main.js?v=20260826-clean-url1"
     ></script>
 
     <script src="assets/js/seo.js"></script>
 
-    <script src="assets/js/maintenance.js"></script>
+    <script src="assets/js/maintenance.js?v=20260827-maintenance-api-root-1"></script>
 
     <script src="assets/js/news-detail.js"></script>
 

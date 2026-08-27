@@ -5,6 +5,10 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/functions.php';
 
+if (!headers_sent()) {
+    header('Content-Type: text/html; charset=UTF-8');
+}
+
 $news = null;
 $newsId = null;
 
@@ -57,8 +61,11 @@ if (empty($news)) {
         <title>
             Berita Tidak Ditemukan - SD Cahaya Harapan
         </title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-        <link rel="stylesheet" href="assets/css/style.css?v=20260709-scroll-icon-only">
+        <link rel="stylesheet" href="assets/css/style.css?v=20260725-staff-about-section">
 
         <style>
 
@@ -246,7 +253,7 @@ $readingTime = max(1, ceil($wordCount / 200));
 
 <head>
     <base href="<?= escape(public_site_path()) ?>">
-<script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
+<script src="assets/js/google-tag.js?v=20260803-ga4-1"></script>
 
     <meta charset="UTF-8">
 
@@ -258,6 +265,9 @@ $readingTime = max(1, ceil($wordCount / 200));
     <title>
         <?= escape($seoTitle) ?> - SD Cahaya Harapan Bekasi
     </title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
     <meta
         name="description"
@@ -361,7 +371,7 @@ $readingTime = max(1, ceil($wordCount / 200));
 
     <link
         rel="stylesheet"
-        href="assets/css/style.css?v=20260709-scroll-icon-only"
+        href="assets/css/style.css?v=20260725-staff-about-section"
     >
 
     <link
@@ -507,13 +517,11 @@ $readingTime = max(1, ceil($wordCount / 200));
                 </span>
 
                 <span class="news-detail-meta__views">
-                    👁
-                    <?= escape((string) $news['views']) ?>
-                    Pembaca
+                    <?= escape((string) $news['views']) ?> Pembaca
                 </span>
 
                 <span class="news-detail-meta__reading-time">
-                    ⏱ <?= $readingTime ?> menit baca
+                    <?= $readingTime ?> menit baca
                 </span>
 
             </div>
@@ -668,7 +676,7 @@ $readingTime = max(1, ceil($wordCount / 200));
                     class="news-detail-navigation__back"
                     href="news"
                 >
-                    ← Kembali ke Berita
+                    &larr; Kembali ke Berita
                 </a>
 
             </div>
@@ -768,7 +776,7 @@ $readingTime = max(1, ceil($wordCount / 200));
                                     </span>
 
                                     <span class="news-detail-sidebar__item-link">
-                                        Baca Selengkapnya →
+                                        Baca Selengkapnya &rarr;
                                     </span>
 
                                 </div>

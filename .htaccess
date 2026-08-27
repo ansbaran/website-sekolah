@@ -89,7 +89,7 @@ Options -Indexes -MultiViews
     RewriteRule "(^|/)\.(?!well-known/)" - [F]
 </IfModule>
 
-<FilesMatch "\.(env|ini|log|sql|bak|backup|dist|md|txt|lock|yml|yaml|json)$">
+<FilesMatch "\.(env|ini|log|sql|bak|backup|dist|md|txt|lock|yml|yaml|json|zip|tar|tgz|gz|7z|rar)$">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>

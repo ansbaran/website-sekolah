@@ -69,15 +69,18 @@ $currentUrl = $agenda
 <html lang="id">
 <head>
     <base href="<?= escape(public_site_path()) ?>">
-<script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
+<script src="assets/js/google-tag.js?v=20260803-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= escape($pageTitle) ?> - SD Cahaya Harapan Bekasi</title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <meta name="description" content="<?= escape($pageDescription) ?>">
     <link rel="canonical" href="<?= escape($currentUrl) ?>">
     <meta property="og:url" content="<?= escape($currentUrl) ?>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=20260709-agenda-detail-compact">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260725-staff-about-section">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="assets/js/tailwind-config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>

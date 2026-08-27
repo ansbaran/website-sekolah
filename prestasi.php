@@ -23,15 +23,18 @@ function achievement_page_excerpt(string $value, int $limit = 220): string
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
+<script src="assets/js/google-tag.js?v=20260803-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daftar prestasi siswa SD Cahaya Harapan Bekasi yang dikelola dari admin sekolah.">
     <link rel="canonical" href="https://sdcahayaharapanbekasi.sch.id/achievements">
     <meta property="og:url" content="https://sdcahayaharapanbekasi.sch.id/achievements">
     <title>Prestasi - SD Cahaya Harapan Bekasi</title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=20260711-prestasi-program-layout">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260725-staff-about-section">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="assets/js/tailwind-config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>

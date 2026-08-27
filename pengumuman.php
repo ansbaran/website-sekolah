@@ -35,15 +35,18 @@ function announcement_excerpt(string $value, int $limit = 150): string
 <!doctype html>
 <html lang="id">
   <head>
-  <script src="assets/js/google-tag.js?v=20260731-ga4-1"></script>
+  <script src="assets/js/google-tag.js?v=20260803-ga4-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daftar pengumuman resmi SD Cahaya Harapan Bekasi untuk orang tua dan siswa.">
     <link rel="canonical" href="https://sdcahayaharapanbekasi.sch.id/announcements">
     <meta property="og:url" content="https://sdcahayaharapanbekasi.sch.id/announcements">
     <title>Pengumuman - SD Cahaya Harapan Bekasi</title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <script src="assets/js/tailwind-config.js"></script>
-    <link rel="stylesheet" href="assets/css/style.css?v=20260709-announcement-flow">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260725-staff-about-section">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>

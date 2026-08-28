@@ -1799,9 +1799,51 @@ function ensure_unique_agenda_slug(string $baseSlug, ?int $excludeId = null): st
     }
 }
 
+function decode_agenda_text(string $value): string
+{
+    return html_entity_decode(
+        $value,
+        ENT_QUOTES | ENT_HTML5,
+        'UTF-8'
+    );
+}
+
+function normalize_agenda_input(string $value): string
+{
+    return trim(strip_tags(decode_agenda_text($value)));
+}
+
+function normalize_agenda_record(array $agenda): array
+{
+    foreach ([
+        'title',
+        'event_time',
+        'location',
+        'contact',
+        'summary',
+        'description',
+        'points',
+        'closing',
+    ] as $field) {
+        if (array_key_exists($field, $agenda)) {
+            $agenda[$field] = decode_agenda_text(
+                (string)$agenda[$field]
+            );
+        }
+    }
+
+    return $agenda;
+}
+
 function normalize_agenda_points(string $points): string
 {
-    return implode("\n", array_values(array_filter(array_map(static fn($line) => trim(strip_tags($line)), preg_split('/\R+/', $points) ?: []))));
+    return implode(
+        "\n",
+        array_values(array_filter(array_map(
+            static fn($line) => normalize_agenda_input($line),
+            preg_split('/\R+/', $points) ?: []
+        )))
+    );
 }
 
 function agenda_points_to_array(?string $points): array
@@ -1821,10 +1863,13 @@ function get_public_agendas(int $limit = 3): array
     global $pdo;
     try {
         ensure_agendas_table();
-        $stmt = $pdo->prepare('SELECT * FROM agendas WHERE is_active = 1 ORDER BY event_date ASC, id ASC LIMIT :limit');
+        $stmt = $pdo->prepare('SELECT * FROM agendas WHERE is_active = 1 ORDER BY event_date DESC, id DESC LIMIT :limit');
         $stmt->bindValue(':limit', max(1, min(50, $limit)), PDO::PARAM_INT);
         $stmt->execute();
-        $items = $stmt->fetchAll();
+        $items = array_map(
+            'normalize_agenda_record',
+            $stmt->fetchAll()
+        );
         return $items ?: array_slice(get_default_agendas(), 0, $limit);
     } catch (Throwable $exception) {
         log_exception($exception);
@@ -1839,7 +1884,10 @@ function get_agenda_by_slug(string $slug): ?array
         ensure_agendas_table();
         $stmt = $pdo->prepare('SELECT * FROM agendas WHERE slug = :slug AND is_active = 1 LIMIT 1');
         $stmt->execute(['slug' => $slug]);
-        return $stmt->fetch() ?: null;
+        $item = $stmt->fetch();
+        return $item
+            ? normalize_agenda_record($item)
+            : null;
     } catch (Throwable $exception) {
         log_exception($exception);
         foreach (get_default_agendas() as $agenda) {

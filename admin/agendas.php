@@ -53,8 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     redirect('agendas.php');
 }
 
-$statement = $pdo->query('SELECT * FROM agendas ORDER BY event_date ASC, id DESC');
-$agendas = $statement->fetchAll();
+$statement = $pdo->query('SELECT * FROM agendas ORDER BY event_date DESC, id DESC');
+$agendas = array_map(
+    'normalize_agenda_record',
+    $statement->fetchAll()
+);
 $pageTitle = 'Agenda';
 require_once __DIR__ . '/includes/header.php';
 ?>

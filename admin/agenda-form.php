@@ -30,25 +30,25 @@ $item = [
 if ($editing) {
     $statement = $pdo->prepare('SELECT * FROM agendas WHERE id = :id LIMIT 1');
     $statement->execute(['id' => $id]);
-    $item = $statement->fetch() ?: $item;
+    $item = normalize_agenda_record($statement->fetch() ?: $item);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
         $error = 'Token keamanan tidak valid. Silakan muat ulang halaman.';
     } else {
-        $title = clean($_POST['title'] ?? '');
+        $title = normalize_agenda_input($_POST['title'] ?? '');
         $rawSlug = trim((string)($_POST['slug'] ?? ''));
         $baseSlug = generate_slug($rawSlug !== '' ? $rawSlug : $title);
         $slug = ensure_unique_agenda_slug($baseSlug, $editing ? $id : null);
         $eventDate = $_POST['event_date'] ?? date('Y-m-d');
-        $eventTime = clean($_POST['event_time'] ?? '');
-        $location = clean($_POST['location'] ?? '');
-        $contact = clean($_POST['contact'] ?? '');
-        $summary = clean($_POST['summary'] ?? '');
-        $description = trim((string)($_POST['description'] ?? ''));
+        $eventTime = normalize_agenda_input($_POST['event_time'] ?? '');
+        $location = normalize_agenda_input($_POST['location'] ?? '');
+        $contact = normalize_agenda_input($_POST['contact'] ?? '');
+        $summary = normalize_agenda_input($_POST['summary'] ?? '');
+        $description = normalize_agenda_input($_POST['description'] ?? '');
         $points = normalize_agenda_points((string)($_POST['points'] ?? ''));
-        $closing = clean($_POST['closing'] ?? '');
+        $closing = normalize_agenda_input($_POST['closing'] ?? '');
         $isActive = isset($_POST['is_active']) ? 1 : 0;
 
         $item = array_merge($item, [
